@@ -1,0 +1,191 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Causal Inference & Policy Evaluation",
+    "section": "",
+    "text": "Welcome to this M.Sc module Causal Inference and Policy Evaluation at University College Dublin. On this webpage you will find the syllabus and resources that will help you learn the material. UCD students can access the slides via Brightspace. Please check Brightspace as well for forum entries and announcements. The official module descriptor of UCD can be found here."
+  },
+  {
+    "objectID": "index.html#about-causal-inference",
+    "href": "index.html#about-causal-inference",
+    "title": "Causal Inference & Policy Evaluation",
+    "section": "About Causal Inference",
+    "text": "About Causal Inference\nCausal questions are everywhere in the social sciences. We strive to understand the impact of educational interventions on student outcomes, the effectiveness of public health campaigns in reducing disease rates, the influence of economic policies on employment rates, the causal factors driving voter behavior and electoral outcomes, or the effects of media framing on public opinion and political decision-making. Unlike in the sciences, however, conducting randomised experiments to answer these questions is often impractical or unethical. This is where causal inference becomes a highly useful toolbox. Causal inference allows us to estimate causal effects even in the absence of randomised experiments. It provides us with rigorous methods to untangle cause-and-effect relationships from observational data, enabling us to make informed decisions , evaluate policies, and guide evidence-based policymaking."
+  },
+  {
+    "objectID": "index.html#who-can-take-this-module",
+    "href": "index.html#who-can-take-this-module",
+    "title": "Causal Inference & Policy Evaluation",
+    "section": "Who Can Take this Module?",
+    "text": "Who Can Take this Module?\nThis is a M.Sc course offered by the UCD School of Economics. The techniques taught in this course have applications across many disciplines such as sociology, political science, education, social policy, health policy, or epidemiology. Students should have a basic knowledge of econometrics at the level of ECON30130 (Introductory Econometrics) at UCD. This means that they should have a firm grasp of basic statistical concepts, especially regression analysis, and they should have knowledge in programming with R."
+  },
+  {
+    "objectID": "instructor.html",
+    "href": "instructor.html",
+    "title": "Hello!",
+    "section": "",
+    "text": "My name is Ben Elsner and I’m looking forward to teaching this course Causal Inference and Policy Evaluation at UCD. I’m originally from Germany, where I grew up in the beautiful city of Regensburg. I have been living in Ireland on and off since 2008. I got a PhD in economics from Trinity College Dublin in 2012 and afterwards worked as a researcher and policy adviser at the Institute of Labor Economics (IZA) in Bonn/Germany. In 2018, I returned to Ireland and “changed sides” by joining UCD. I’m an applied microeconomist an my research mainly deals with the impact of migration on sending and receiving countries. I have also recently taken a great interest in the impact of pollution on human capital formation and decision-making and am currently working on some projects in this field. You can learn more about my work on my website www.benjaminelsner.com.\nI am passionate about teaching econometrics and data analytics because it equips students with a highly useful toolbox that allows them to go out into the world and do their own research. I am particularly excited about this new course Causal Inference and Policy Evaluation (launched in spring 2024) because it is truly interdisciplinary: its material appeals to scholars in a large number of disciplines such as economics, political science, sociology, health policy, social work, education and everything in between.\nWhen I don’t do research or teach, I enjoy cooking (especially bbq), reading, and playing piano."
+  },
+  {
+    "objectID": "instructor.html#projects",
+    "href": "instructor.html#projects",
+    "title": "Hello!",
+    "section": "Projects",
+    "text": "Projects\nI share my teaching worldwide through my YouTube channel, where I have over 70 videos on causal inference and public economics. I have recently started a new playlist called Metrics Nuts and Bolts, where I explain some of the maths behind undergraduate econometrics that lots of students struggle with. I also work on a project called Intuitive MetriX, a platform with econometrics materials for visual learners.\nTogether with colleagues from the UCD School of Mathematics and Statistics, we recently created the M.Sc Economics and Data Analytics and we are very excited about this new venture. The programme combines economic theory, econometrics and data analytics and equips graduates with a highly marketable skill set."
+  },
+  {
+    "objectID": "instructor.html#contact",
+    "href": "instructor.html#contact",
+    "title": "Hello!",
+    "section": "Contact",
+    "text": "Contact\nEmail: benjamin.elsner@ucd.ie\nBook a slot for my office hours on Calendly"
+  },
+  {
+    "objectID": "instructor.html#links",
+    "href": "instructor.html#links",
+    "title": "Hello!",
+    "section": "Links",
+    "text": "Links\nBen’s webpage\nYouTube Channel\nIntuitive MetriX\nM.Sc Economics and Data Analytics"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About this course",
+    "section": "",
+    "text": "Causal questions are everywhere in the social sciences. We strive to understand the impact of educational interventions on student outcomes, the effectiveness of public health campaigns in reducing disease rates, and the influence of economic policies on employment rates. Unlike in the sciences, however, conducting randomized experiments to answer these questions is often impractical or unethical. This is where causal inference becomes a highly useful toolbox. Causal inference allows us to estimate causal effects even in the absence of randomized experiments. It provides us with rigorous methods to untangle cause-and-effect relationships from observational data, enabling us to make informed decisions and evaluate policies. By applying causal inference techniques, we can assess the true impact of interventions, identify the most effective strategies, and guide evidence-based decision-making in the social sciences."
+  },
+  {
+    "objectID": "materials.html",
+    "href": "materials.html",
+    "title": "Course Materials",
+    "section": "",
+    "text": "On this page you will find the lecture slides and videos as well as links to papers with textbook-like applications of each technique. You can find more resources on learning R and learning econometrics and causal inference under Resources."
+  },
+  {
+    "objectID": "materials.html#introduction-to-causal-inference",
+    "href": "materials.html#introduction-to-causal-inference",
+    "title": "Course Materials",
+    "section": "Introduction to Causal Inference",
+    "text": "Introduction to Causal Inference\n\nSlides\n\n\nVideos\nTwo videos explain the foundations of causal inference based on directed acyclic graphs (DAGs)"
+  },
+  {
+    "objectID": "materials.html#matching",
+    "href": "materials.html#matching",
+    "title": "Course Materials",
+    "section": "Matching",
+    "text": "Matching\n\nSlides\n\n\nVideos\nNo videos yet…"
+  },
+  {
+    "objectID": "materials.html#instrumental-variables",
+    "href": "materials.html#instrumental-variables",
+    "title": "Course Materials",
+    "section": "Instrumental Variables",
+    "text": "Instrumental Variables\n\nSlides\n\n\nVideos\nThe following five videos cover instrumental variables and appliations:"
+  },
+  {
+    "objectID": "materials.html#regression-discontinuity",
+    "href": "materials.html#regression-discontinuity",
+    "title": "Course Materials",
+    "section": "Regression Discontinuity",
+    "text": "Regression Discontinuity\n\nSlides\n\n\nVideos"
+  },
+  {
+    "objectID": "materials.html#difference-in-differences",
+    "href": "materials.html#difference-in-differences",
+    "title": "Course Materials",
+    "section": "Difference-in-Differences",
+    "text": "Difference-in-Differences\n\nSlides\n\n\nVideos"
+  },
+  {
+    "objectID": "materials.html#synthetic-control",
+    "href": "materials.html#synthetic-control",
+    "title": "Course Materials",
+    "section": "Synthetic Control",
+    "text": "Synthetic Control\n\nSlides\n\n\nVideos"
+  },
+  {
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "Syllabus ECON42720",
+    "section": "",
+    "text": "This course is offered every spring trimester. Our weekly sessions are on Thursdays from 9-11am. There is a two-week midterm break around St. Patrick’s Day. The course has no scheduled lab sessions. Instead, several sessions will be run in flipped classroom mode, that is, students watch lecture videos at home and we discuss applications during the in-person sessions."
+  },
+  {
+    "objectID": "syllabus.html#instructor",
+    "href": "syllabus.html#instructor",
+    "title": "Syllabus ECON42720",
+    "section": "👨‍🏫 Instructor",
+    "text": "👨‍🏫 Instructor\nBenjamin Elsner, PhD\nUniversity College Dublin\nSchool of Economics Office\nNewman G206\nEmail: benjamin.elsner@ucd.ie\nI am available for questions before, during, and after the sessions on Thursday. Students can also book slots for my office hour (regular time tba) via Calendly."
+  },
+  {
+    "objectID": "syllabus.html#module-description-and-learning-outcomes",
+    "href": "syllabus.html#module-description-and-learning-outcomes",
+    "title": "Syllabus ECON42720",
+    "section": "⏳ Module Description and Learning Outcomes",
+    "text": "⏳ Module Description and Learning Outcomes\nThis course introduces students to the most commonly used techniques in causal inference and policy evaluation. These techniques have a wide range of applications in the social sciences. Upon completion of this module, students will achieve the following learning outcomes:\n\nDevelop identification strategies to uncover causal effects for a given research question and in a given context.\nApplying state-of-the-art causal inference techniques using real-world data and statistical software.\nCritically evaluate the assumptions and limitations of various causal inference methods.\nApply visualisation techniques and effectively communicate and interpret research findings.\nSet up an effective workflow with version control and markdown.\n\nWe will cover the following topics:\n\nEconometrics recap (Mixtape)(Effect)\nIntroduction to causality: causal diagrams and potential outcomes (Mixtape)(Effect)\nMatching and inverse probability weighting (Mixtape)(Effect)\nInstrumental variables (Mixtape)(Effect)\nRegression Discontinuity (Mixtape)(Effect)\nDifference-in-differences (Mixtape)(Effect)\nSynthetic control (Mixtape)(Effect)"
+  },
+  {
+    "objectID": "syllabus.html#prerequisites",
+    "href": "syllabus.html#prerequisites",
+    "title": "Syllabus ECON42720",
+    "section": "💡 Prerequisites",
+    "text": "💡 Prerequisites\nStudents should have a firm understanding of basic statistical concepts (descriptive statistics, hypothesis testing), regression analysis, and programming with R. There are no strict prerequisites regarding courses: it is possible to take this course without having taken MSc-level econometrics before, as long as students have a good idea of the aforementioned concepts/techniques."
+  },
+  {
+    "objectID": "syllabus.html#assessment",
+    "href": "syllabus.html#assessment",
+    "title": "Syllabus ECON42720",
+    "section": "✏️ Assessment",
+    "text": "✏️ Assessment\nThe assessment will consist of a final exam worth 60% of the grade and two assignments (20% each). Students will get one letter grade in the end.\n\nFinal exam\nThe final exam will take place in the RDS or on campus during the exam period. It’s a two-hour closed book exam. Students cannot bring notes. Usually, there is a study week between the last teaching week and the exam period. The exam period lasts two weeks. The exam timetable is set by the UCD exam office. We can accommodate special arrangements (for example for students with disabilities), but we cannot accommodate requests to sit an exam on a different date or online.\n\n\nAssignments\nWe will have two empirical assignments that require students to analyse a dataset, visualise content, and write up their results. The first assignment will be given around week 4; the second assignment will be given around week 9 (assuming a 14-week term).\n\n\nAssessment Policies\n\nAI Policy I am a firm believer in AI as a helpful tool for our work, and I encourage students to use it. I see two major uses for the assignments: helping with coding (debugging, suggesting more efficient solutions), and language editing. If you use AI for your assignment, please add an AI statement at the beginning and explain very briefly what you used it for. You will not use points if you use AI; I am just curious what students used it for. Also, be careful when using AI: it can produce nonsense results, and for those you will lose a lot of points.\nLate submission policy: assignments have to be submitted by the deadline. UCD’s late submission policy does not apply.\nPlagiarism policy: UCD’s Student Plagiarism Policy applies. I reserve the right to use a plagiarism checker.\n\n\n\nGrade Scale\nFor all assessments, I will apply the alternative linear grade scale; the pass mark is 40%:\n\n\n\nGrades\nLower %\nUpper %\n\n\n\n\nA+\n≥95\n100\n\n\nA\n≥90\n<95\n\n\nA-\n≥85\n<90\n\n\nB+\n≥80\n<85\n\n\nB\n≥75\n<80\n\n\nB-\n≥70\n<75\n\n\nC+\n≥65\n<70\n\n\nC\n≥60\n<65\n\n\nC-\n≥55\n<60\n\n\nD+\n≥50\n<55\n\n\nD\n≥45\n<50\n\n\nD-\n≥40\n<45\n\n\nE+\n≥35\n<40\n\n\nE\n≥30\n<35\n\n\nE-\n≥25\n<30\n\n\nF+\n≥20\n<25\n\n\nF\n≥15\n<20\n\n\nF-\n≥10\n<15\n\n\nG+\n≥5\n<10\n\n\nG\n≥0.02\n<5\n\n\nG-\n≥0.01\n<0.02\n\n\nNM\n0\n<0.01\n\n\nABS\nNo work submitted / absent"
+  },
+  {
+    "objectID": "syllabus.html#software",
+    "href": "syllabus.html#software",
+    "title": "Syllabus ECON42720",
+    "section": "🖥️ Software",
+    "text": "🖥️ Software\nTL/DR; you will need:\n\nR and R Studio; please download these at the start of the course.\nA word processor: MS Word is ok but I strongly recommend Quarto.\nGithub: please make an account and download Github Desktop\n\n\nStatistical Software\nAll assignments and labs will be done with R. Using R comes with lots of advantages: it is a very flexible object-oriented programming language with a huge comparative advantage in data analytics. It is free, which is great, and it has excellent AI support through ChatGPT and Github Copilot.\nTo work with R, you need to install R itself (link here) and a user interface. As a user interface, I recommend RStudio (link here), which is very user friendly and has been optimised for use with R. RStudio Desktop is free and is sufficient for all our applications. If you want to use Github Copilot for AI support, you need to work with Visual Studio Code (link here), which is also great. Note: VS Code is free in general, and Github Copilot is free for students.\n\n\nWord processing\nFor writing your assignments, you can use any word processing software. However, I strongly recommend that you learn to use markdown software. Markdown allows for an integrated workflow of data cleaning, exploration, visualisation and write-up. It can handle inputs from many programming languages (R, Python, SQL, Julia, etc) and markdown languages (R markdown, html, LaTeX, etc) and create nice-looking outputs in pdf, html, doc, or ppt format. So you can create presentation slides, websites, academic papers, CVs, and many more outputs with markdown. For example, this website was made with a markdown software, as were the lecture slides and the tutorial sheets. If you are interested in a career in data science or data analytics, you will have to learn to use markdown.\nSounds daunting? The basics are actually quite easy to learn. I highly recommend Quarto, which can be used from within RStudio or VSCode.\n\n\nVersion Control\nVersion control is a crucial tool for anyone writing software. And, yes, when you do empirical work you do write software. Version controls allows efficient management of project files, collaboration with teammates, and tracking of changes over time. With version control, you can maintain different versions of your work, experiment, and easily revert if needed. It promotes transparency by recording every modification, which is valuable when working on complex projects. Additionally, it enables seamless collaboration and merging of changes.\nIn your assignments you will be asked to show proof that you use version control. The main version control system is Github, which offers free accounts. I particularly recommend Github Desktop, a very user-friendly interface for Github. I will provide a brief introduction to Github."
+  },
+  {
+    "objectID": "syllabus.html#textbooks",
+    "href": "syllabus.html#textbooks",
+    "title": "Syllabus ECON42720",
+    "section": "📚 Textbook(s)",
+    "text": "📚 Textbook(s)\nThe main textbook for this course is\n\nCunningham, Scott. Causal Inference: The Mixtape. Yale University Press, 2021. https://doi.org/10.2307/j.ctv1c29t27.\n\nI recommend purchasing this book, although it is also available in a free html version at https://mixtape.scunning.com/\nOther excellent books are\n\nHuntington-Klein, N. (2021). The Effect: An Introduction to Research Design and Causality (1st ed.). Chapman and Hall/CRC. https://doi.org/10.1201/9781003226055; see https://theeffectbook.net/ for a free html version.\nAngrist, J. and J.-S. Pischke (2014). Mastering ’Metrics. Princeton University Press. Additional material here: https://www.masteringmetrics.com/This book provides a non-technical introduction to the canonical research designs in causal inference.\nAngrist, J. and J.-S. Pischke (2009). Mostly Harmless Econometrics. Princeton University Press. Additional material here: https://www.mostlyharmlesseconometrics.com/. MHE has become the standard textbook for causal inference in economics. The presentation of the material is more technical than in other books listed here.\nBékés, G. and G. Kézdi (2021). Data Analysis for Business, Economics, and Policy. Cambridge University Press. Additional material here: https://gabors-data-analysis.com/. This is an excellent textbook for data analysis in general. It covers data exploration, regression analysis, prediction with basic machine learning techniques, and causal analysis. The chapter on causal analysis is not as detailed as in books dedicated to this topic. However, if you want to have a book that introduces you to lots of important empirical techniques in a fairly non-technical fashion, this book is for you."
+  },
+  {
+    "objectID": "syllabus.html#tentative-schedule",
+    "href": "syllabus.html#tentative-schedule",
+    "title": "Syllabus ECON42720",
+    "section": "📆 Tentative Schedule",
+    "text": "📆 Tentative Schedule\nThe table below provides a tentative schedule. Some topics may not require two weeks, and we will use some of the sessions for labs or tutorials. Details will be announced on Brightspace closer to the time.\n\n\n\nWeeks\nTopic\nChapter Mixtape\nChapter Effect\n\n\n\n\n1\nRegression re-cap\n2\n13\n\n\n2/3\nBasics of causality\n3 & 4\n1-10\n\n\n4/5\nMatching and IPW\n5\n14\n\n\n6/7\nInstrumental Variables\n7\n19\n\n\n8/9\nMidterm break ☘️\n\n\n\n\n10/11\nRegression Discontinuity\n6\n20\n\n\n12/13\nDifference-in-differences\n9\n18\n\n\n14\nSynthetic Control\n10\n18"
+  },
+  {
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "On this page I provide links to learning resources I find very useful."
+  },
+  {
+    "objectID": "resources.html#learning-r",
+    "href": "resources.html#learning-r",
+    "title": "Resources",
+    "section": "Learning R",
+    "text": "Learning R"
+  },
+  {
+    "objectID": "resources.html#learning-econometrics-and-statistics",
+    "href": "resources.html#learning-econometrics-and-statistics",
+    "title": "Resources",
+    "section": "Learning Econometrics and Statistics",
+    "text": "Learning Econometrics and Statistics"
+  },
+  {
+    "objectID": "resources.html#causal-inference",
+    "href": "resources.html#causal-inference",
+    "title": "Resources",
+    "section": "Causal Inference",
+    "text": "Causal Inference"
+  }
+]
