@@ -1,0 +1,27 @@
+project:
+  type: website
+
+website:
+  title: "ECON42720"
+  navbar:
+    background: "#16396f"
+    left:
+      - href: index.qmd
+        text: Home
+      - href: instructor.qmd
+        text: Instructor       
+      - href: syllabus.qmd
+        text: Syllabus
+      - href: materials.qmd
+        text: Materials         
+      - href: resources.qmd
+        text: Resources       
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+editor: visual
+

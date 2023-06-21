@@ -1,0 +1,85 @@
+---
+title: "Course Materials"
+---
+
+On this page you will find the lecture slides and videos as well as links to papers with textbook-like applications of each technique. You can find more resources on learning R and learning econometrics and causal inference under [Resources](resources.qmd).
+
+## Introduction to Causal Inference
+
+#### Slides
+
+#### Videos
+
+Two videos explain the foundations of causal inference based on directed acyclic graphs (DAGs)
+
+{{< video https://youtu.be/tUz2yl2QEbY >}}
+
+{{< video https://youtu.be/9QJUvVB4lcI >}}
+
+
+## Matching
+
+#### Slides
+
+#### Videos
+
+No videos yet...
+
+## Instrumental Variables
+
+#### Slides
+
+#### Videos
+
+The following five videos cover instrumental variables and appliations:
+
+
+{{< video https://youtu.be/2dl2FTik-y4 >}}
+
+{{< video https://youtu.be/et-8a3_cFUM >}}
+
+{{< video https://youtu.be/s0YOQnouYO4 >}}
+
+{{< video https://youtu.be/JU1SaKbRhdM >}}
+
+{{< video https://youtu.be/aC_2Sn-IxTk >}}
+
+
+
+## Regression Discontinuity
+
+#### Slides
+
+#### Videos
+
+{{< video https://youtu.be/I2IJcyCLVlc >}}
+
+{{< video https://youtu.be/nYfF80pWeFc >}}
+
+{{< video https://youtu.be/kyMdBi806bk >}}
+
+## Difference-in-Differences
+
+#### Slides
+
+#### Videos
+
+{{< video https://youtu.be/yM5tLON-meM >}}
+
+{{< video https://youtu.be/zKk6U4NcgsU >}}
+
+{{< video https://youtu.be/NUwxMqZAMjI >}}
+
+
+## Synthetic Control
+
+
+#### Slides
+
+#### Videos
+
+{{< video https://youtu.be/vmx3R8emVjQ >}}
+
+{{< video https://youtu.be/RwbFdga1V4Q >}}
+
+

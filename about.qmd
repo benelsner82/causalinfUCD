@@ -1,0 +1,5 @@
+---
+title: "About this course"
+---
+
+Causal questions are everywhere in the social sciences. We strive to understand the impact of educational interventions on student outcomes, the effectiveness of public health campaigns in reducing disease rates, and the influence of economic policies on employment rates. Unlike in the sciences, however, conducting randomized experiments to answer these questions is often impractical or unethical. This is where causal inference becomes a highly useful toolbox. Causal inference allows us to estimate causal effects even in the absence of randomized experiments. It provides us with rigorous methods to untangle cause-and-effect relationships from observational data, enabling us to make informed decisions and evaluate policies. By applying causal inference techniques, we can assess the true impact of interventions, identify the most effective strategies, and guide evidence-based decision-making in the social sciences.

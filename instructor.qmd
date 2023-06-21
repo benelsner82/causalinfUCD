@@ -1,0 +1,33 @@
+---
+title: "Hello!"
+---
+
+![](images/ben_pic_official.png){fig-alt="Ben" fig-align="center" width="250"}
+
+My name is Ben Elsner and I'm looking forward to teaching this course **Causal Inference and Policy Evaluation** at UCD. I'm originally from Germany, where I grew up in the beautiful city of [Regensburg](https://tourismus.regensburg.de/en). I have been living in Ireland on and off since 2008. I got a PhD in economics from Trinity College Dublin in 2012 and afterwards worked as a researcher and policy adviser at the Institute of Labor Economics (IZA) in Bonn/Germany. In 2018, I returned to Ireland and "changed sides" by joining UCD. I'm an applied microeconomist an my research mainly deals with the impact of migration on sending and receiving countries. I have also recently taken a great interest in the impact of pollution on human capital formation and decision-making and am currently working on some projects in this field. You can learn more about my work on my website [www.benjaminelsner.com.](https://www.benjaminelsner.com)
+
+I am passionate about teaching econometrics and data analytics because it equips students with a highly useful toolbox that allows them to go out into the world and do their own research. I am particularly excited about this new course Causal Inference and Policy Evaluation (launched in spring 2024) because it is truly interdisciplinary: its material appeals to scholars in a large number of disciplines such as economics, political science, sociology, health policy, social work, education and everything in between.
+
+When I don't do research or teach, I enjoy cooking (especially bbq), reading, and playing piano.
+
+## Projects
+
+I share my teaching worldwide through my [YouTube channel](https://www.youtube.com/@ben_elsner), where I have over 70 videos on causal inference and public economics. I have recently started a new playlist called *Metrics Nuts and Bolts*, where I explain some of the maths behind undergraduate econometrics that lots of students struggle with. I also work on a project called *Intuitive MetriX*, a platform with econometrics materials for visual learners.
+
+Together with colleagues from the UCD School of Mathematics and Statistics, we recently created the [M.Sc Economics and Data Analytics](https://www.ucd.ie/economics/study/graduate/msceconomicsanddataanalytics/) and we are very excited about this new venture. The programme combines economic theory, econometrics and data analytics and equips graduates with a highly marketable skill set.
+
+## Contact
+
+Email: [benjamin.elsner\@ucd.ie](mailto:benjamin.elsner@ucd.ie)
+
+Book a slot for my office hours on [Calendly](https://calendly.com/benjamin-elsner/office-hour)
+
+## Links
+
+[Ben's webpage](https://benjaminelsner.com/)
+
+[YouTube Channel](https://www.youtube.com/@ben_elsner)
+
+[Intuitive MetriX](https://intuitivemetrix.com/)
+
+[M.Sc Economics and Data Analytics](https://www.ucd.ie/economics/study/graduate/msceconomicsanddataanalytics/)

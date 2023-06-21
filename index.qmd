@@ -1,0 +1,13 @@
+---
+title: "Causal Inference & Policy Evaluation"
+---
+
+Welcome to this M.Sc module **Causal Inference and Policy Evaluation** at University College Dublin. On this webpage you will find the syllabus and resources that will help you learn the material. UCD students can access the slides via Brightspace. Please check Brightspace as well for forum entries and announcements. The official module descriptor of UCD can be found [here](https://hub.ucd.ie/usis/!W_HU_MENU.P_PUBLISH?p_tag=MODULE&MODULE=ECON42720).
+
+## About Causal Inference
+
+Causal questions are everywhere in the social sciences. We strive to understand the impact of educational interventions on student outcomes, the effectiveness of public health campaigns in reducing disease rates, the influence of economic policies on employment rates, the causal factors driving voter behavior and electoral outcomes, or the effects of media framing on public opinion and political decision-making. Unlike in the sciences, however, conducting randomised experiments to answer these questions is often impractical or unethical. This is where causal inference becomes a highly useful toolbox. Causal inference allows us to estimate causal effects even in the absence of randomised experiments. It provides us with rigorous methods to untangle cause-and-effect relationships from observational data, enabling us to make informed decisions , evaluate policies, and guide evidence-based policymaking.
+
+## Who Can Take this Module?
+
+This is a M.Sc course offered by the UCD School of Economics. The techniques taught in this course have applications across many disciplines such as sociology, political science, education, social policy, health policy, or epidemiology. Students should have a basic knowledge of econometrics at the level of ECON30130 (Introductory Econometrics) at UCD. This means that they should have a firm grasp of basic statistical concepts, especially regression analysis, and they should have knowledge in programming with R.
