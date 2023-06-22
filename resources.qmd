@@ -2,10 +2,38 @@
 title: "Resources"
 ---
 
-On this page I provide links to learning resources I find very useful.
+On this page I provide links to learning resources I find very useful. This is surely not an exhaustive list. I'll add to this list when I come across interesting resources.
 
 ## Learning R
 
-## Learning Econometrics and Statistics
+R comes with a steep learning curve but opens up a lot of possibilities for its users. You don't need to learn each and every command --- no one is able to do that. The best you can do is learn the basics, get started with a project and learn by doing. And then practice, practice, practice.
+
+There are almost endless resources on R on the web. Here are some resources I recommend:
+
+#### Videos
+
+-   [Nick Huntington-Klein](https://www.youtube.com/@NickHuntingtonKlein) has excellent videos on [R for econometrics](https://www.youtube.com/playlist?list=PLcTBLulJV_AIuXCxr__V8XAzWZosMQIfW) and many other topics.
+
+-   [Albert Rapp's website](https://albert-rapp.de/) and [YouTube channel](https://www.youtube.com/@rappa753) is a treasure trove for tips and tricks with R, especially for data wrangling, visualisation, and outputs with Quarto.
+
+#### Textbooks and websites
+
+-   Here is a [free e-book](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf) with an introduction to base R. R has gotten a lot more user friendly with the introduction of tidyverse. However, if you want to become proficient in R, knowing base R is very helpful.
+
+-   For econometrics, I recommend two e-books: 1) [Introduction to Econometrics with R](https://www.econometrics-with-r.org/), an introductory e-book based on the Stock & Watson textbook, created by Christoph Hanck, Martin Arnold, Alexander Gerber, and Martin Schmelzer. 2) [Introduction to Econometrics with R](https://scpoecon.github.io/ScPoEconometrics/), a free e-book by a team of professors from Sciences Po (Florian Oswald, Vincent Viers, Jean-Marc Robin, Pierre Villedieu, Gustave Kenedi). The book combines everything you need: an introduction to R, econometric theory, coding examples, etc.
+
+## Learning Econometrics
 
 ## Causal Inference
+
+#### General
+
+-   The Nobel Prize 2021 was given to three masters of causal inference: [David Card](https://youtu.be/wD48p6m8U-8), [Joshua Angrist](https://youtu.be/vEBUER-l0yQ), and [Guido Imbens](https://youtu.be/yTrVg-t8O8A). Here is a [video of a lecture to UCD undergraduate students](https://www.youtube.com/watch?v=yG2__HMQpTQ) I've given the day after the prize was announced.
+
+-   It is difficult to stay up to date with all the new methods in applied econometrics. Here is a fantastic public good by [Christine Cai](https://christinecai.github.io/), who maintains a document with abstracts and references of methods papers of the last 5-6 years. [Link here](https://christinecai.github.io/PublicGoods/applied_micro_methods.pdf).
+
+-   Paul Goldsmith-Pinkham has an excellent course on applied empirical methods (basically causal inference), with [YouTube videos](https://www.youtube.com/playlist?list=PLWWcL1M3lLlojLTSVf2gGYQ_9TlPyPbiJ) and [lecture slides](https://github.com/paulgp/applied-methods-phd).
+
+#### Diff-in-Diff
+
+-   [Jonathan Roth](https://www.jonathandroth.com/did-resources/) provides excellent slides on new diff-in-diff methods, along with coding exercises and R packages.
