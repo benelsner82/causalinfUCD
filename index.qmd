@@ -4,7 +4,7 @@ title: "Causal Inference & Policy Evaluation"
 
 ![](images/collage.png){fig-align="center"}
 
-Welcome to this M.Sc module **Causal Inference and Policy Evaluation** at University College Dublin. On this webpage you will find the syllabus and resources that will help you learn the material. UCD students can access the slides via Brightspace. Please check Brightspace as well for forum entries and announcements. The official module descriptor of UCD can be found [here](https://hub.ucd.ie/usis/!W_HU_MENU.P_PUBLISH?p_tag=MODULE&MODULE=ECON42720).
+Welcome to this M.Sc module **Causal Inference and Policy Evaluation** (ECON42470), taught by [Ben Elsner](https://www.benjaminelsner.com) at University College Dublin. On this webpage you will find the syllabus and resources that will help you learn the material. UCD students can access the slides via Brightspace. Please check Brightspace as well for forum entries and announcements. The official module descriptor of UCD can be found [here](https://hub.ucd.ie/usis/!W_HU_MENU.P_PUBLISH?p_tag=MODULE&MODULE=ECON42720).
 
 ## About Causal Inference
 

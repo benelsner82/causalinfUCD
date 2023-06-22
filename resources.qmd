@@ -28,6 +28,14 @@ There are almost endless resources on R on the web. Here are some resources I re
 
 -   [Telling Stories with Data](https://tellingstorieswithdata.com/) by Rohan Alexander is a free e-book aimed at data scientists. It offers lots of excellent examples about workflows, exploratory analysis, modeling and applications.
 
+-   [Allison Horst's page on data wrangling with dplyr](https://allisonhorst.shinyapps.io/dplyr-learnr) is excellent. Come for the coding, stay for the penguin illustrations.
+
+-   R is great for **text analysis**. You can learn [tidytext in this excellent tutorial by Julia Silge](https://juliasilge.shinyapps.io/learntidytext/). A more comprehensive package on text analysis is [Quanteda](http://quanteda.io/), which has been co-written and is co-maintained by [Stefan Müller](https://muellerstefan.net/). Stefan is also based at UCD and does very cool work at the intersection of political science and data science. [See here for an example](https://pollingindicator.com/).
+
+-   [Grant McDermott's materials on Data Science for Economists](https://github.com/uo-ec607/lectures) have lots of interesting material on workflow, processing of large data (high-performance computing, Spark, Docker), and database management.
+
+-   [Jon Hersh's course on Machine Learning for Economists](https://github.com/jonhersh/BUS696/tree/master/slides)covers the basics of machine learning in a very intuitive way.
+
 ## 
 
 ## Causal Inference
@@ -40,8 +48,10 @@ There are almost endless resources on R on the web. Here are some resources I re
 
 -   Paul Goldsmith-Pinkham has an excellent course on applied empirical methods (basically causal inference), with [YouTube videos](https://www.youtube.com/playlist?list=PLWWcL1M3lLlojLTSVf2gGYQ_9TlPyPbiJ) and [lecture slides](https://github.com/paulgp/applied-methods-phd).
 
+-   Want to use causal inference with Python? Check out Matheus Facure's free e-book [Causal Inference for the Brave and True](https://matheusfacure.github.io/python-causality-handbook/landing-page.html).
+
 #### Specific Methods
 
--   [Jonathan Roth](https://www.jonathandroth.com/did-resources/) provides excellent slides on new **diff-in-diff** methods, along with coding exercises and R packages.
+-   [Jonathan Roth](https://www.jonathandroth.com/did-resources/) provides excellent slides on new **diff-in-diff** methods, along with coding exercises and R packages. Also, see [Ajad Naqvi's website](https://asjadnaqvi.github.io/DiD/) listing the various diff-in-diff packages in R, Stata and Julia.
 -   [Matias D. Cattaneo](https://arxiv.org/search/stat?searchtype=author&query=Cattaneo%2C+M+D), [Nicolas Idrobo](https://arxiv.org/search/stat?searchtype=author&query=Idrobo%2C+N), [Rocio Titiunik](https://arxiv.org/search/stat?searchtype=author&query=Titiunik%2C+R) have an [excellent review article](https://arxiv.org/abs/2301.08958) on **regression discontinuity designs**.
 -   [Peter Hull's course materials](https://github.com/Mixtape-Sessions/Instrumental-Variables) on **instrumental variables**.
