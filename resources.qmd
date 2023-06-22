@@ -20,9 +20,15 @@ There are almost endless resources on R on the web. Here are some resources I re
 
 -   Here is a [free e-book](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf) with an introduction to base R. R has gotten a lot more user friendly with the introduction of tidyverse. However, if you want to become proficient in R, knowing base R is very helpful.
 
+-   [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham and Garrett Grolemund is THE standard textbook for working with tidyverse.
+
 -   For econometrics, I recommend two e-books: 1) [Introduction to Econometrics with R](https://www.econometrics-with-r.org/), an introductory e-book based on the Stock & Watson textbook, created by Christoph Hanck, Martin Arnold, Alexander Gerber, and Martin Schmelzer. 2) [Introduction to Econometrics with R](https://scpoecon.github.io/ScPoEconometrics/), a free e-book by a team of professors from Sciences Po (Florian Oswald, Vincent Viers, Jean-Marc Robin, Pierre Villedieu, Gustave Kenedi). The book combines everything you need: an introduction to R, econometric theory, coding examples, etc.
 
-## Learning Econometrics
+-   The [R Graph Gallery](https://r-graph-gallery.com/index.html) by Yan Holtz provides examples (visual and code) for pretty much any graph type under the sun.
+
+-   [Telling Stories with Data](https://tellingstorieswithdata.com/) by Rohan Alexander is a free e-book aimed at data scientists. It offers lots of excellent examples about workflows, exploratory analysis, modeling and applications.
+
+## 
 
 ## Causal Inference
 
@@ -34,6 +40,8 @@ There are almost endless resources on R on the web. Here are some resources I re
 
 -   Paul Goldsmith-Pinkham has an excellent course on applied empirical methods (basically causal inference), with [YouTube videos](https://www.youtube.com/playlist?list=PLWWcL1M3lLlojLTSVf2gGYQ_9TlPyPbiJ) and [lecture slides](https://github.com/paulgp/applied-methods-phd).
 
-#### Diff-in-Diff
+#### Specific Methods
 
--   [Jonathan Roth](https://www.jonathandroth.com/did-resources/) provides excellent slides on new diff-in-diff methods, along with coding exercises and R packages.
+-   [Jonathan Roth](https://www.jonathandroth.com/did-resources/) provides excellent slides on new **diff-in-diff** methods, along with coding exercises and R packages.
+-   [Matias D. Cattaneo](https://arxiv.org/search/stat?searchtype=author&query=Cattaneo%2C+M+D), [Nicolas Idrobo](https://arxiv.org/search/stat?searchtype=author&query=Idrobo%2C+N), [Rocio Titiunik](https://arxiv.org/search/stat?searchtype=author&query=Titiunik%2C+R) have an [excellent review article](https://arxiv.org/abs/2301.08958) on **regression discontinuity designs**.
+-   [Peter Hull's course materials](https://github.com/Mixtape-Sessions/Instrumental-Variables) on **instrumental variables**.
