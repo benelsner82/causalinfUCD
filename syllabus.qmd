@@ -10,20 +10,20 @@ This course is offered every spring trimester. Our weekly sessions are on *Thurs
 
 ## :man_teacher: Instructor
 
-[Benjamin Elsner, PhD](https://benjaminelsner.com)\
+[Prof. Benjamin Elsner, PhD](https://benjaminelsner.com)\
 University College Dublin\
 School of Economics Office\
 Newman G206\
 Email: [benjamin.elsner\@ucd.ie](mailto:benjamin.elsner@ucd.ie)
 
-I am available for questions before, during, and after the sessions on Thursday. Students can also book slots for my office hour (regular time tba) via [Calendly](https://calendly.com/benjamin-elsner/office-hour).
+I am available for questions before, during, and after the sessions on Thursday. Students can also book slots for my office hour (Thursdays 11am-12pm) via [Calendly](https://calendly.com/benjamin-elsner/office-hour).
 
 ## :hourglass_flowing_sand: Module Description and Learning Outcomes
 
 This course introduces students to the most commonly used techniques in causal inference and policy evaluation. These techniques have a wide range of applications in the social sciences. Upon completion of this module, students will achieve the following learning outcomes:
 
 1.  Develop identification strategies to uncover causal effects for a given research question and in a given context.
-2.  Applying state-of-the-art causal inference techniques using real-world data and statistical software.
+2.  Applying state-of-the-art causal inference techniques to policy-relevant questions using real-world data and statistical software.
 3.  Critically evaluate the assumptions and limitations of various causal inference methods.
 4.  Apply visualisation techniques and effectively communicate and interpret research findings.
 5.  Set up an effective workflow with version control and markdown.
@@ -56,8 +56,8 @@ We will have two empirical assignments that require students to analyse a datase
 
 ### Assessment Policies
 
--   **AI Policy** I am a firm believer in AI as a helpful tool for our work, and I encourage students to use it. I see two major uses for the assignments: helping with coding (debugging, suggesting more efficient solutions), and language editing. If you use AI for your assignment, please add an AI statement at the beginning and explain very briefly what you used it for. You will not use points if you use AI; I am just curious what students used it for. Also, be careful when using AI: it can produce nonsense results, and for those you will lose a lot of points.
--   **Late submission policy**: assignments have to be submitted by the deadline. UCD's late submission policy does not apply.
+-   **AI Policy** I am a firm believer in AI as a helpful tool for our work, and I encourage students to use it. I see two major uses for the assignments: helping with coding (debugging, suggesting more efficient solutions), and language editing. If you use AI for your assignment, please add an AI statement at the beginning and explain very briefly what you used it for. You will not lose points if you use AI; I am just curious what students used it for. Also, be careful when using AI: it can produce nonsense results, and for those you will lose a lot of points.
+-   **Late submission policy**: assignments have to be submitted by the deadline. UCD's late submission policy does not apply. If you know that you will not be able to submit an assignment on time, please let me know as soon as possible. 
 -   **Plagiarism policy**: UCD's [Student Plagiarism Policy](https://hub.ucd.ie/usis/!W_HU_MENU.P_PUBLISH?p_tag=GD-DOCLAND&ID=222) applies. I reserve the right to use a plagiarism checker.
 
 ### Grade Scale
@@ -94,15 +94,15 @@ For all assessments, I will apply the **alternative linear grade scale**; the pa
 
 TL/DR; you will need:
 
-1.  R and R Studio; please download these at the start of the course.
-2.  A word processor: MS Word is ok but I strongly recommend Quarto.
-3.  Github: please make an account and download Github Desktop
+1.  [R](https://cran.r-project.org/) and [R Studio](https://posit.co/downloads/); please download and install these at the start of the course.
+2.  A word processor: MS Word is ok but I strongly recommend [Quarto](https://quarto.org/).
+3.  Github: please make an account and download [Github Desktop](https://desktop.github.com/)
 
 ### Statistical Software
 
 All assignments and labs will be done with R. Using R comes with lots of advantages: it is a very flexible object-oriented programming language with a huge comparative advantage in data analytics. It is free, which is great, and it has excellent AI support through ChatGPT and Github Copilot.
 
-To work with R, you need to install R itself ([link here](https://cran.r-project.org/)) and a user interface. As a user interface, I recommend RStudio ([link here](https://posit.co/downloads/)), which is very user friendly and has been optimised for use with R. RStudio Desktop is free and is sufficient for all our applications. If you want to use Github Copilot for AI support, you need to work with Visual Studio Code ([link here](https://code.visualstudio.com/)), which is also great. Note: VS Code is free in general, and Github Copilot is free for students.
+To work with R, you need to install R itself ([link here](https://cran.r-project.org/)) and a user interface. As a user interface, I recommend RStudio ([link here](https://posit.co/downloads/)), which is very user friendly and has been optimised for use with R. RStudio Desktop is free and is sufficient for all our applications. An alternative is Visual Studio Code ([link here](https://code.visualstudio.com/)), which is also great.
 
 ### Word processing
 
@@ -132,7 +132,9 @@ Other excellent books are
 
 -   Angrist, J. and J.-S. Pischke (2009). *Mostly Harmless Econometrics*. Princeton University Press. Additional material here: <https://www.mostlyharmlesseconometrics.com/>. MHE has become the standard textbook for causal inference in economics. The presentation of the material is more technical than in other books listed here.
 
--   Békés, G. and G. Kézdi (2021). *Data Analysis for Business, Economics, and Policy*. Cambridge University Press. Additional material here: <https://gabors-data-analysis.com/>. This is an excellent textbook for data analysis in general. It covers data exploration, regression analysis, prediction with basic machine learning techniques, and causal analysis. The chapter on causal analysis is not as detailed as in books dedicated to this topic. However, if you want to have a book that introduces you to lots of important empirical techniques in a fairly non-technical fashion, this book is for you.
+- Huber, M. (2023). *Causal Analysis: Impact Evaluation and Causal Machine Learning with Applications in R*. MIT Press. This book covers the standard causal inference techniques covered in this course as well as newer techniques based on machine learning. It is more technical than the other books listed here but well worth reading. 
+
+-   Békés, G. and G. Kézdi (2021). *Data Analysis for Business, Economics, and Policy*. Cambridge University Press. Additional material here: <https://gabors-data-analysis.com/>. This is an excellent introductory textbook for data analysis in general. It covers data exploration, regression analysis, prediction with basic machine learning techniques, and causal analysis. The chapter on causal analysis is not as detailed as in books dedicated to this topic. However, if you want to have a book that introduces you to lots of important empirical techniques in a fairly non-technical fashion, this book is for you.
 
 ## :calendar: Tentative Schedule
 

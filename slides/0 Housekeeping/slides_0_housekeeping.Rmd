@@ -1,0 +1,21 @@
+---
+title: "ECON42720 Causal Inference and Policy Evaluation"
+subtitle: "0 Housekeeping"
+author: "Ben Elsner (UCD)"
+output:
+  beamer_presentation:
+    includes:
+      in_header: "../Templates/template_metrics.tex"
+classoption: "aspectratio=169, handout" 
+
+
+--- 
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+
+
