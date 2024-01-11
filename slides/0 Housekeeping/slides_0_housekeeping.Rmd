@@ -17,5 +17,207 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
 
+## Causal questions are everywhere
+
+Does a higher income tax rate reduce inequality?
+
+\vfill
+
+Does a new drug improve health outcomes?
+
+\vfill
+
+Does a new training program improve employment outcomes?
+
+\vfill
+
+Does raising interest rates reduce inflation?
+
+\vfill
+
+Does going to the gym make you healthier?
+
+
+## Answering causal questions
+
+The "hard" sciences answer \br{causal questions by conducting experiments}
+
+\vfill
+
+But \br{experiments are not always possible}
+
+- Ethical concerns
+- Practical concerns
+- Financial constraints
+- etc
+
+
+## This module: causal inference without experiments
+
+We will learn how to \br{answer causal questions} using \br{observational data}
+
+\vfill
+
+What we need for that:
+
+- knowledge of \br{statistics}
+- theory of \br{causal inference}
+- understanding of \br{best practices} in the social sciences
+- \br{programming skills} to implement methods
+
+
+## This module: causal inference without experiments
+
+\brf{What we will cover}
+
+- Introduction to causal inference
+- The most important causal research designs
+- Applications of causal inference methods
+
+\vfill
+
+\brf{What we will NOT cover}
+
+- Causal machine learning (but: references available on request)
+- Causal discovery and other alchemy
+
+
+## Topics 
+
+1.  Econometrics recap 
+2.  Introduction to causality: causal diagrams and potential outcomes
+3.  Matching and inverse probability weighting 
+4.  Instrumental variables
+5.  Regression Discontinuity 
+6.  Difference-in-differences 
+7.  Synthetic control
+
+
+## Two Main Textbooks
+
+\brf{Cunningham, Scott. Causal Inference: The Mixtape.} Yale University Press, 2021. Free html version at <https://mixtape.scunning.com/>
+
+\vfill
+
+\brf{Huntington-Klein, N. (2021). The Effect: An Introduction to Research Design and Causality (1st ed.).} Chapman and Hall/CRC.  Free html version at  <https://theeffectbook.net/>.
+
+
+## Other Textbooks
+
+\brf{The classic}: Angrist, J. and J.-S. Pischke (2009). *Mostly Harmless Econometrics*. Princeton University Press.
+
+\vfill
+
+\brf{Simple intro}: Angrist, J. and J.-S. Pischke (2014). *Mastering 'Metrics*. Princeton University Press.
+
+\vfill
+
+\brf{For the cool kids}: Huber, M. (2023). *Causal Analysis: Impact Evaluation and Causal Machine Learning with Applications in R*. MIT Press. Free e-book version available online at <https://mitpress.ublish.com/ebook/causal-analysis-impact-evaluation-and-causal-machine-learning-with-applications-in-r-preview/12759/Cover>
+
+\vfill
+
+\brf{Intro to data analysis}: Békés, G. and G. Kézdi (2021). *Data Analysis for Business, Economics, and Policy*. Cambridge University Press.
+
+
+
+## Prerequisites
+
+(Frequentist) \br{Statistics}: estimation and inference (undergrad level)
+
+\vfill
+
+\br{Econometrics}: multiple regression (undergrad level)
+
+\vfill
+
+\br{Programming}: R 
+
+\vfill
+
+That's it really! More important: curiosity and willingness to learn new things
+
+
+## Sessions
+
+We meet every Thursday, 9-11am, D201
+
+\vfill
+
+Sessions will be a mix of 
+
+- theory lectures
+- "lab" sessions (with laptops)
+
+\vfill
+
+I will tell you before when to bring laptops
+
+
+
+## Software
+
+Please install the following \br{software on your computer}:
+
+- \br{Programming:} R and R Studio
+- \br{Word processing:} Quarto (optional)
+- \br{Version control:} Github desktop or alternative
+
+
+## Assessment
+
+\br{Final exam}: 60\% of final grade
+
+\vfill
+
+\br{Assignments}: 40\% of final grade
+
+- First assignment given in week 4
+- Second assignment around week 9
+
+\vfill
+Details about assignments will be given closer to the time
+
+
+## AI Policy
+
+You can use \br{AI for the assignments}
+
+\vfill
+
+ChatGPT and Github Co-pilot work well for R. Github Co-pilot is free for students.
+
+\vfill
+But use it with caution
+
+\vfill
+If you use AI, add a statement that explains briefly how you used it.
+
+
+
+
+## Contact
+
+
+Prof. Benjamin Elsner \
+University College Dublin \
+School of Economics \
+Newman Building, Office G206
+
+\vfill
+Office hours: Thursdays 11am-12pm; book on [Calendly](https://calendly.com/benjamin-elsner/office-hour)
+\vfill
+
+
+
+
+<center>
+  | |
+  |:-------------------------:|
+  | [benjaminelsner.com](https://benjaminelsner.com) |
+  | [benjamin.elsner@ucd.ie](benjamin.elsner@ucd.ie) |
+  | [YouTube Channel](https://youtube.com/@ben_elsner) |
+
+</center>
+
 
 
