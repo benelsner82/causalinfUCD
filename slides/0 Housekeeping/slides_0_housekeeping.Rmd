@@ -198,13 +198,12 @@ If you use AI, add a statement that explains briefly how you used it.
 ## Contact
 
 
-Prof. Benjamin Elsner \
+*Prof. Benjamin Elsner* \
 University College Dublin \
 School of Economics \
-Newman Building, Office G206
-
+Newman Building, Office G206 
 \vfill
-Office hours: Thursdays 11am-12pm; book on [Calendly](https://calendly.com/benjamin-elsner/office-hour)
+Office hours: book on [Calendly](https://calendly.com/benjamin-elsner/office-hour)
 \vfill
 
 
