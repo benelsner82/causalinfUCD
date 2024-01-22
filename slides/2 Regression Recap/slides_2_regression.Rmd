@@ -1,6 +1,6 @@
 ---
 title: "ECON42720 Causal Inference and Policy Evaluation"
-subtitle: "1 Regression Recap"
+subtitle: "2 Regression Recap"
 author: "Ben Elsner (UCD)"
 output:
   beamer_presentation:
@@ -627,7 +627,7 @@ We can include \brf{confounders in the regression model} to control for them
 $$y=\beta_0+\beta_1 x + \boldsymbol{S\gamma} + u$$
 \vfill
 
-Here, $\boldsymbol{S}$ is a vector of covariates $\boldsymbol{S}=(s_1, s_2, \dots, s_k)$ and $\boldsymbol{\gamma}=(\gamma_1, \gamma_2, \dots, \gamma_k)$ is a vector of coefficients,\footnote{Note: each element of $\boldsymbol{S}$ is in itself an $(n \times 1)$ vector, so $\boldsymbol{S}$ is actually an $(n \times k)$ matrix} i.e. 
+Here, $\boldsymbol{S}$ is a vector of covariates $\boldsymbol{S}=(s_1', s_2', \dots, s_k')$ and $\boldsymbol{\gamma}=(\gamma_1, \gamma_2, \dots, \gamma_k)$ is a vector of coefficients,\footnote{Note: each element of $\boldsymbol{S}$ is in itself an $(1 \times n)$ vector. E.g. $s_1=(s_{11}, s_{12}, \dots, s_{1n})$ so $\boldsymbol{S}$ is actually an $(n \times k)$ matrix} i.e. 
 
 $$\boldsymbol{S\gamma}=\gamma_1 s_1 + \gamma_2 s_2 + \dots + \gamma_k s_k$$
 \vfill
@@ -664,6 +664,10 @@ In plain English: as long as \brf{$\boldsymbol{S}$ is included, the error term $
 
 - $x$ is exogenous conditional on $\boldsymbol{S}$
 - $x$ is as good as random conditional on $\boldsymbol{S}$
+
+
+
+## Controlled Regression in Practice
 
 
 
@@ -717,6 +721,23 @@ reg2 <- lm(wage ~ educ + exper, data = df) # estimate multivariate regression
 
 stargazer(reg1, reg2, type = "text") # print regression results
 ```
+
+
+## Regression outputs with Stargazer and R Markdown
+
+You can generate nice regression tables with the `stargazer` package and R Markdown/Quarto. Here is a code chunk that gives you a nicely formatted latex table. 
+
+````markdown
+`r ''````{r, results='asis', echo=FALSE}
+stargazer(reg1, reg2, 
+      header=FALSE, 
+      type='latex',
+      title="Effect of Education on Wages")
+```
+````
+
+
+
 
 ## Regression with R
 
