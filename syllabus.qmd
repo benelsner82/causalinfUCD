@@ -146,8 +146,9 @@ The table below provides a tentative schedule. Some topics may not require two w
 
 | Weeks | Topic                     | Chapter Mixtape | Chapter Effect |
 |-------|:--------------------------|:----------------|:---------------|
-| 1     | Regression re-cap         | 2               | 13             |
-| 2/3   | Basics of causality       | 3 & 4           | 1-10           |
+| 1     | Foundations of Causality  | 3               | 1-9            |
+| 2     | Regression re-cap         | 2               | 13             |
+| 3     | Potential Outcomes        | 4               | N.A.           |
 | 4/5   | Matching and IPW          | 5               | 14             |
 | 6/7   | Instrumental Variables    | 7               | 19             |
 | 8/9   | Midterm break :shamrock:  |                 |                |
