@@ -30,13 +30,14 @@ This course introduces students to the most commonly used techniques in causal i
 
 **We will cover the following topics:**
 
-1.  Econometrics recap ([Mixtape](https://mixtape.scunning.com/02-probability_and_regression))([Effect](https://theeffectbook.net/ch-StatisticalAdjustment.html))
-2.  Introduction to causality: causal diagrams and potential outcomes ([Mixtape](https://mixtape.scunning.com/03-directed_acyclical_graphs))([Effect](https://theeffectbook.net/ch-CausalDiagrams.html))
-3.  Matching and inverse probability weighting ([Mixtape](https://mixtape.scunning.com/05-matching_and_subclassification))([Effect](https://theeffectbook.net/ch-Matching.html?highlight=inverse%20probability))
-4.  Instrumental variables ([Mixtape](https://mixtape.scunning.com/07-instrumental_variables))([Effect](https://theeffectbook.net/ch-InstrumentalVariables.html))
-5.  Regression Discontinuity ([Mixtape](https://mixtape.scunning.com/06-regression_discontinuity))([Effect](https://theeffectbook.net/ch-RegressionDiscontinuity.html))
-6.  Difference-in-differences ([Mixtape](https://mixtape.scunning.com/09-difference_in_differences))([Effect](https://theeffectbook.net/ch-DifferenceinDifference.html))
-7.  Synthetic control ([Mixtape](https://mixtape.scunning.com/10-synthetic_control))([Effect](https://theeffectbook.net/ch-DifferenceinDifference.html))
+1.  Foundations of Causality: DAGs ([Mixtape](https://mixtape.scunning.com/03-directed_acyclical_graphs))([Effect](https://theeffectbook.net/ch-CausalDiagrams.html))
+2.  Econometrics recap ([Mixtape](https://mixtape.scunning.com/02-probability_and_regression))([Effect](https://theeffectbook.net/ch-StatisticalAdjustment.html))
+3. Randomised Experiments and the Potential Outcomes Framework ([Mixtape](https://mixtape.scunning.com/04-potential_outcomes))
+4. Matching and inverse probability weighting ([Mixtape](https://mixtape.scunning.com/05-matching_and_subclassification))([Effect](https://theeffectbook.net/ch-Matching.html?highlight=inverse%20probability))
+5.  Instrumental variables ([Mixtape](https://mixtape.scunning.com/07-instrumental_variables))([Effect](https://theeffectbook.n6et/ch-InstrumentalVariables.html))
+6.  Regression Discontinuity ([Mixtape](https://mixtape.scunning.com/06-regression_discontinuity))([Effect](https://theeffectbook.net/ch-RegressionDiscontinuity.html))
+7.  Difference-in-differences ([Mixtape](https://mixtape.scunning.com/09-difference_in_differences))([Effect](https://theeffectbook.net/ch-DifferenceinDifference.html))
+8.  Synthetic control ([Mixtape](https://mixtape.scunning.com/10-synthetic_control))([Effect](https://theeffectbook.net/ch-DifferenceinDifference.html))
 
 ## :bulb: Prerequisites
 
@@ -115,6 +116,9 @@ Sounds daunting? The basics are actually quite easy to learn. I highly recommend
 Version control is a crucial tool for anyone writing software. And, yes, when you do empirical work you do write software. Version controls allows efficient management of project files, collaboration with teammates, and tracking of changes over time. With version control, you can maintain different versions of your work, experiment, and easily revert if needed. It promotes transparency by recording every modification, which is valuable when working on complex projects. Additionally, it enables seamless collaboration and merging of changes.
 
 In your assignments you will be asked to show proof that you use version control. The main version control system is [Github](https://github.com/), which offers free accounts. I particularly recommend [Github Desktop](https://desktop.github.com/), a very user-friendly interface for Github. I will provide a brief introduction to Github.
+
+
+
 
 ## :books: Textbook(s)
 

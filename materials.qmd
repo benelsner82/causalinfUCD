@@ -4,35 +4,47 @@ title: "Course Materials"
 
 On this page you will find the lecture slides and videos as well as links to papers with textbook-like applications of each technique. You can find more resources on learning R and learning econometrics and causal inference under [Resources](resources.qmd).
 
-## Introduction to Causal Inference
+## 0 Housekeeping
 
-#### Slides
+#### [Slides](/slides/0 Housekeeping/slides_0_housekeeping.pdf)
+
+
+## 1 Foundations of Causal Inference: DAGs
+
+#### [Slides](/slides/1 Causality/slides_1_causality.pdf)
+
 
 #### Videos
 
-Two videos explain the foundations of causal inference based on directed acyclic graphs (DAGs)
+These two videos explain the foundations of causal inference based on directed acyclic graphs (DAGs)
 
 {{< video https://youtu.be/tUz2yl2QEbY >}}
 
 {{< video https://youtu.be/9QJUvVB4lcI >}}
 
 
-## Matching
+
+
+## 2 Regression Recap
+
+
+## 3 Randomised Experiments and the Potential Outcomes Framework
+
+
+
+## 4 Matching
+
+#### Slides
+
+
+
+## 5 Instrumental Variables
 
 #### Slides
 
 #### Videos
 
-No videos yet...
-
-## Instrumental Variables
-
-#### Slides
-
-#### Videos
-
-The following five videos cover instrumental variables and appliations:
-
+The following five videos cover instrumental variables and applications:  
 
 {{< video https://youtu.be/2dl2FTik-y4 >}}
 
@@ -46,7 +58,7 @@ The following five videos cover instrumental variables and appliations:
 
 
 
-## Regression Discontinuity
+## 6 Regression Discontinuity
 
 #### Slides
 
@@ -58,7 +70,7 @@ The following five videos cover instrumental variables and appliations:
 
 {{< video https://youtu.be/kyMdBi806bk >}}
 
-## Difference-in-Differences
+## 7 Difference-in-Differences
 
 #### Slides
 
@@ -71,7 +83,7 @@ The following five videos cover instrumental variables and appliations:
 {{< video https://youtu.be/NUwxMqZAMjI >}}
 
 
-## Synthetic Control
+## 8 Synthetic Control
 
 
 #### Slides

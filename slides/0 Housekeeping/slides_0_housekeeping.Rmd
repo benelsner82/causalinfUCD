@@ -1,5 +1,5 @@
 ---
-title: "ECON42720 Causal Inference and Policy Evaluation"
+title: "[ECON42720 Causal Inference and Policy Evaluation](https://benelsner82.github.io/causalinfUCD/)"
 subtitle: "0 Housekeeping"
 author: "Ben Elsner (UCD)"
 output:
@@ -82,15 +82,30 @@ What we need for that:
 - Causal discovery and other alchemy
 
 
-## Topics 
+## Course Page & Brightspace
 
-1.  Econometrics recap 
-2.  Introduction to causality: causal diagrams and potential outcomes
-3.  Matching and inverse probability weighting 
-4.  Instrumental variables
-5.  Regression Discontinuity 
-6.  Difference-in-differences 
-7.  Synthetic control
+All materials and the syllabus are available on the [\brf{Course Page}](https://benelsner82.github.io/causalinfUCD/)
+
+\vfill
+
+\brf{Brightspace} will be used for 
+
+- Announcements
+- Answering questions in the Forum
+
+
+
+
+## Topics Covered in this Course
+
+1.  Foundations of Causality: DAGs
+2.  Econometrics Recap
+2.  Randomised experiments and potential outcomes
+4.  Matching and inverse probability weighting 
+5.  Instrumental variables
+6.  Regression Discontinuity 
+7.  Difference-in-differences 
+8.  Synthetic control
 
 
 ## Two Main Textbooks
@@ -126,11 +141,11 @@ What we need for that:
 
 \vfill
 
-\br{Econometrics}: multiple regression (undergrad level)
+\br{Econometrics}: multivariate regressions and panel regressions
 
 \vfill
 
-\br{Programming}: R 
+\br{Programming}: you must be able to write code in R
 
 \vfill
 
@@ -163,6 +178,23 @@ Please install the following \br{software on your computer}:
 - \br{Version control:} Github desktop or alternative
 
 
+## Asking Questions
+
+\brf{Questions that have no confidential content} can be asked in the \brf{Brightspace Forum}
+
+- This concerns 90\% of questions about material or logistics
+- I will answer questions in the forum
+- You can email me and I will post on the forum without mentioning your name
+
+\vfill
+
+\brf{Questions with confidential content} should be asked via \brf{email}
+
+- These are questions that are specific to you
+- Examples: accommodation of disability, illness, personal circumstances
+
+
+
 ## Assessment
 
 \br{Final exam}: 60\% of final grade
@@ -190,33 +222,21 @@ ChatGPT and Github Co-pilot work well for R. Github Co-pilot is free for student
 But use it with caution
 
 \vfill
-If you use AI, add a statement that explains briefly how you used it.
+If you use AI, add a statement that explains briefly how you used it
 
 
+
+## .
+
+
+```{r child = '../Templates/socialmedia.Rmd'}
+```
 
 
 ## Contact
 
-
-*Prof. Benjamin Elsner* \
-University College Dublin \
-School of Economics \
-Newman Building, Office G206 
-\vfill
-Office hours: book on [Calendly](https://calendly.com/benjamin-elsner/office-hour)
-\vfill
-
-
-
-
-<center>
-  | |
-  |:-------------------------:|
-  | [benjaminelsner.com](https://benjaminelsner.com) |
-  | [benjamin.elsner@ucd.ie](benjamin.elsner@ucd.ie) |
-  | [YouTube Channel](https://youtube.com/@ben_elsner) |
-
-</center>
+```{r child = '../Templates/contactpage.Rmd'}
+```
 
 
 

@@ -1,0 +1,10 @@
+\begin{large}
+\begin{tabular}{m{1cm} l}
+  \includegraphics[width=1cm]{../Templates/emailicon.png} & \href{mailto:benjamin.elsner@ucd.ie}{benjamin.elsner@ucd.ie} \\
+  \includegraphics[width=1.2cm]{../Templates/interneticon.jpeg} & \href{https://benjaminelsner.com}{www.benjaminelsner.com} \\   
+  \includegraphics[width=1.2cm]{../Templates/calendlyicon.png} & \href{https://calendly.com/benjamin-elsner/office-hour}{Sign up for office hours} \\  
+  \includegraphics[width=1cm]{../Templates/youtubeicon.png} & \href{www.youtube.com/@ben_elsner}{YouTube Channel} \\    
+  \includegraphics[width=1cm]{../Templates/xicon.png} & \href{https://twitter.com/ben_elsner}{@ben\_elsner} \\ 
+    \includegraphics[width=1cm]{../Templates/linkedinicon.png} & \href{www.linkedin.com/in/benjamin-elsner-b71b98bb}{LinkedIn} \\     
+\end{tabular}
+\end{large}

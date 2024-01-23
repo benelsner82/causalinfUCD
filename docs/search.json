@@ -73,36 +73,36 @@
     "objectID": "materials.html#matching",
     "href": "materials.html#matching",
     "title": "Course Materials",
-    "section": "Matching",
-    "text": "Matching\n\nSlides\n\n\nVideos\nNo videos yet…"
+    "section": "4 Matching",
+    "text": "4 Matching\n\nSlides"
   },
   {
     "objectID": "materials.html#instrumental-variables",
     "href": "materials.html#instrumental-variables",
     "title": "Course Materials",
-    "section": "Instrumental Variables",
-    "text": "Instrumental Variables\n\nSlides\n\n\nVideos\nThe following five videos cover instrumental variables and appliations:"
+    "section": "5 Instrumental Variables",
+    "text": "5 Instrumental Variables\n\nSlides\n\n\nVideos\nThe following five videos cover instrumental variables and applications:"
   },
   {
     "objectID": "materials.html#regression-discontinuity",
     "href": "materials.html#regression-discontinuity",
     "title": "Course Materials",
-    "section": "Regression Discontinuity",
-    "text": "Regression Discontinuity\n\nSlides\n\n\nVideos"
+    "section": "6 Regression Discontinuity",
+    "text": "6 Regression Discontinuity\n\nSlides\n\n\nVideos"
   },
   {
     "objectID": "materials.html#difference-in-differences",
     "href": "materials.html#difference-in-differences",
     "title": "Course Materials",
-    "section": "Difference-in-Differences",
-    "text": "Difference-in-Differences\n\nSlides\n\n\nVideos"
+    "section": "7 Difference-in-Differences",
+    "text": "7 Difference-in-Differences\n\nSlides\n\n\nVideos"
   },
   {
     "objectID": "materials.html#synthetic-control",
     "href": "materials.html#synthetic-control",
     "title": "Course Materials",
-    "section": "Synthetic Control",
-    "text": "Synthetic Control\n\nSlides\n\n\nVideos"
+    "section": "8 Synthetic Control",
+    "text": "8 Synthetic Control\n\nSlides\n\n\nVideos"
   },
   {
     "objectID": "syllabus.html",
@@ -123,7 +123,7 @@
     "href": "syllabus.html#module-description-and-learning-outcomes",
     "title": "Syllabus ECON42720",
     "section": "⏳ Module Description and Learning Outcomes",
-    "text": "⏳ Module Description and Learning Outcomes\nThis course introduces students to the most commonly used techniques in causal inference and policy evaluation. These techniques have a wide range of applications in the social sciences. Upon completion of this module, students will achieve the following learning outcomes:\n\nDevelop identification strategies to uncover causal effects for a given research question and in a given context.\nApplying state-of-the-art causal inference techniques to policy-relevant questions using real-world data and statistical software.\nCritically evaluate the assumptions and limitations of various causal inference methods.\nApply visualisation techniques and effectively communicate and interpret research findings.\nSet up an effective workflow with version control and markdown.\n\nWe will cover the following topics:\n\nEconometrics recap (Mixtape)(Effect)\nIntroduction to causality: causal diagrams and potential outcomes (Mixtape)(Effect)\nMatching and inverse probability weighting (Mixtape)(Effect)\nInstrumental variables (Mixtape)(Effect)\nRegression Discontinuity (Mixtape)(Effect)\nDifference-in-differences (Mixtape)(Effect)\nSynthetic control (Mixtape)(Effect)"
+    "text": "⏳ Module Description and Learning Outcomes\nThis course introduces students to the most commonly used techniques in causal inference and policy evaluation. These techniques have a wide range of applications in the social sciences. Upon completion of this module, students will achieve the following learning outcomes:\n\nDevelop identification strategies to uncover causal effects for a given research question and in a given context.\nApplying state-of-the-art causal inference techniques to policy-relevant questions using real-world data and statistical software.\nCritically evaluate the assumptions and limitations of various causal inference methods.\nApply visualisation techniques and effectively communicate and interpret research findings.\nSet up an effective workflow with version control and markdown.\n\nWe will cover the following topics:\n\nFoundations of Causality: DAGs (Mixtape)(Effect)\nEconometrics recap (Mixtape)(Effect)\nRandomised Experiments and the Potential Outcomes Framework (Mixtape)\nMatching and inverse probability weighting (Mixtape)(Effect)\nInstrumental variables (Mixtape)(Effect)\nRegression Discontinuity (Mixtape)(Effect)\nDifference-in-differences (Mixtape)(Effect)\nSynthetic control (Mixtape)(Effect)"
   },
   {
     "objectID": "syllabus.html#prerequisites",
@@ -201,5 +201,33 @@
     "title": "Syllabus ECON42720",
     "section": "",
     "text": "This course is offered every spring trimester. Our weekly sessions are on Thursdays from 9-11am. There is a two-week midterm break around St. Patrick’s Day. The course has no scheduled lab sessions. Instead, several sessions will be run in flipped classroom mode, that is, students watch lecture videos at home and we discuss applications during the in-person sessions."
+  },
+  {
+    "objectID": "materials.html#foundations-of-causal-inference-dags",
+    "href": "materials.html#foundations-of-causal-inference-dags",
+    "title": "Course Materials",
+    "section": "1 Foundations of Causal Inference: DAGs",
+    "text": "1 Foundations of Causal Inference: DAGs\n\nSlides\n\n\nVideos\nThese two videos explain the foundations of causal inference based on directed acyclic graphs (DAGs)"
+  },
+  {
+    "objectID": "materials.html#housekeeping",
+    "href": "materials.html#housekeeping",
+    "title": "Course Materials",
+    "section": "0 Housekeeping",
+    "text": "0 Housekeeping\n\nSlides"
+  },
+  {
+    "objectID": "materials.html#regression-recap",
+    "href": "materials.html#regression-recap",
+    "title": "Course Materials",
+    "section": "2 Regression Recap",
+    "text": "2 Regression Recap"
+  },
+  {
+    "objectID": "materials.html#randomised-experiments-and-the-potential-outcomes-framework",
+    "href": "materials.html#randomised-experiments-and-the-potential-outcomes-framework",
+    "title": "Course Materials",
+    "section": "3 Randomised Experiments and the Potential Outcomes Framework",
+    "text": "3 Randomised Experiments and the Potential Outcomes Framework"
   }
 ]

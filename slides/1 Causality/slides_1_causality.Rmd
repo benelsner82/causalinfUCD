@@ -1,6 +1,6 @@
 ---
-title: "ECON42720 Causal Inference and Policy Evaluation"
-subtitle: "2 Causality: DAGs and Potential Outcomes"
+title: "[ECON42720 Causal Inference and Policy Evaluation](https://benelsner82.github.io/causalinfUCD/)"
+subtitle: "1 Foundations of Causality"
 author: "Ben Elsner (UCD)"
 output:
   beamer_presentation:
@@ -35,8 +35,12 @@ We learn:
 - to develop **research designs based on DAGs**
 - to detect **common pitfalls in empirical analyses**
 
-\vfill
-This lecture is based on 
+
+
+## Resources
+
+
+\brf{This lecture is based on}
 
 - \citet{cunningham_2018}, Mixtape: Chapter 3
 - \citet{huntington2022}, The Effect: Chapters 6-8
@@ -44,8 +48,11 @@ This lecture is based on
 \vfill
 *The Effect* is very accessible and goes step-by-step through all things DAGs. *The Mixtape* chapter is more concise. Both are excellent resources.
 
+\vfill 
+Part of the material of this lecture is also covered in the first two lectures of my \brf{YouTube playlist} on Causal Inference: [LINK](https://www.youtube.com/playlist?list=PLyvUJLHD8IsJCB7ALqwjRG1BjL5JxE__H)
 
-
+\vfill
+Find more about the course on the [\brf{course page}](https://benelsner82.github.io/causalinfUCD/)
 
 
 
@@ -521,7 +528,7 @@ Problem: it is \brf{not random who is stopped by the police}.
 
 ## Bad Controls: Endogenous Sample Selection
 
-```{r, out.width = '60%', echo=FALSE, fig.align="center"}
+```{r, out.width = '80%', echo=FALSE, fig.align="center"}
 knitr::include_graphics(paste0(graphdir, "dag_policing.pdf"))
 ```
 
@@ -669,26 +676,16 @@ Deconfound the following DAG of the effect of education on income:
 knitr::include_graphics(paste0(graphdir, "dag_politics.png"))
 ```
 
+## .
+
+
+```{r child = '../Templates/socialmedia.Rmd'}
+```
+
 
 ## Contact
 
-
-**Prof. Benjamin Elsner** \
-University College Dublin \
-School of Economics \
-Newman Building, Office G206 
-\vfill
-Office hours: book on [Calendly](https://calendly.com/benjamin-elsner/office-hour)
-\vfill
+```{r child = '../Templates/contactpage.Rmd'}
+```
 
 
-
-
-<center>
-  | |
-  |:-------------------------:|
-  | [benjaminelsner.com](https://benjaminelsner.com) |
-  | [benjamin.elsner@ucd.ie](benjamin.elsner@ucd.ie) |
-  | [YouTube Channel](https://youtube.com/@ben_elsner) |
-
-</center>
