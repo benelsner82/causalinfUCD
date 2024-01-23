@@ -1,5 +1,5 @@
 ---
-title: "ECON42720 Causal Inference and Policy Evaluation"
+title: "[ECON42720 Causal Inference and Policy Evaluation](https://benelsner82.github.io/causalinfUCD/)"
 subtitle: "2 Regression Recap"
 author: "Ben Elsner (UCD)"
 output:
@@ -18,6 +18,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(ggplot2)
 library(wooldridge)
 library(stargazer)
+library(foreign)
 
 set.seed(1234)
 graphdir <- "../../../causalinf_phd/Graphs/"
@@ -653,6 +654,50 @@ The \brf{inclusion of $\boldsymbol{S}$} allows for a \brf{like-with-like compari
 - But the like-with like comparison is only valid if $\boldsymbol{S}$ contains all confounders
 
 
+
+## Anatomy of Regression: the Frisch-Waugh-Lovell Theorem
+
+Population model: 
+
+$$y=\beta_0+\beta_1 x_1 + \beta_2 x_2  + u$$
+\vfill
+The FWL theorem states that three OLS estimators for $\beta_1$ are equivalent
+
+1. regressing $y$ on $x_1$ and $x_2$
+2. regressing $y$ on $\tilde{x}_1$, the residuals from a regression of $x_1$ on $x_2$
+3. regressing $\tilde{y}$ on $\tilde{x}_1$, with $\tilde{y}$ being the residuals from a regression of $y$ on $x_2$
+
+\vfill
+The main insight comes from point 2...
+
+## Anatomy of Regression: the Frisch-Waugh-Lovell Theorem
+
+\brf{Multivariate regression does two steps at the same time}: 
+
+1. It purges the correlation between $x_1$ and $x_2$ from $x_1$; the residuals $\tilde{x}_1$ are "what's left"; they are uncorrelated with $x_2$
+2. It estimates the effect of $\tilde{x}_1$ on $y$, i.e. *after* purging the correlation between $x_1$ and $x_2$ 
+
+\vfill
+
+\brf{Why is this important?}
+
+- If $x_2$ is a **confounder**, we can **purge** its influence by including it in the regression
+
+\vfill
+The same also holds for more than one control variable
+
+
+## Example: Effect of Education on Earnings
+
+```{r, eval=TRUE, echo=FALSE}
+wage1 <- wage1 %>% mutate(abil=0.5*ed + rnorm(nrow(wage1), 0, 1))
+```
+
+```{r, eval=TRUE, echo=FALSE}
+```
+
+
+
 ## Conditional Mean Independence Assumption
 
 The \brf{Conditional Mean Independence Assumption (CMIA)} is a "light" version of the ZCM assumption. 
@@ -750,28 +795,65 @@ ggplot(df, aes(x = educ, y = wage)) + # generate scatter plot
   theme_minimal()
 ```
 
+## Group Work Questions I
 
+What is the difference between unbiasedness and consistency of an estimator?
+
+\vfill
+
+What is the sampling distribution of an estimator? Provide an intuitive explanation
+
+\vfill
+
+How is the sampling variance of an estimator related to the sample size? 
+
+
+## Group Work Questions II
+
+Suppose you have a variable $z$ that is omitted from the population model 
+
+$$y=\beta_0 + \beta_1 x + \beta_2 z + u$$
+
+The correct population parameter, $\beta_1$, is positive.
+
+- a) Suppose you know that $cov(x, z)>0$ and $\beta_2<0$. How will the OLS estimator $\widehat\beta_1$ be biased when $z$ is omitted? Will it be over- or underestimated?
+- b) Draw a DAG with $z$ as a confounder and indicate the two factors that make up the omitted variable bias 
+
+## Group Work Questions III
+
+```{r eval=TRUE, echo=FALSE}
+datacal <- data.frame(read.dta("../../data/caschool.dta"))
+reg1 <- lm(testscr ~ str, data=datacal)
+reg2 <- lm(testscr ~ str + el_pct, data=datacal)
+```
+
+On the following slide, you see a regression output with two columns. In data on school districts in California, we want to study whether larger class sizes lead to lower test scores. The dependent variable is the average test score in a school district; the regressor of interest is the average class size in a school district. In Column (2), we control for the percentage of students in a school district who are not English native speakers (a proxy for poverty).
+
+- a) Interpret the slope coefficient on class size in Column (1)
+- b) Given the results in Column (2), what can we say about the correlation between class size and the share of non-native English speakers in a school district? 
+
+
+## Group Work Questions III cont'd
+
+\scriptsize
+```{r, results='asis', echo=FALSE}
+stargazer(reg1, reg2, 
+          type="latex",
+          header=FALSE, 
+          no.space=TRUE,
+          omit.stat=c("f", "ser"))
+```
+\normalsize
+
+## .
+
+
+```{r child = '../Templates/socialmedia.Rmd'}
+```
 
 
 ## Contact
 
+```{r child = '../Templates/contactpage.Rmd'}
+```
 
-**Prof. Benjamin Elsner** \
-University College Dublin \
-School of Economics \
-Newman Building, Office G206 
-\vfill
-Office hours: book on [Calendly](https://calendly.com/benjamin-elsner/office-hour)
-\vfill
-
-
-
-
-<center>
-  | |
-  |:-------------------------:|
-  | [benjaminelsner.com](https://benjaminelsner.com) |
-  | [benjamin.elsner@ucd.ie](benjamin.elsner@ucd.ie) |
-  | [YouTube Channel](https://youtube.com/@ben_elsner) |
-
-</center>
