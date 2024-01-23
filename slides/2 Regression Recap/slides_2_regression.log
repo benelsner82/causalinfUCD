@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.19)  23 JAN 2024 11:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.19)  23 JAN 2024 16:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -750,6 +750,12 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 
 LaTeX Warning: Label `' multiply defined.
 
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
 )
 \openout1 = `slides_2_regression.aux'.
 
@@ -925,111 +931,111 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
 
 ] [5
 
+] [6
+
 {/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}]
-<slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf, id=52, 692.5875pt x 430.60875pt>
+<slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf, id=58, 692.5875pt x 430.60875pt>
 File: slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf Graphic file (type pdf)
 <use slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf  used on input line 273.
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf  used on input line 298.
 (pdftex.def)             Requested size: 179.25114pt x 111.44312pt.
-[6
+[7
 
-{/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc} <./slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf>] [7
+{/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc} <./slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf>] [8
 
-{/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}] [8
-
-] [9
+{/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}] [9
 
 ] [10
 
 ] [11
 
+] [12
+
 ]
-<../../../causalinf_phd/Graphs/CEF_schooling.png, id=101, 482.55281pt x 275.52937pt>
+<../../../causalinf_phd/Graphs/CEF_schooling.png, id=107, 482.55281pt x 275.52937pt>
 File: ../../../causalinf_phd/Graphs/CEF_schooling.png Graphic file (type png)
 <use ../../../causalinf_phd/Graphs/CEF_schooling.png>
-Package pdftex.def Info: ../../../causalinf_phd/Graphs/CEF_schooling.png  used on input line 423.
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/CEF_schooling.png  used on input line 448.
 (pdftex.def)             Requested size: 239.00558pt x 136.46523pt.
-[12
+[13
 
- <../../../causalinf_phd/Graphs/CEF_schooling.png>] [13
+ <../../../causalinf_phd/Graphs/CEF_schooling.png>] [14
 
 ]
-<../../../causalinf_phd/Graphs/CEF_schooling2.png, id=117, 510.40688pt x 338.76563pt>
+<../../../causalinf_phd/Graphs/CEF_schooling2.png, id=123, 510.40688pt x 338.76563pt>
 File: ../../../causalinf_phd/Graphs/CEF_schooling2.png Graphic file (type png)
 <use ../../../causalinf_phd/Graphs/CEF_schooling2.png>
-Package pdftex.def Info: ../../../causalinf_phd/Graphs/CEF_schooling2.png  used on input line 470.
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/CEF_schooling2.png  used on input line 495.
 (pdftex.def)             Requested size: 239.00558pt x 158.63574pt.
 
-Overfull \vbox (13.97194pt too high) detected at line 470
+Overfull \vbox (13.97194pt too high) detected at line 495
  []
 
-[14
+[15
 
- <../../../causalinf_phd/Graphs/CEF_schooling2.png>] [15
+ <../../../causalinf_phd/Graphs/CEF_schooling2.png>] [16
 
-] [16
+] [17
 
 ]
-<slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf, id=138, 693.59125pt x 476.78125pt>
+<slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf, id=144, 693.59125pt x 476.78125pt>
 File: slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf  used on input line 523.
-(pdftex.def)             Requested size: 258.91765pt x 177.98499pt.
-[17
-
- <./slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf>]
-<slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf, id=152, 693.59125pt x 476.78125pt>
-File: slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf Graphic file (type pdf)
-<use slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf  used on input line 530.
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf  used on input line 548.
 (pdftex.def)             Requested size: 258.91765pt x 177.98499pt.
 [18
 
- <./slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf>]
-<slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf, id=167, 693.59125pt x 476.78125pt>
-File: slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf  used on input line 538.
+ <./slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf>]
+<slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf, id=159, 693.59125pt x 476.78125pt>
+File: slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf Graphic file (type pdf)
+<use slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf>
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf  used on input line 555.
 (pdftex.def)             Requested size: 258.91765pt x 177.98499pt.
 [19
 
- <./slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf>]
-<slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf, id=182, 693.59125pt x 476.78125pt>
-File: slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf Graphic file (type pdf)
-<use slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf  used on input line 545.
+ <./slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf>]
+<slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf, id=174, 693.59125pt x 476.78125pt>
+File: slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf Graphic file (type pdf)
+<use slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf>
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf  used on input line 563.
 (pdftex.def)             Requested size: 258.91765pt x 177.98499pt.
 [20
 
- <./slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf>]
-<slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf, id=199, 693.59125pt x 476.78125pt>
-File: slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf Graphic file (type pdf)
-<use slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf  used on input line 552.
+ <./slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf>]
+<slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf, id=188, 693.59125pt x 476.78125pt>
+File: slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf Graphic file (type pdf)
+<use slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf>
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf  used on input line 570.
 (pdftex.def)             Requested size: 258.91765pt x 177.98499pt.
 [21
 
- <./slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf>] [22
+ <./slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf>]
+<slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf, id=205, 693.59125pt x 476.78125pt>
+File: slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf Graphic file (type pdf)
+<use slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf>
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf  used on input line 577.
+(pdftex.def)             Requested size: 258.91765pt x 177.98499pt.
+[22
+
+ <./slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf>] [23
 
 ]
-<slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf, id=222, 698.61pt x 476.78125pt>
+<slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf, id=228, 698.61pt x 476.78125pt>
 File: slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf Graphic file (type pdf)
 <use slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf  used on input line 574.
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf  used on input line 599.
 (pdftex.def)             Requested size: 258.91765pt x 176.70457pt.
-[23
+[24
 
  <./slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf>]
 
-Package hyperref Warning: Ignoring empty anchor on input line 611.
+Package hyperref Warning: Ignoring empty anchor on input line 636.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 611.
+(Font)              <5> on input line 636.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 611.
-[24
-
-] [25
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 636.
+[25
 
 ] [26
 
@@ -1049,99 +1055,194 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
 
 ] [34
 
+] [35
+
 ]
-<../../../causalinf_phd/Graphs/dag_confound1.png, id=313, 289.83281pt x 216.81pt>
+<../../../causalinf_phd/Graphs/dag_confound1.png, id=319, 289.83281pt x 216.81pt>
 File: ../../../causalinf_phd/Graphs/dag_confound1.png Graphic file (type png)
 <use ../../../causalinf_phd/Graphs/dag_confound1.png>
-Package pdftex.def Info: ../../../causalinf_phd/Graphs/dag_confound1.png  used on input line 880.
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/dag_confound1.png  used on input line 905.
 (pdftex.def)             Requested size: 179.25114pt x 134.08998pt.
-[35
+[36
 
- <../../../causalinf_phd/Graphs/dag_confound1.png>] [36
+ <../../../causalinf_phd/Graphs/dag_confound1.png>] [37
 
-] [37
+] [38
 
-]
-LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <10.95> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 949.
-LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <8> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 949.
-LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <6> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <6> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <6> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <6> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 949.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 949.
-LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <9> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 949.
-LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <5> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <5> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <5> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 949.
-LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <5> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 949.
-[38
-
-]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 977.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 977.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 977.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 977.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 977.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 977.
-[39
+] [39
 
 ] [40
 
 ] [41
 
-] [42
+]
+<slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf, id=359, 697.60625pt x 482.80376pt>
+File: slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf Graphic file (type pdf)
+<use slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf>
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf  used on input line 1027.
+(pdftex.def)             Requested size: 239.00558pt x 165.41086pt.
+[42
 
-] [43
+ <./slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf>] [43
+
+] [44
+
+]
+LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <10.95> not available
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <8> not available
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <6> not available
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <10.95> not available
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <8> not available
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <6> not available
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <10.95> not available
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <10.95> not available
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <8> not available
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <8> not available
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <6> not available
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <6> not available
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1105.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <9> not available
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <5> not available
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <9> not available
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <5> not available
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <9> not available
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <9> not available
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <5> not available
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1105.
+LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <5> not available
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1105.
+[45
+
+]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <14.4> on input line 1133.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 1133.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 1133.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1133.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1133.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1133.
+[46
+
+] [47
+
+] [48
 
 ]
 \openout4 = `slides_2_regression.vrb'.
 
 (./slides_2_regression.vrb
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
+
+Package hyperref Warning: Ignoring empty anchor on input line 10.
+
+) [49
+
+]
+
+Package hyperref Warning: Ignoring empty anchor on input line 1259.
+
+
+Overfull \vbox (1.12074pt too high) detected at line 1259
+ []
+
+[50
+
+]
+\openout4 = `slides_2_regression.vrb'.
+
+(./slides_2_regression.vrb
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 6.
-) [44
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 4.
+) [51
+
+] [52
+
+] [53
+
+]
+<../../../causalinf_phd/Graphs/chernobyl1.pdf, id=454, 598.235pt x 447.6725pt>
+File: ../../../causalinf_phd/Graphs/chernobyl1.pdf Graphic file (type pdf)
+<use ../../../causalinf_phd/Graphs/chernobyl1.pdf>
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/chernobyl1.pdf  used on input line 1344.
+(pdftex.def)             Requested size: 239.00558pt x 178.85406pt.
+[54
+
+ <../../../causalinf_phd/Graphs/chernobyl1.pdf>] [55
+
+] [56
+
+] [57
+
+] [58
+
+]
+<../../../causalinf_phd/Graphs/chernobylresults1.png, id=491, 637.38126pt x 117.43875pt>
+File: ../../../causalinf_phd/Graphs/chernobylresults1.png Graphic file (type png)
+<use ../../../causalinf_phd/Graphs/chernobylresults1.png>
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/chernobylresults1.png  used on input line 1460.
+(pdftex.def)             Requested size: 318.67209pt x 58.71564pt.
+<../../../causalinf_phd/Graphs/chernobylresults2.png, id=492, 361.35pt x 90.3375pt>
+File: ../../../causalinf_phd/Graphs/chernobylresults2.png Graphic file (type png)
+<use ../../../causalinf_phd/Graphs/chernobylresults2.png>
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/chernobylresults2.png  used on input line 1460.
+(pdftex.def)             Requested size: 199.1693pt x 49.7919pt.
+[59
+
+ <../../../causalinf_phd/Graphs/chernobylresults1.png> <../../../causalinf_phd/Graphs/chernobylresults2.png>] [60
+
+] [61
+
+] [62
+
+] [63
+
+] (./slides_2_regression.bbl
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\translate ' on input line 1.
+
+
+Overfull \hbox (2.12503pt too wide) in paragraph at lines 1--1
+[][]  
+ []
+
+) [64
+
+] [65
+
+]
+\openout4 = `slides_2_regression.vrb'.
+
+(./slides_2_regression.vrb) [66
 
 ]
 \openout4 = `slides_2_regression.vrb'.
@@ -1150,7 +1251,7 @@ LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 7.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)) [45
+)) [67
 
 {/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
 \openout4 = `slides_2_regression.vrb'.
@@ -1164,73 +1265,73 @@ LaTeX Font Warning: Font shape `T1/lmtt/bx/it' in size <10.95> not available
 LaTeX Font Warning: Font shape `TS1/lmtt/bx/it' in size <10.95> not available
 (Font)              Font shape `TS1/lmtt/b/sl' tried instead on input line 9.
 
-) [46
+) [68
 
 ]
 \openout4 = `slides_2_regression.vrb'.
 
-(./slides_2_regression.vrb) [47
+(./slides_2_regression.vrb) [69
 
-] [48
+] [70
 
-] [49
+] [71
 
-] [50
+] [72
 
 ]
 
-Package hyperref Warning: Ignoring empty anchor on input line 1202.
+Package hyperref Warning: Ignoring empty anchor on input line 1757.
 
-[51
+[73
 
 ]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 1216.
+(Font)              <12> on input line 1771.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <12> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1216.
-<../Templates/emailicon.png, id=436, 513.92pt x 513.92pt>
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1771.
+<../Templates/emailicon.png, id=595, 513.92pt x 513.92pt>
 File: ../Templates/emailicon.png Graphic file (type png)
 <use ../Templates/emailicon.png>
-Package pdftex.def Info: ../Templates/emailicon.png  used on input line 1216.
+Package pdftex.def Info: ../Templates/emailicon.png  used on input line 1771.
 (pdftex.def)             Requested size: 28.45274pt x 28.44997pt.
-<../Templates/interneticon.jpeg, id=438, 1927.2pt x 1927.2pt>
+<../Templates/interneticon.jpeg, id=597, 1927.2pt x 1927.2pt>
 File: ../Templates/interneticon.jpeg Graphic file (type jpg)
 <use ../Templates/interneticon.jpeg>
-Package pdftex.def Info: ../Templates/interneticon.jpeg  used on input line 1216.
+Package pdftex.def Info: ../Templates/interneticon.jpeg  used on input line 1771.
 (pdftex.def)             Requested size: 34.14322pt x 34.14113pt.
 
-Overfull \hbox (5.69048pt too wide) in paragraph at lines 1216--1216
+Overfull \hbox (5.69048pt too wide) in paragraph at lines 1771--1771
 []|[]| 
  []
 
-<../Templates/calendlyicon.png, id=440, 401.5pt x 401.5pt>
+<../Templates/calendlyicon.png, id=599, 401.5pt x 401.5pt>
 File: ../Templates/calendlyicon.png Graphic file (type png)
 <use ../Templates/calendlyicon.png>
-Package pdftex.def Info: ../Templates/calendlyicon.png  used on input line 1216.
+Package pdftex.def Info: ../Templates/calendlyicon.png  used on input line 1771.
 (pdftex.def)             Requested size: 34.14322pt x 34.14235pt.
 
-Overfull \hbox (5.69048pt too wide) in paragraph at lines 1216--1216
+Overfull \hbox (5.69048pt too wide) in paragraph at lines 1771--1771
 []|[]| 
  []
 
-<../Templates/youtubeicon.png, id=442, 204.765pt x 192.72pt>
+<../Templates/youtubeicon.png, id=601, 204.765pt x 192.72pt>
 File: ../Templates/youtubeicon.png Graphic file (type png)
 <use ../Templates/youtubeicon.png>
-Package pdftex.def Info: ../Templates/youtubeicon.png  used on input line 1216.
+Package pdftex.def Info: ../Templates/youtubeicon.png  used on input line 1771.
 (pdftex.def)             Requested size: 28.45274pt x 26.7777pt.
-<../Templates/xicon.png, id=444, 148.555pt x 148.555pt>
+<../Templates/xicon.png, id=603, 148.555pt x 148.555pt>
 File: ../Templates/xicon.png Graphic file (type png)
 <use ../Templates/xicon.png>
-Package pdftex.def Info: ../Templates/xicon.png  used on input line 1216.
+Package pdftex.def Info: ../Templates/xicon.png  used on input line 1771.
 (pdftex.def)             Requested size: 28.45274pt x 28.45241pt.
-<../Templates/linkedinicon.png, id=446, 308.352pt x 308.352pt>
+<../Templates/linkedinicon.png, id=605, 308.352pt x 308.352pt>
 File: ../Templates/linkedinicon.png Graphic file (type png)
 <use ../Templates/linkedinicon.png>
-Package pdftex.def Info: ../Templates/linkedinicon.png  used on input line 1216.
+Package pdftex.def Info: ../Templates/linkedinicon.png  used on input line 1771.
 (pdftex.def)             Requested size: 28.45274pt x 28.45152pt.
-[52
+[74
 
- <../Templates/emailicon.png> <../Templates/interneticon.jpeg> <../Templates/calendlyicon.png> <../Templates/youtubeicon.png> <../Templates/xicon.png> <../Templates/linkedinicon.png>] [53
+ <../Templates/emailicon.png> <../Templates/interneticon.jpeg> <../Templates/calendlyicon.png> <../Templates/youtubeicon.png> <../Templates/xicon.png> <../Templates/linkedinicon.png>] [75
 
 ]
 \tf@nav=\write7
@@ -1252,18 +1353,18 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 27729 strings out of 476132
- 569524 string characters out of 5793900
- 1936539 words of memory out of 5000000
- 49056 multiletter control sequences out of 15000+600000
+ 27926 strings out of 476132
+ 574608 string characters out of 5793900
+ 1941539 words of memory out of 5000000
+ 49178 multiletter control sequences out of 15000+600000
  693425 words of font info for 135 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 101i,13n,107p,415b,898s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 101i,13n,107p,415b,1040s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss12.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss9.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbo10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsso10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsso8.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsso9.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtko10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on slides_2_regression.pdf (53 pages, 645440 bytes).
+Output written on slides_2_regression.pdf (75 pages, 1179664 bytes).
 PDF statistics:
- 631 PDF objects out of 1000 (max. 8388607)
- 468 compressed objects within 5 object streams
- 162 named destinations out of 1000 (max. 500000)
- 123 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 812 PDF objects out of 1000 (max. 8388607)
+ 616 compressed objects within 7 object streams
+ 230 named destinations out of 1000 (max. 500000)
+ 151 words of extra memory for PDF output out of 10000 (max. 10000000)
 

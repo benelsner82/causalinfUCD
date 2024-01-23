@@ -1,6 +1,6 @@
 ---
 title: "[ECON42720 Causal Inference and Policy Evaluation](https://benelsner82.github.io/causalinfUCD/)"
-subtitle: "2 Regression Recap"
+subtitle: "2 Regression Recap and Selection on Observables"
 author: "Ben Elsner (UCD)"
 output:
   beamer_presentation:
@@ -19,6 +19,7 @@ library(ggplot2)
 library(wooldridge)
 library(stargazer)
 library(foreign)
+library(dplyr)
 
 set.seed(1234)
 graphdir <- "../../../causalinf_phd/Graphs/"
@@ -47,6 +48,23 @@ Yes, I know, \br{machine learning is all the rage these days}
 - But a linear approximation is often the best we can do
 - It's already hard enough to get the linear approximation right
 - Fancy techniques are not always better
+
+
+## About this Lecture
+
+\brf{Part I: how does regression work? A recap}
+
+- Why we use linear regressions and how we estimate them
+- The sampling distribution of the OLS estimator
+
+\vfill
+
+\brf{Part II: selection on observables}
+
+- Multivariate regression can be used for causal inference
+- But for that we need to make strong assumptions
+
+
 
 
 ## Resources
@@ -621,6 +639,117 @@ ZCM holds if $x$ is \brf{as good as randomly assigned} to individuals
 We should **always assume that ZCM is violated**. Researchers need to **think hard about confounders and how to eliminate them.** 
 
 
+## The Sampling Distribution of the OLS Estimator
+
+
+So far, we only talked about the \brf{mean of the OLS estimator} $\widehat{\beta}_1$
+
+- Suppose we run the **same regression in many samples**
+- The **mean of the OLS estimator** is the **average** of the estimates **across samples**
+
+\vfill
+
+However, to draw \brf{inference about the population}, we need to know more than the mean
+
+- How is $\widehat{\beta}_1$ **distributed across samples?**
+- But how can we know this distribution if we only have one sample?
+
+
+## The Sampling Distribution of the OLS Estimator
+
+Enter: the \brf{Central Limit Theorem (CLT)}
+
+- If the **sample size is large enough**...
+- the **sampling distribution is approximately normal**
+
+\vfill
+
+Under the CLT and an assumption of homoskedastic errors, the sampling distribution of the estimator is: 
+
+$$\widehat{\beta}_1 \sim N(\beta_1, \sigma_{\widehat{\beta}_1}^2)$$
+
+where $\sigma_{\widehat{\beta}_1}^2=\frac{\sigma^2}{\sum_{i=1}^n (x_i-\bar{x})^2}$
+
+\vfill
+
+Going into the assumptions behind this distribution is beyond this module. Most econometrics textbooks provide in-depth discussions
+
+
+
+## The Sampling Distribution of the OLS Estimator
+
+Let's draw 1,000 samples of size $n=100$ from the following data-generating process and run 1,000 regressions:
+
+$$y=1 + 2x + u$$
+
+where $u\sim N(0,1)$ and $x\sim U(0,10)$
+
+\vfill
+
+And then we run a regression in each sample and store the slope coefficient $\widehat{\beta}_1$
+
+
+
+## The Sampling Distribution of the OLS Estimator
+
+
+```{r, echo=FALSE, fig.align="center", out.width="60%"}
+slopes <- numeric(1000)
+
+# Simulation loop
+for (i in 1:1000) {
+  # Generate data
+  x <- runif(100, min = 0, max = 10)  # x ~ U(0,10)
+  u <- rnorm(100, mean = 0, sd = 1)   # u ~ N(0,1)
+  y <- 1 + 2 * x + u                  # y = 1 + 2x + u
+
+  # Run regression and store the slope coefficient
+  model <- lm(y ~ x)
+  slopes[i] <- coef(model)[2]  # The second coefficient is the slope of x
+}
+
+# Create a histogram of slope coefficients
+ggplot(data.frame(slopes), aes(x = slopes)) +
+  geom_histogram(bins = 30, fill = "blue", color = "black") +
+  labs(title = "Distribution of Slope Coefficients",
+       x = "Slope Coefficient") + 
+  theme_minimal(base_size=basesize) + 
+  graphtheme
+
+``` 
+- The distribution is centered on the true value $\beta_1=2$
+- The distribution is approximately normal
+
+
+## The Sampling Distribution of the OLS Estimator
+
+An important statistic for inference is the \brf{standard error} of the OLS estimator
+
+$$SE(\widehat{\beta}_1)=\sqrt{\frac{\widehat{\sigma}^2}{\sum_{i=1}^n (x_i-\bar{x})^2}}$$
+
+where $\widehat{\sigma}^2=\frac{1}{n-2}\sum_{i=1}^n \widehat{u}_i^2$
+
+\vfill
+
+$SE(\widehat{\beta}_1)$ is an estimate of the \brf{standard deviation of the sampling distribution}
+
+- It tells us **how much the he OLS estimator varies across samples**
+- **Larger sample size** $\rightarrow$ smaller standard error
+
+
+## Why We Need the Sampling Distribution
+
+We \brf{need the sampling distribution} to draw \brf{inference about the population}
+
+- We typically **test the hypothesis that the true value $\beta_1=0$**
+- Based on the (estimated) sampling distribution, we can test this hypothesis
+- We can use the **t-statistic**, the **p-value**, or **confidence intervals**
+
+\vfill
+
+How this works: please check econometrics/statistics textbooks
+
+
 ## Controlling for Confounders: Multivariate Regression
 
 We can include \brf{confounders in the regression model} to control for them
@@ -687,14 +816,78 @@ The main insight comes from point 2...
 The same also holds for more than one control variable
 
 
-## Example: Effect of Education on Earnings
+## FWL Example: Effect of Education on Earnings
 
 ```{r, eval=TRUE, echo=FALSE}
-wage1 <- wage1 %>% mutate(abil=0.5*ed + rnorm(nrow(wage1), 0, 1))
+wage1 <- wage1 %>% mutate(abil=0.5*educ + rnorm(n(), 0, 1), 
+                          wage=0.5*educ + 0.5*abil + rnorm(n(), 0, 1))
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
+auxreg1 <- lm(educ ~ abil, data=wage1)
+resideduc <- residuals(auxreg1)
+auxreg2 <- lm(wage ~ abil, data=wage1)
+residwage <- residuals(auxreg2)
+
+wage1 <- wage1 %>% mutate(resideduc=resideduc, residwage=residwage)
+
+wagereg1 <- lm(wage ~ educ, data=wage1)
+wagereg2 <- lm(wage ~ educ + abil, data=wage1)
+wagereg3 <- lm(wage ~ resideduc, data=wage1)
+wagereg4 <- lm(residwage ~ resideduc, data=wage1)
 ```
+
+
+Suppose `abil` (ability) is a confounder
+\vfill
+Let's first look at the auxiliary regressions (for generating the residuals)
+
+\scriptsize
+```{r, results='asis', echo=FALSE}
+stargazer(auxreg1, auxreg2, 
+          type="latex",
+          header=FALSE, 
+          no.space=TRUE,
+          omit.stat=c("f", "ser"))
+```
+\normalsize
+
+
+## FWL Example: Effect of Education on Earnings
+
+Now let's look at the main regressions
+
+\scriptsize
+```{r, results='asis', echo=FALSE}
+stargazer(wagereg1, wagereg2, wagereg3, wagereg4,  
+          type="latex",
+          header=FALSE, 
+          no.space=TRUE,
+          omit.stat=c("f", "ser"))
+```
+\normalsize
+
+
+## Insights from the previous slide
+
+
+Columns (1) and (2) show that the **omission of `abil` leads to an upward bias**
+
+\vfill
+
+The **coefficient of `educ` is the same** in Columns (2), (3) and (4) is the same $\Rightarrow$ \brf{FWL}
+
+\vfill
+
+The regression in Column (2) takes \brf{two steps at a time}:
+
+1. **"regresses out"** (a.k.a "partials out") the **confounding influence** of ability on education
+2. provides the **partial effect of education on wages** that is \underline{not} driven by ability
+
+
+\vfill
+
+\brf{Thanks to FWL}, we can \brf{eliminate the confounding influence of other variables}. This is \brf{BIG}!
 
 
 
@@ -714,8 +907,156 @@ In plain English: as long as \brf{$\boldsymbol{S}$ is included, the error term $
 
 ## Controlled Regression in Practice
 
+\citet{elsner_2018}: what is the \brf{impact of low-dose radiation on cognitive ability?}
+
+- Long-run exposure to low-dose radiation can affect cognitive ability through its effect on the brain and general health effects
+
+\vfill
+\brf{Challenge:} people are usually not randomly exposed to radiation
+
+- Our setting: exploit variation in the Chernobyl fallout across Germany
+- This was driven by wind and rain patterns in April 1986
+- Look at the effect on test scores 25 years
 
 
+## Variation in Chernobyl-induced ground radiation in Germany, 1986
+
+Is this variation as good as random?
+
+```{r, out.width = '60%', echo=FALSE, fig.align="center"}
+knitr::include_graphics(paste0(graphdir, "chernobyl1.pdf"))
+```
+
+
+## Example: \citet{elsner_2018}
+
+$$testscore_i = \beta_0 + \beta_1 radiation_i +  u_i$$
+\vfill
+\brf{Radiation exposure is likely not random...}
+
+- People could not foresee the Chernobyl accident
+- But: some areas are more prone to radiation when an accident happens
+- More prone: higher rainfall, higher altitude, further East
+- People in more prone areas are likely different from people in less prone areas
+
+\vfill
+
+So \brf{ZCM is violated}: $E(u \mid radiation) \neq 0$
+
+
+
+## Solution: include potential confounders
+
+We need to \brf{control somehow for "proneness to radiation"}
+
+- Control for average rainfall in April and for altitude
+
+\vfill
+We can \brf{include state dummies}
+
+- Compare **people who reside in the same state** but are exposed to **different levels of radiation**
+- This means that we run a **regression with group fixed effects** $\boldsymbol{\delta_s}$ (more on this later)
+
+## Solution: include potential confounders
+
+$$testscore_i = \beta_0 + \beta_1 radiation_i + \beta_2 rain_i + \beta_3 alt_i +  \boldsymbol{\delta_s} + u_i$$
+\vfill
+
+Does the Conditional Mean Independence Assumption (CMIA) hold?
+
+- I.e. is radiation as good as randomly assigned conditional on rainfall, altitude and state dummies?
+
+$$E(u_i \mid radiation_i, \; rain_i, \; alt_i, \; \boldsymbol{\delta_s})=0$$
+
+## Does CMIA Hold? Balancing Tests
+
+We run \brf{balancing tests based on observable characteristics} (age, gender, education, parental education)
+
+- **Run regressions** of observable characteristics on radiation, rainfall, altitude and state dummies
+- Ideally, there should be **no correlation between radiation and the observables**
+- This would be **evidence in favour of CMIA**, but no proof
+
+\vfill
+
+\brf{Results:} 
+
+- radiation is correlated with some observables: negatively with own and parental education
+- but this correlation is **removed once we control for altitude and rainfall**
+- this is evidence that CMIA holds
+
+\vfill
+See here for the table of balancing tests: [LINK](https://www.sciencedirect.com/science/article/pii/S0095069623000037?via%3Dihub#tbl2)
+
+
+## Results
+
+```{r, out.width = '80%', echo=FALSE, fig.align="center"}
+knitr::include_graphics(paste0(graphdir, "chernobylresults1.png")) 
+```
+
+```{r, out.width = '50%', echo=FALSE, fig.align="center"}
+knitr::include_graphics(paste0(graphdir, "chernobylresults2.png"))
+```
+
+\brf{Higher radiation in 1986} $\Rightarrow$ \brf{lower test scores} in 2011
+\vfill
+
+In the paper we do a lot more to convince the reader
+
+
+## Using Controlled Regression for Causal Inference
+
+
+The \brf{key to any research design} is \brf{CREDIBIILTY}
+
+\vfill
+With controlled regression, the credibility of causal identification hinges on the ZCM or CMIA assumption
+
+- Assumption: conditional on controls, $x$ is as good as randomly assigned
+- This design is called \brf{selection on observables}
+- The assumption is untestable! But we can (and must) bring evidence and good arguments in favour of it
+
+
+## Selection on observables: ingredients of a good paper
+
+\brf{1) Theory:} why should $x$ affect $y$ to begin with? And through what channels?
+
+\vfill
+
+\brf{2)} A \brf{clear statement and discussion of the identification assumption}: 
+
+- What is the ZCM/CMIA in your context? Why should it hold? What are potential challenges?
+- DAG: what are the confounders? Why should I include them in the regression?
+
+\vfill
+
+\brf{3) Balancing tests:} 
+
+- show that $x$ is as good as randomly assigned conditional on controls
+
+\vfill
+
+\brf{4)} Extensive \brf{robustness checks} to rule out alternative explanations
+
+
+## Common mistake: kitchen sink regressions
+
+A **common problem**: people start with a model like this
+
+$$y_i = \beta_0 + \beta_1 x_i + \boldsymbol{S\gamma} + u_i$$
+and include in $\boldsymbol{S}$ **every variable they can find** (everything but the kitchen sink)
+
+\vfill
+
+\brf{Don't do this!!!}
+
+- you could condition on colliders or mediators
+- you could condition on irrelevant variables
+- readers won't believe you
+
+
+\vfill
+\brf{DAGs will help!}
 
 ## Summary: What you need to understand for this module
 
@@ -725,16 +1066,22 @@ In plain English: as long as \brf{$\boldsymbol{S}$ is included, the error term $
 - Why we use linear regression
 - Why and how we use OLS to estimate the parameters of the linear regression model
 - How to interpret the OLS estimator $\hat\beta_1$
+- What multivariate regression does, especially the FWL theorem
 
 
 \vfill
 
-\brf{Limitations of linear regression for causal inference}
+\brf{Uses and limitations of linear regression for causal inference}
 
 - The ZCM assumption is violated in most applications, leading to OVB
-- How control variables can be used to control for confounders
+- How control variables can be used to control for confounders: the CMIA assumption
 
 
+
+## .
+\tiny
+\bibliographystyle{authordate1}
+\bibliography{../../../causalinf_phd/bibliography_causalinf}
 
 
 

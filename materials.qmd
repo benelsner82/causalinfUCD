@@ -28,6 +28,10 @@ These two videos explain the foundations of causal inference based on directed a
 ## 2 Regression Recap
 
 
+#### [Slides](/slides/2 Regression Recap/slides_2_regression.pdf)
+
+
+
 ## 3 Randomised Experiments and the Potential Outcomes Framework
 
 
