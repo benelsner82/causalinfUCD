@@ -1,0 +1,35 @@
+---
+title: "[ECON42720 Causal Inference and Policy Evaluation](https://benelsner82.github.io/causalinfUCD/)"
+subtitle: "3 Matching and Re-weighting"
+author: "Ben Elsner (UCD)"
+output:
+  beamer_presentation:
+    includes:
+      in_header: "../Templates/template_metrics.tex"
+classoption: "aspectratio=169, handout" 
+
+
+--- 
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## About this Lecture
+
+
+
+
+## .
+
+
+```{r child = '../Templates/socialmedia.Rmd'}
+```
+
+
+## Contact
+
+```{r child = '../Templates/contactpage.Rmd'}
+```
+
