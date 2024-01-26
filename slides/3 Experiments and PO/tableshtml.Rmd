@@ -1,0 +1,28 @@
+---
+title: "Untitled"
+output: ioslides_presentation
+date: "2024-01-26"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(dplyr)
+library(knitr)
+library(kableExtra)
+```
+
+```{r, echo=FALSE, results='asis'}
+data <- data.frame(
+  Person = 1:8,
+  D = c(1, 1, 0, 1, 0, 0, 0, 1), # 1 for treated, 0 for untreated
+  Treated = c(80, 75, 70, 85, 75, 80, 90, 85),
+  Untreated = c(60, 70, 60, 80, 70, 80, 100, 80),
+  Causal_Effect = c(20, 5, 10, 5, 5, 0, -10, 5)
+)
+
+kable(data, "html", escape = FALSE) %>%
+  kable_styling(full_width = F, position = "center") %>%
+  column_spec(5, width = "6em")
+```
+

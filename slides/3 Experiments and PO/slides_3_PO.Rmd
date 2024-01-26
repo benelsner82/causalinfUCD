@@ -17,9 +17,14 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 library(cowplot)
 library(ggplot2)
+library(knitr)
+library(kableExtra)
 
 set.seed(1234)
 graphdir <- "../../../causalinf_phd/Graphs/"
+
+# generate graphs
+# source("atttables.R")
 
 ```
 
@@ -36,7 +41,7 @@ The \brf{lingo of causal inference} is borrowed from \brf{medical trials}
 - **outcome** is the variable that is potentially affected by the treatment
 
 \vfill
-\brf{We are after the causal effect}: \brf{treatment} ($D$) $\Rightarrow$ \brf{outcome} ($Y$)
+\brf{We are after the causal effect}: \brf{treatment} ($D$) $\rightarrow$ \brf{outcome} ($Y$)
 
 
 
@@ -244,7 +249,6 @@ ATT = E(\Delta_{i}|D_{i} = 1) & = E(Y_{i1} - Y_{i0}|D_{i} = 1)\\
 
 Similarly, we can define the \brf{Average Treatment Effect on the Untreated} (**ATU**) as: 
 
-- the **average difference in potential outcomes** for those who were **not treated**
 
 \begin{equation*}
 \begin{array}{ll}
@@ -253,30 +257,104 @@ ATU = E(\Delta_{i}|D_{i} = 0) & = E(Y_{i1} - Y_{i0}|D_{i} = 0)\\
 \end{array}
 \end{equation*}
 
+**Interpretation**: the **average difference in potential outcomes** for those who were **not treated**
+
+
+
 
 ## The Fundamental Problem of Causal Inference
-Example for the ATT
-```{r, out.width = '70%', echo=FALSE, fig.align="center"}
-knitr::include_graphics(paste0(graphdir, "example_att.png"))
+**Example for ATE, ATT, and ATU**
+```{r, out.width = '60%', echo=FALSE, fig.align="center"}
+knitr::include_graphics("trimmed_table.pdf")
 ```
+
 \vfill
 \pause
-**ATE**: Average of the last column \
-**ATT**: Average of the green cells \
-**ATU**: Average of the white cells
+**$ATE=5$**: Average of the last column \
+**$ATT=8.75$**: Average of the green cells \
+**$ATU=1.25$**: Average of the white cells
+
+
+## The Average Treatment Effect 
+
+\begin{tabular}{ccccc}
+\hline
+\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Treated} $Y^0$  & \textbf{Causal Effect} \\
+\hline
+1 & 1 & 80 & 60 & 20 \\
+2 & 1 & 75 & 70 & 5 \\
+3 & 0 & 70 & 60 & 10 \\
+4 & 1 & 85 & 80 & 5 \\
+5 & 0 & 75 & 70 & 5 \\
+6 & 0 & 80 & 80 & 0 \\
+7 & 0 & 90 & 100 & -10 \\
+8 & 1 & 85 & 80 & 5 \\
+\hline
+\end{tabular}
+
+
+## The Average Treatment Effect 
+
+\begin{tabular}{ccccc}
+\hline
+\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Treated} $Y^0$  & \textbf{Causal Effect} \\
+\hline
+1 & 1 & 80 & 60 & \cellcolor{green!25} 20 \\
+2 & 1 & 75 & 70 & \cellcolor{green!25} 5 \\
+3 & 0 & 70 & 60 & \cellcolor{green!25}10 \\
+4 & 1 & 85 & 80 & \cellcolor{green!25}5 \\
+5 & 0 & 75 & 70 & \cellcolor{green!25}5 \\
+6 & 0 & 80 & 80 & \cellcolor{green!25}0 \\
+7 & 0 & 90 & 100 & \cellcolor{green!25}-10 \\
+8 & 1 & 85 & 80 & \cellcolor{green!25}5 \\
+\hline
+\end{tabular}
+
+
+## The Average Treatment Effect on the Treated (ATT)
+
+\begin{tabular}{ccccc}
+\hline
+\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Treated} $Y^0$  & \textbf{Causal Effect} \\
+\hline
+1 & 1 & 80 & 60 & \cellcolor{green!25}  20 \\
+2 & 1 & 75 & 70 & \cellcolor{green!25}  5 \\
+3 & 0 & 70 & 60 & 10 \\
+4 & 1 & 85 & 80 & \cellcolor{green!25} 5 \\
+5 & 0 & 75 & 70 & 5 \\
+6 & 0 & 80 & 80 & 0 \\
+7 & 0 & 90 & 100 & -10 \\
+8 & 1 & 85 & 80 & \cellcolor{green!25} 5 \\
+\hline
+\end{tabular}
+
+
+## The Average Treatment Effect 
+
+```{r, echo=FALSE, results='asis'}
+data <- data.frame(
+  Person = 1:8,
+  D = c(1, 1, 0, 1, 0, 0, 0, 1), # 1 for treated, 0 for untreated
+  Treated = c(80, 75, 70, 85, 75, 80, 90, 85),
+  Untreated = c(60, 70, 60, 80, 70, 80, 100, 80),
+  Causal_Effect = c(20, 5, 10, 5, 5, 0, -10, 5)
+)
+
+```
+
 
 
 
 ## ATE/ATT/ATU: Which Parameter is most Relevant?
 
-There is no clear answer to this question
+There is \brf{no clear answer to this question}
 
 \vfill
 
 \brf{ATE is the most general parameter}
 
-- what if we give the average person/firm a treatment
-- This is interesting for medical trials and for some policy questions
+- what if we give the average person/firm/unit a treatment
+- This is interesting for medical trials and for many policy questions
 
 \vfill
 
@@ -287,10 +365,13 @@ There is no clear answer to this question
 
 \vfill
 
-\brf{ATU can be interesting for policy evaluation}
+\brf{ATU is sometimes interesting for policy evaluation}
 
 - We may be concerned about the people who did not take up the policy
 - How would they be affected if they took up the policy
+
+\vfill
+But: We \brf{need all three to interpret the estimation results}
 
 
 
@@ -298,7 +379,7 @@ There is no clear answer to this question
 
 
 ## Comparison by Treatment Status
-In most applications, we want to \brf{estimate the ATT}
+In many applications, we want to \brf{estimate the ATT}
 \vfill
 But we \brf{only observe}
 
@@ -306,10 +387,15 @@ But we \brf{only observe}
 - The actual outcome of the unit
 
 \vfill
-Solution (?): **comparison of means**/simple difference in outcomes
+Solution (?): \brf{comparison of means/simple difference in outcomes}, which can be estimated from two samples of data (treatment and control group)
 \begin{equation*}
-SDO = E(Y_i |D_i=1))-E(Y_i |D_i=0))
+\begin{array}{ll}
+SDO &= E(Y_i |D_i=1))-E(Y_i |D_i=0)) \\
+&= \frac{1}{N_T}\displaystyle\sum_i (y_i \mid d_i=1) - \frac{1}{N_C}\displaystyle\sum_i (y_i \mid d_i=0)   \\
+\end{array}
 \end{equation*}
+
+In **out example**, $SDO=$
 
 
 
@@ -321,7 +407,7 @@ Problem with SDO: units may \brf{select into treatment}
 \begin{array}{rcl}
 E(Y_{i}|D_{i} = 1) &-& E(Y_{i}|D_{i} = 0)\\
  &=& E(Y_{i1}|D_{i} = 1) - E(Y_{i0}|D_{i} = 0)\\
- &=& \underbrace{E(Y_{i1}|D_{i} = 1) - \textcolor{brickred}{E(Y_{i0}|D_{i} = 1)}}_{ATT} + \underbrace{\textcolor{brickred}{E(Y_{i0}|D_{i} = 1)} - E(Y_{i0}|D_{i} = 0)}_{Selection bias}\\
+ &=& \underbrace{E(Y_{i1}|D_{i} = 1) - \textcolor{brickred}{E(Y_{i0}|D_{i} = 1)}}_{ATT} + \underbrace{\textcolor{brickred}{E(Y_{i0}|D_{i} = 1)} - E(Y_{i0}|D_{i} = 0)}_{\text{Selection bias}}\\
 \end{array}
 \end{equation}
 \vfill
@@ -333,6 +419,28 @@ E(Y_{i}|D_{i} = 1) &-& E(Y_{i}|D_{i} = 0)\\
 \small
 Note how we add and subtract $E(Y_{i0}|D_{i} = 1)$ here
 \normalsize
+
+
+## Now Suppose We Want to Estimate the ATE
+
+Note that we can write the ATE as: $ATE=\pi ATT + (1-\pi)ATU$
+
+\vfill
+The \brf{simple difference in outcomes yields}: 
+
+\begin{equation}\nonumber
+\begin{array}{rcl}
+E(Y_{i}|D_{i} = 1) - E(Y_{i}|D_{i} = 0) &=&\\
+ &=& ATE  \\
+ &+& \underbrace{\textcolor{brickred}{E(Y_{i0}|D_{i} = 1)} - E(Y_{i0}|D_{i} = 0)}_{\text{Selection bias}}\\
+ &+& \underbrace{(1-\pi)\left[ATT-ATU\right]}_{\text{HTE Bias}}\\
+\end{array}
+\end{equation}
+
+Our estimate of the ATE is contaminates by two biases:
+
+- selection into treatment
+- heterogeneous treatment effects
 
 
 ## Comparison by Treatment Status
@@ -697,6 +805,44 @@ ATE, ATT, ATU
 
 
 ## Group Work II
+
+## Derivation of SDO Decomposition
+
+\begin{align*}
+E(Y^1\mid D=1) &- E(Y^0\mid D=0) \\ 
+&= E(Y^1\mid D=1)-E(Y^1\mid D=0) + E(Y^1\mid D=0)-E(Y^0\mid D=0)\\
+&= \underbrace{E(Y^1\mid D=1)-E(Y^1\mid D=0)}_{\text{ATT}} + \underbrace{E(Y^1\mid D=0)-E(Y^0\mid D=0)}_{\text{Selection Bias}}\\ 
+\end{align*}
+
+## Derivation of SDO Decomposition
+
+Now consider $ATE=\pi ATT + (1-\pi)ATU$
+
+\begin{align*}
+ATE &= \pi ATT + (1-\pi)ATU \\
+&= \pi ATT + ATT - ATT + (1-\pi)ATU \\
+\end{align*}
+
+Re-arranging yields
+
+\begin{align*}
+ATT &= ATE + (1-\pi)ATT - (1-\pi)ATU \\
+&= ATE + (1-\pi)[ATT-ATU]\\
+\end{align*}
+
+## Derivation of SDO Decomposition
+
+We can plug this into the SDO decomposition and get
+
+
+\begin{align*}
+E(Y^1\mid D=1) &- E(Y^0\mid D=0) \\ 
+&= ATE \\
+&+ \underbrace{E(Y^1\mid D=0)-E(Y^0\mid D=0)}_{\text{Selection Bias}}\\ 
+&+ \underbrace{(1-\pi)[ATT-ATU]}_{\text{HTE Bias}}\\
+\end{align*}
+
+
 
 
 ## .
