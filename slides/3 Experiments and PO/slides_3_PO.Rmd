@@ -257,29 +257,18 @@ ATU = E(\Delta_{i}|D_{i} = 0) & = E(Y_{i1} - Y_{i0}|D_{i} = 0)\\
 \end{array}
 \end{equation*}
 
+\vfill
 **Interpretation**: the **average difference in potential outcomes** for those who were **not treated**
 
 
 
+ 
 
-## The Fundamental Problem of Causal Inference
-**Example for ATE, ATT, and ATU**
-```{r, out.width = '60%', echo=FALSE, fig.align="center"}
-knitr::include_graphics("trimmed_table.pdf")
-```
-
-\vfill
-\pause
-**$ATE=5$**: Average of the last column \
-**$ATT=8.75$**: Average of the green cells \
-**$ATU=1.25$**: Average of the white cells
-
-
-## The Average Treatment Effect 
+## Treatment Effects
 
 \begin{tabular}{ccccc}
 \hline
-\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Treated} $Y^0$  & \textbf{Causal Effect} \\
+\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Untreated} $Y^0$  & \textbf{Causal Effect} \\
 \hline
 1 & 1 & 80 & 60 & 20 \\
 2 & 1 & 75 & 70 & 5 \\
@@ -292,12 +281,14 @@ knitr::include_graphics("trimmed_table.pdf")
 \hline
 \end{tabular}
 
+\vfill
+Here we observe the \brf{potential outcomes} for each person. Some people are treated ($D=1$), some are not ($D=0$). 
 
 ## The Average Treatment Effect 
 
 \begin{tabular}{ccccc}
 \hline
-\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Treated} $Y^0$  & \textbf{Causal Effect} \\
+\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Untreated} $Y^0$  & \textbf{Causal Effect} \\
 \hline
 1 & 1 & 80 & 60 & \cellcolor{green!25} 20 \\
 2 & 1 & 75 & 70 & \cellcolor{green!25} 5 \\
@@ -310,12 +301,15 @@ knitr::include_graphics("trimmed_table.pdf")
 \hline
 \end{tabular}
 
+\vfill
+The ATE is the average of the last column: $5$
+
 
 ## The Average Treatment Effect on the Treated (ATT)
 
 \begin{tabular}{ccccc}
 \hline
-\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Treated} $Y^0$  & \textbf{Causal Effect} \\
+\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Untreated} $Y^0$  & \textbf{Causal Effect} \\
 \hline
 1 & 1 & 80 & 60 & \cellcolor{green!25}  20 \\
 2 & 1 & 75 & 70 & \cellcolor{green!25}  5 \\
@@ -328,19 +322,34 @@ knitr::include_graphics("trimmed_table.pdf")
 \hline
 \end{tabular}
 
+\vfill
+The ATT is the average of the green cells: $8.75$
 
-## The Average Treatment Effect 
 
-```{r, echo=FALSE, results='asis'}
-data <- data.frame(
-  Person = 1:8,
-  D = c(1, 1, 0, 1, 0, 0, 0, 1), # 1 for treated, 0 for untreated
-  Treated = c(80, 75, 70, 85, 75, 80, 90, 85),
-  Untreated = c(60, 70, 60, 80, 70, 80, 100, 80),
-  Causal_Effect = c(20, 5, 10, 5, 5, 0, -10, 5)
-)
 
-```
+## The Average Treatment Effect on the Untreated (ATU)
+
+\begin{tabular}{ccccc}
+\hline
+\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Untreated} $Y^0$  & \textbf{Causal Effect} \\
+\hline
+1 & 1 & 80 & 60 & 20 \\
+2 & 1 & 75 & 70 & 5 \\
+3 & 0 & 70 & 60 & \cellcolor{green!25} 10 \\
+4 & 1 & 85 & 80 & 5 \\
+5 & 0 & 75 & 70 & \cellcolor{green!25} 5 \\
+6 & 0 & 80 & 80 & \cellcolor{green!25} 0 \\
+7 & 0 & 90 & 100 & \cellcolor{green!25} -10 \\
+8 & 1 & 85 & 80 & 5 \\
+\hline
+\end{tabular}
+
+\vfill
+The ATU is the average of the white cells: $1.25$
+
+\vfill
+Here we have $ATT>ATE>ATU$, which may indicate **selection into treatment**: those who benefit most from the treatment are most likely to take it
+
 
 
 
@@ -379,7 +388,7 @@ But: We \brf{need all three to interpret the estimation results}
 
 
 ## Comparison by Treatment Status
-In many applications, we want to \brf{estimate the ATT}
+In many applications, we want to \brf{estimate the ATE or the ATT}
 \vfill
 But we \brf{only observe}
 
@@ -390,18 +399,40 @@ But we \brf{only observe}
 Solution (?): \brf{comparison of means/simple difference in outcomes}, which can be estimated from two samples of data (treatment and control group)
 \begin{equation*}
 \begin{array}{ll}
-SDO &= E(Y_i |D_i=1))-E(Y_i |D_i=0)) \\
+SDO &= E(Y_i |D_i=1)-E(Y_i |D_i=0) \\
 &= \frac{1}{N_T}\displaystyle\sum_i (y_i \mid d_i=1) - \frac{1}{N_C}\displaystyle\sum_i (y_i \mid d_i=0)   \\
 \end{array}
 \end{equation*}
 
-In **out example**, $SDO=$
 
 
+## Simple Difference in Outcomes (SDO)
 
+
+\begin{tabular}{ccccc}
+\hline
+\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Untreated} $Y^0$  & \textbf{Causal Effect} \\
+\hline
+1 & 1 & \cellcolor{green!25}80 & 60 & 20 \\
+2 & 1 & \cellcolor{green!25}75 & 70 & 5 \\
+3 & 0 & 70 & \cellcolor{red!25}60 & 10 \\
+4 & 1 & \cellcolor{green!25}85 & 80 & 5 \\
+5 & 0 & 75 & \cellcolor{red!25}70 & 5 \\
+6 & 0 & 80 & \cellcolor{red!25}80 & 0 \\
+7 & 0 & 90 & \cellcolor{red!25}100 & -10 \\
+8 & 1 & \cellcolor{green!25}85 & 80 & 5 \\
+\hline
+\end{tabular}
+
+\vfill
+We compare here the \textcolor{green}{observed outcomes of the treated} to the \textcolor{red}{observed outcomes of the untreated}
+
+\vfill
+
+$SDO=\textcolor{green}{81.25} - \textcolor{red}{77.5}=3.75$
 
 ## Comparison by Treatment Status
-Problem with SDO: units may \brf{select into treatment}
+Problem with SDO: \brf{treated and untreated units are not comparable}
 
 \begin{equation}\nonumber
 \begin{array}{rcl}
@@ -437,10 +468,157 @@ E(Y_{i}|D_{i} = 1) - E(Y_{i}|D_{i} = 0) &=&\\
 \end{array}
 \end{equation}
 
-Our estimate of the ATE is contaminates by two biases:
+Our estimate of the \brf{ATE is contaminated by two biases}:
 
-- selection into treatment
-- heterogeneous treatment effects
+- **selection bias**
+- **heterogeneous treatment effects** 
+
+
+## Selection Bias
+
+\begin{tabular}{ccccc}
+\hline
+\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Untreated} $Y^0$  & \textbf{Causal Effect} \\
+\hline
+1 & 1 & 80 & \cellcolor{green!25}60 & 20 \\
+2 & 1 & 75 & \cellcolor{green!25}70 & 5 \\
+3 & 0 & 70 & \cellcolor{red!25}60 & 10 \\
+4 & 1 & 85 & \cellcolor{green!25}80 & 5 \\
+5 & 0 & 75 & \cellcolor{red!25}70 & 5 \\
+6 & 0 & 80 & \cellcolor{red!25}80 & 0 \\
+7 & 0 & 90 & \cellcolor{red!25}100 & -10 \\
+8 & 1 & 85 & \cellcolor{green!25}80 & 5 \\
+\hline
+\end{tabular}
+
+\vfill
+The \brf{selection bias} is the difference between the green and red cells. 
+
+\vfill
+
+In this case, $E(Y_{i0}|D_{i} = 1) - E(Y_{i0}|D_{i} = 0) = 72.5-77.5=-5$
+
+\vfill
+So in absence of the treatment, the untreated have more favourable outcomes than the treated
+
+
+## Selection Bias
+
+The \brf{selection bias} is $E(Y_{i0}|D_{i} = 1) - E(Y_{i0}|D_{i} = 0)$
+
+\vfill
+This means that, even \brf{without the treatment}, the \brf{two groups would have different outcomes}
+
+\vfill
+Selection bias is very common! Whenever there is a \brf{confounder, we have selection bias}
+
+
+## Heterogeneous Treatment Effects
+
+$\text{HTE bias}=(1-\pi)\left[ATT-ATU\right]$
+
+\vfill
+
+Another problem is that the \brf{treatment effect may vary across units}
+
+- People who take the treatment may be different from those who do not
+- People with **stronger treatment effects** may be **more likely** to take the treatment
+
+\vfill
+
+\brf{Heterogeneous treatment effects bias} can even occur in a randomised experiment
+
+- We can **hardly ever enforce that people take the treatment**
+- Unlike in physics or chemistry, in the social sciences we can only **encourage people to take the treatment**
+- We speak here of \brf{imperfect compliance}
+
+
+
+
+## Heterogeneous Treatment Effects Bias
+
+\begin{tabular}{ccccc}
+\hline
+\textbf{Person} & \textbf{D} & \textbf{PO Treated} $Y^1$ & \textbf{PO Untreated} $Y^0$  & \textbf{Causal Effect} \\
+\hline
+1 & 1 & 80 & 60 & \cellcolor{green!25}20 \\
+2 & 1 & 75 & 70 & \cellcolor{green!25}5 \\
+3 & 0 & 70 & 60 & \cellcolor{red!25}10 \\
+4 & 1 & 85 & 80 & \cellcolor{green!25}5 \\
+5 & 0 & 75 & 70 & \cellcolor{red!25}5 \\
+6 & 0 & 80 & 80 & \cellcolor{red!25}0 \\
+7 & 0 & 90 & 100 & \cellcolor{red!25}-10 \\
+8 & 1 & 85 & 80 & \cellcolor{green!25}5 \\
+\hline
+\end{tabular}
+
+\vfill
+The \brf{heterogeneous treatment effects bias} is the difference between the green and red cells weighted by the \brf{probability of treatment}
+
+\vfill
+
+$\text{HTE bias}=(1-\pi)\left[\textcolor{green}{ATT}-\textcolor{red}{ATU}\right]=0.5\times \left[ \textcolor{green}{8.75}-\textcolor{red}{1.25}\right]=3.75$
+
+
+
+## SDO vs. ATT
+
+In our example, $SDO=3.75$
+
+\vfill
+\begin{equation*}
+\begin{array}{rcl}
+SDO &=& ATT + \text{Selection Bias} \\
+    &=& 8.75 - 5 = 3.75
+\end{array}
+\end{equation*}
+
+\vfill
+In our case, the \brf{SDO under-estimates the ATT} by 5 because of selection bias. Without the treatment, treated units have less favourable outcomes than untreated units. 
+
+
+## SDO vs ATE
+
+\begin{equation*}
+\begin{array}{rclllll}
+SDO &=& ATE &+& \text{Selection Bias} &+& \text{HTE Bias} \\
+    &=& 5 &-& 5 &+& 3.75 \\
+    &=& 3.75
+\end{array}
+\end{equation*}
+
+\vfill
+
+In our case, the SDO also under-estimates the ATE. This is the result of two biases going in opposite directions. The overall bias is negative. 
+
+
+## Putting it all together
+
+The **previous slides** have shown that 
+
+- a \brf{simple (a.k.a. naive) comparison of treated and untreated} units yields a \brf{biased estimate} of the ATE and ATT
+- It is \brf{not random} whether a unit is treated or not or \brf{chooses to get treated or not}
+- This choice leads to \brf{selection bias} and \brf{heterogeneous treatment effects bias}
+- A \brf{randomised experiment} can **eliminate selection bias** but **not necessarily the HTE bias**
+
+
+## Implication for research practice:
+
+We need to **understand the sources of bias** in our context
+
+\vfill
+We **cannot test directly for the presence of bias** 
+
+- no matter how much big data enthusiasts make us believe that we can
+
+\vfill
+
+We need to be humble about **what parameters we can identify with our data**
+- Example: ATT does not suffer from HTE bias, but is it relevant?
+
+
+
+
 
 
 ## Comparison by Treatment Status

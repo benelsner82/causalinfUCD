@@ -25,7 +25,7 @@ custom_col_names <- c("Person", "D", "PO Treated \\(Y^1\\)", "PO Untreated \\(Y^
 ## blank table
 
 html_table <- data %>%
-  kable("html", escape = FALSE) %>%
+  kable("html", escape = FALSE, col.names=custom_col_names) %>%
   kable_styling(bootstrap_options = c("striped", "hover")) 
 
 
