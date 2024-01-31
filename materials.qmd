@@ -32,8 +32,9 @@ These two videos explain the foundations of causal inference based on directed a
 
 
 
-## 3 Randomised Experiments and the Potential Outcomes Framework
+## 3 The Potential Outcomes Framework and Randomised Experiments
 
+#### [Slides](/slides/3 Experiments and PO/slides_3_PO.pdf)
 
 
 ## 4 Matching

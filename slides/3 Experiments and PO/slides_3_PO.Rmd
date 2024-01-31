@@ -1,6 +1,6 @@
 ---
 title: "[ECON42720 Causal Inference and Policy Evaluation](https://benelsner82.github.io/causalinfUCD/)"
-subtitle: "3 Potential Outcomes and Randomized Experiments"
+subtitle: "3 Potential Outcomes and Randomised Experiments"
 author: "Ben Elsner (UCD)"
 output:
   beamer_presentation:
@@ -30,6 +30,18 @@ graphdir <- "../../../causalinf_phd/Graphs/"
 
 ## About this Lecture
 
+This lecture introduces the \brf{potential outcomes framework} 
+
+- This framework allows us to think about \brf{causal effects in a structured way}
+- We learn why \brf{counterfactuals are important} but also \brf{difficult to observe/construct}
+- We learn what biases can occur when we \brf{do not observe all confounders}
+
+\vfill
+One \brf{solution for causal inference: randomised experiments}
+
+- Under what conditions do they allow for the **identification of a causal effect?**
+- How can a hypothetical experiment serve as a **benchmark for other methods?**
+
 
 ## Lingo and Notation
 
@@ -57,8 +69,6 @@ The \brf{lingo of causal inference} is borrowed from \brf{medical trials}
 \vfill
 
 Find more about the course on the [\brf{course page}](https://benelsner82.github.io/causalinfUCD/)
-
-## Notation
 
 
 ## Causality
@@ -179,6 +189,7 @@ Y_{i0} & \textrm{if } D_{i}=0
 \end{array} \right.
 \end{equation*}
 \vfill
+\brf{Switching equation}
 \begin{equation*}
  =  D_{i}Y_{i1} + (1 - D_{i})Y_{i0} 
 \end{equation*}
@@ -207,19 +218,29 @@ We are interested in the (individual) \brf{treatment effect} \(\Delta_{i} = Y_{i
 
 
 
-## The Fundamental Problem of Causal Inference
+## Wanted: The Counterfactual
 A \brf{critical ingredient} to establish causality: the \brf{counterfactual}
 \vfill
 \brf{What would have happened} to a unit if 
 
 - the treatment status $D \in \{0,1\}$ was different?
-- the treatment intensity was different?
+- or, if $D$ is continuous, the treatment intensity was different?
 
 \vfill
-The \brf{counterfactual} is entirely \brf{hypothetical}, but we cannot make causal claims without it!
+For units that were treated, we want to know $Y_{i0}\mid D_i=1$. For units that were untreated, we want to know $Y_{i1}\mid D_i=0$.
 
 \vfill
-\pause
+\brf{No counterfactual, no causal claim!}
+
+
+## Finding a Counterfactual: The Average Treatment Effect (ATE)
+Problem: \brf{we cannot observe the counterfactual}
+
+- at the **individual level**, the counterfactual is **entirely hypothetical**
+
+
+\vfill
+
 \brf{Statistical solution}: **Average Treatment Effect** (**ATE**) for a random unit
 \begin{equation*}
 E(\Delta_{i}) = E(Y_{i1} - Y_{i0}) = E(Y_{i1}) - E(Y_{i0})
@@ -231,9 +252,8 @@ If a **random unit was treated**, the **expected difference in their outcome** i
 
 
 
-## The Fundamental Problem of Causal Inference
-To see how the \brf{ATE can(not) be estimated from observational data}, it is useful to consider a \brf{hypothetical effect}
-\vfill
+## The Average Treatment Effect on the Treated (**ATT**)
+
 The \brf{Average Treatment Effect on the Treated} (**ATT**)
 \begin{equation*}
 \begin{array}{ll}
@@ -243,6 +263,9 @@ ATT = E(\Delta_{i}|D_{i} = 1) & = E(Y_{i1} - Y_{i0}|D_{i} = 1)\\
 \end{equation*}
 \vfill
 **Interpretation**: Average difference in potential outcomes for those who were treated
+
+\vfill
+The ATT is **useful for policy evaluation**: take units who were treated and think what their outcomes would be had they not been treated
 
 
 ## The Average Treatment Effect on the Untreated (ATU)
@@ -260,11 +283,14 @@ ATU = E(\Delta_{i}|D_{i} = 0) & = E(Y_{i1} - Y_{i0}|D_{i} = 0)\\
 \vfill
 **Interpretation**: the **average difference in potential outcomes** for those who were **not treated**
 
+\vfill
+The ATU can (sometimes) be **useful for policy evaluation**: take units who were untreated and think what their outcomes would be had they been treated
+
 
 
  
 
-## Treatment Effects
+## Treatment Effects: Numerical Example
 
 \begin{tabular}{ccccc}
 \hline
@@ -302,7 +328,7 @@ Here we observe the \brf{potential outcomes} for each person. Some people are tr
 \end{tabular}
 
 \vfill
-The ATE is the average of the last column: $5$
+The ATE is the average of the last column: $ATE=5$
 
 
 ## The Average Treatment Effect on the Treated (ATT)
@@ -323,7 +349,7 @@ The ATE is the average of the last column: $5$
 \end{tabular}
 
 \vfill
-The ATT is the average of the green cells: $8.75$
+The ATT is the average causal effect of those who were treated (green cells): $ATT=8.75$
 
 
 
@@ -345,10 +371,10 @@ The ATT is the average of the green cells: $8.75$
 \end{tabular}
 
 \vfill
-The ATU is the average of the white cells: $1.25$
+The ATU is the average causal effect of the units who were not treated (green cells): $ATU=1.25$
 
 \vfill
-Here we have $ATT>ATE>ATU$, which may indicate **selection into treatment**: those who benefit most from the treatment are most likely to take it
+Here we have **$ATT>ATE>ATU$**, which may indicate **selection into treatment**: those who benefit most from the treatment are most likely to take it
 
 
 
@@ -380,7 +406,7 @@ There is \brf{no clear answer to this question}
 - How would they be affected if they took up the policy
 
 \vfill
-But: We \brf{need all three to interpret the estimation results}
+But: We \brf{need all three to interpret typical estimation results}
 
 
 
@@ -400,7 +426,7 @@ Solution (?): \brf{comparison of means/simple difference in outcomes}, which can
 \begin{equation*}
 \begin{array}{ll}
 SDO &= E(Y_i |D_i=1)-E(Y_i |D_i=0) \\
-&= \frac{1}{N_T}\displaystyle\sum_i (y_i \mid d_i=1) - \frac{1}{N_C}\displaystyle\sum_i (y_i \mid d_i=0)   \\
+&= \underbrace{\frac{1}{N_T}\displaystyle\sum_i (y_i \mid d_i=1)}_{\text{Treated units}} - \underbrace{\frac{1}{N_C}\displaystyle\sum_i (y_i \mid d_i=0)}_{\text{"Control" units (untreated)}}   \\
 \end{array}
 \end{equation*}
 
@@ -425,11 +451,11 @@ SDO &= E(Y_i |D_i=1)-E(Y_i |D_i=0) \\
 \end{tabular}
 
 \vfill
-We compare here the \textcolor{green}{observed outcomes of the treated} to the \textcolor{red}{observed outcomes of the untreated}
+We compare here the **observed outcomes** of the \textcolor{darkgreen}{treated} to the **observed outcomes** of the \textcolor{red}{untreated}
 
 \vfill
 
-$SDO=\textcolor{green}{81.25} - \textcolor{red}{77.5}=3.75$
+$SDO=\textcolor{darkgreen}{81.25} - \textcolor{red}{77.5}=3.75$
 
 ## Comparison by Treatment Status
 Problem with SDO: \brf{treated and untreated units are not comparable}
@@ -461,8 +487,7 @@ The \brf{simple difference in outcomes yields}:
 
 \begin{equation}\nonumber
 \begin{array}{rcl}
-E(Y_{i}|D_{i} = 1) - E(Y_{i}|D_{i} = 0) &=&\\
- &=& ATE  \\
+E(Y_{i}|D_{i} = 1) - E(Y_{i}|D_{i} = 0) &=& ATE\\
  &+& \underbrace{\textcolor{brickred}{E(Y_{i0}|D_{i} = 1)} - E(Y_{i0}|D_{i} = 0)}_{\text{Selection bias}}\\
  &+& \underbrace{(1-\pi)\left[ATT-ATU\right]}_{\text{HTE Bias}}\\
 \end{array}
@@ -471,10 +496,10 @@ E(Y_{i}|D_{i} = 1) - E(Y_{i}|D_{i} = 0) &=&\\
 Our estimate of the \brf{ATE is contaminated by two biases}:
 
 - **selection bias**
-- **heterogeneous treatment effects** 
+- **heterogeneous treatment effects (HTE) bias** 
 
 
-## Selection Bias
+## Selection Bias: Genuine Difference between Treated and Untreated Units
 
 \begin{tabular}{ccccc}
 \hline
@@ -492,17 +517,26 @@ Our estimate of the \brf{ATE is contaminated by two biases}:
 \end{tabular}
 
 \vfill
-The \brf{selection bias} is the difference between the green and red cells. 
+The \brf{selection bias} is the \brf{difference between the green and red cells}. 
 
 \vfill
 
-In this case, $E(Y_{i0}|D_{i} = 1) - E(Y_{i0}|D_{i} = 0) = 72.5-77.5=-5$
+In this case, $\textcolor{darkgreen}{E(Y_{i0}|D_{i} = 1)} - \textcolor{red}{E(Y_{i0}|D_{i} = 0)} = \textcolor{darkgreen}{72.5}-\textcolor{red}{77.5}=-5$
 
 \vfill
-So in absence of the treatment, the untreated have more favourable outcomes than the treated
+So in absence of the treatment, the untreated have more favorable outcomes than the treated
 
 
 ## Selection Bias
+
+```{r, echo=FALSE, out.width="75%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "charlesosbourne.jpeg"))
+```
+
+\tiny
+Source: somewhere on X, before 2023
+
+## Selection Bias: Genuine Difference between Treated and Untreated Units
 
 The \brf{selection bias} is $E(Y_{i0}|D_{i} = 1) - E(Y_{i0}|D_{i} = 0)$
 
@@ -513,13 +547,16 @@ This means that, even \brf{without the treatment}, the \brf{two groups would hav
 Selection bias is very common! Whenever there is a \brf{confounder, we have selection bias}
 
 
+
+
+
 ## Heterogeneous Treatment Effects
 
 $\text{HTE bias}=(1-\pi)\left[ATT-ATU\right]$
 
 \vfill
 
-Another problem is that the \brf{treatment effect may vary across units}
+\brf{Treatment effect may vary across units}
 
 - People who take the treatment may be different from those who do not
 - People with **stronger treatment effects** may be **more likely** to take the treatment
@@ -533,6 +570,15 @@ Another problem is that the \brf{treatment effect may vary across units}
 - We speak here of \brf{imperfect compliance}
 
 
+## Heterogeneous Treatment Effects Bias
+
+
+```{r, echo=FALSE, out.width="75%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "strengthtraining.png"))
+```
+
+\tiny
+Source: Dall-E, OpenAI
 
 
 ## Heterogeneous Treatment Effects Bias
@@ -557,7 +603,7 @@ The \brf{heterogeneous treatment effects bias} is the difference between the gre
 
 \vfill
 
-$\text{HTE bias}=(1-\pi)\left[\textcolor{green}{ATT}-\textcolor{red}{ATU}\right]=0.5\times \left[ \textcolor{green}{8.75}-\textcolor{red}{1.25}\right]=3.75$
+$\text{HTE bias}=(1-\pi)\left[\textcolor{darkgreen}{ATT}-\textcolor{red}{ATU}\right]=0.5\times \left[ \textcolor{darkgreen}{8.75}-\textcolor{red}{1.25}\right]=3.75$
 
 
 
@@ -602,6 +648,45 @@ The **previous slides** have shown that
 - A \brf{randomised experiment} can **eliminate selection bias** but **not necessarily the HTE bias**
 
 
+
+## So when Is the SDO Unbiased?
+
+The SDO is unbiased ($SDO=ATE$) under the \brf{Independence Assumption}
+
+\begin{align}
+   (Y_1,Y_0) \perp D
+\end{align}
+
+\vfill
+\brf{The potential outcomes are independent of the treatment}
+
+- Treated and untreated individuals have the same average potential outcomes $E(Y_0)$ and $E(Y_1)$
+- I.e. they are statistically similar
+- And no one selects into treatment because of their treatment effect
+
+## So when Is the SDO Unbiased?
+
+We can show that the \brf{selection bias and HTE bias are zero under the independence assumption}
+
+\vfill
+The **independence assumption implies**
+
+\begin{align*}
+   E\big[Y_1\mid D=1\big] - E\big[Y_1\mid D=0\big]=0 \\
+   \br{\underbrace{E\big[Y_0\mid D=1\big] - E\big[Y_0\mid D=0\big]}_{\text{Selection bias}}=0}
+\end{align*}
+
+\vfill
+
+**Independence also implies that $ATU=ATT$**
+
+\begin{align*}
+   ATT-ATU & =E\big[Y_1\mid D=1\big]-E\big[Y_0\mid D=1\big]    \\
+           & - E\big[Y_1 \mid D=0\big]+ E\big[Y_0\mid D=0\big] \\
+           & = 0                                                        
+\end{align*}
+
+
 ## Implication for research practice:
 
 We need to **understand the sources of bias** in our context
@@ -622,7 +707,7 @@ We need to be humble about **what parameters we can identify with our data**
 
 
 ## Comparison by Treatment Status
-But in most cases, \brf{we run regressions} rather than comparing means
+In most cases, \brf{we run regressions} rather than comparing means
 \begin{equation}\nonumber
 \begin{array}{lcccccc}
 Y_{i} =& \alpha &+& \beta & D_{i} & + & \varepsilon_{i}\\
@@ -643,40 +728,125 @@ E(Y_{i}|D_{i} = 0) = & \alpha + E(\varepsilon_{i}|D_{i} = 0)\\
 
 
 ## Comparison by Treatment Status
+
+\brf{Your regression will estimate a coefficient} \(\hat{\beta}\) that is a \brf{combination of a treatment effect (ATE or ATT) plus a bias}
+
+\vfill
 The OLS estimate of \(\beta\) is
 \begin{equation*}\label{eq5}
 \begin{array}{rcl}
 E(Y_{i}|D_{i} = 1) &-& E(Y_{i}|D_{i} = 0)\\
-& = & \underbrace{\beta}_{\mbox{treatment effect}}  +  \underbrace{E(\varepsilon_{i}|D_{i} = 1) - E(\varepsilon_{i}|D_{i} = 0)}_{\mbox{selection bias}}.
+& = & \underbrace{\beta}_{\mbox{Treatment Effect}}  +  \underbrace{E(\varepsilon_{i}|D_{i} = 1) - E(\varepsilon_{i}|D_{i} = 0)}_{\mbox{bias}}.
+\end{array}
+\end{equation*}
+
+
+\vfill
+The **RHS is either**
+
+- ATT + Selection Bias
+- ATE + Selection Bias + HTE Bias
+- Both are equivalent
+
+\vfill
+We should \textbf{always assume that the $\text{bias} \neq 0$}
+
+
+## What if We Control for $X$
+
+\begin{tabular}{cccccc}
+\hline
+\textbf{Person} & \textbf{D} & Female (\textbf{X}) & \textbf{PO Treated} $Y^1$ & \textbf{PO Untreated} $Y^0$  & \textbf{Causal Effect} \\
+\hline
+1 & 1 & 1 & 80 & 60 & 20 \\
+2 & 1 & 1 & 75 & 70 & 5 \\
+3 & 0 & 1 & 70 & 60 & 10 \\
+4 & 1 & 0 & 85 & 80 & 5 \\
+5 & 0 & 1 & 75 & 70 & 5 \\
+6 & 0 & 0 & 80 & 80 & 0 \\
+7 & 0 & 0 & 90 & 100 & -10 \\
+8 & 1 & 0 & 85 & 80 & 5 \\
+\hline
+\end{tabular}
+
+
+
+## Controlling for $X$
+
+If $X$ is binary, we \brf{compare the outcomes conditional on $X$}
+
+\vfill
+
+This means that 
+
+- We **compare the outcomes** of treated and untreated units **within each group** defined by $X$
+- Our estimator is the **weighted average of these differences**
+
+\vfill
+
+Consider $p=Pr(x=1)$ and $q=Pr(x=0)$, with $p+q=1$
+
+
+
+\begin{equation*}
+\begin{array}{rcl}
+E(Y_{i}|D_{i} = 1, X) &-& E(Y_{i}|D_{i} = 0, X)\\
+& = & p\left[E(Y_{i1} \mid D_{i} = 1, x=1)-E(Y_{i1} \mid D_{i} = 0, x=1)\right] \\
+& + & q\left[E(Y_{i1} \mid D_{i} = 1, x=0)-E(Y_{i1} \mid D_{i} = 0, x=0)\right] \\
+& = & p\left[ATT_{x=1} + E(Y_{i0} \mid D_{i} = 1, x=1)-E(Y_{i0} \mid D_{i} = 0, x=1)\right] \\
+& + & q\left[ATT_{x=0} + E(Y_{i0} \mid D_{i} = 1, x=0)-E(Y_{i0} \mid D_{i} = 0, x=0)\right] \\
 \end{array}
 \end{equation*}
 
 
 
+## What if We Control for $X$
 
-## Comparison by Treatment Status
-\brf{Selection bias in theory} $E(Y_{i0}|D_{i} = 1) - E(Y_{i0}|D_{i} = 0)=E(\varepsilon_{i}|D_{i} = 1) - E(\varepsilon_{i}|D_{i} = 0)$
+Suppose $X$ is binary, for example male and female 
 
-- Treated and untreated units don't have the same potential outcomes
+
+\begin{tabular}{cccccc}
+\hline
+\textbf{Person} & \textbf{D} & Female (\textbf{X}) & \textbf{PO Treated} $Y^1$ & \textbf{PO Untreated} $Y^0$  & \textbf{Causal Effect} \\
+\hline
+1 & 1 & 1 & \cellcolor{green!25}80 & 60 & 20 \\
+2 & 1 & 1 & \cellcolor{green!25}75 & 70 & 5 \\
+3 & 0 & 1 & 70 & \cellcolor{red!25}60 & 10 \\
+4 & 1 & 0 & \cellcolor{gray!25}85 & 80 & 5 \\
+5 & 0 & 1 & 75 & \cellcolor{red!25}70 & 5 \\
+6 & 0 & 0 & 80 & \cellcolor{yellow!25}80 & 0 \\
+7 & 0 & 0 & 90 & \cellcolor{yellow!25}100 & -10 \\
+8 & 1 & 0 & \cellcolor{gray!25}85 & 80 & 5 \\
+\hline
+\end{tabular}
+
+- $SDO_{X=1}=\textcolor{darkgreen}{77.5}-\textcolor{red}{65}=12.5$
+- $SDO_{X=0}=\textcolor{darkgreen}{85}-\textcolor{red}{90}=-5$
+- $SDO=\frac{1}{2}\times 12.5 + \frac{1}{2}\times (-5)=3.75$
+
+
+## Controlling for $X$
+
+In our example, $E(D \mid X)=E(D)$, i.e. \brf{$D$ is independent of $X$}
+
+- This means that controlling for $X$ does not affect the estimate of the SDO
+
+\vfill 
+
+But often, $E(D \mid X) \neq E(D)$ because \brf{$X$ is a confounder}
+
+- That's exactly when we want to control for $X$
+- If $X$ is the only confounder, **controlling for $X$ eliminates the selection bias**
 
 \vfill
-\brf{In practice, put simply}: **treated and untreated units are different**
-\vfill
-\pause
-\brf{Selection bias is pervasive} because **people choose what's best** for them
+We can identify the ATE under the \brf{Conditional Independence Assumption}
 
-- There is simply no reason to believe the bias is zero
-- Causal inference provides techniques to eliminate selection bias under assumptions
+\begin{align*}
+   (Y_1,Y_0) \perp D \mid X
+\end{align*}
 
 
-
-
-
-
-
-
-
-## Randomized Experiments
+## Randomised Experiments
 \brf{Experiments} provide a \brf{clean way to eliminate selection bias}
 \vfill
 Even if in most cases it is **not possible to run experiments**, a **clean experiment** serves as the **benchmark** for all the methods in this course
@@ -688,7 +858,7 @@ Even if in most cases it is **not possible to run experiments**, a **clean exper
 
 
 
-## Randomized Experiments
+## Randomised Experiments
 \brf{Basic idea}: \brf{randomly assign treatment} across units
 \vfill
 \brf{Two conditions} have to be fulfilled: 
@@ -703,7 +873,7 @@ In that case, the **treatment and control group** are **statistically identical*
 
 
 
-## Randomized Experiments
+## Randomised Experiments
 \brf{Formally} (T: treatment group, C: control group)
 \begin{equation*}\label{eq7}
 E\{Y_{i0}|i \in C\} = E\{Y_{i0}|i \in T\}
@@ -719,7 +889,7 @@ E\{Y_{i1}|i \in C\} = E\{Y_{i1}|i \in T\}.
 
 
 
-## Randomized Experiments
+## Randomised Experiments
 Therefore, we can obtain an \brf{unbiased and consistent estimate of the ATE}
 \vfill
 \begin{equation*}\label{eq9}
@@ -728,12 +898,12 @@ E(\Delta _{i}) = E(Y_{i1} - Y_{i0}) = E\{Y_{i1}|i \in T\} - E\{Y_{i0}|i \in C\}.
 \vfill
 $\Rightarrow$ **comparison of means** is meaningful (causal effect in expectation)
 \vfill
-$\Rightarrow$ Randomization solves the \brf{fundamental problem of causal inference}
+$\Rightarrow$ Randomisation solves the \brf{fundamental problem of causal inference}
 
 
 
 
-## Randomized Experiments
+## Randomised Experiments
 But \brf{what if not everyone complies} with the treatment?
 \vfill
 Examples
@@ -756,7 +926,7 @@ As we will learn later in the course, **all is not lost**
 
 
 
-## Randomized Experiments
+## Randomised Experiments
 An **important assumption** underlying causal inference in experiments
 \vfill
 \begin{center}
@@ -771,7 +941,7 @@ In \brf{plain English}
 
 
 
-## Randomized Experiments
+## Randomised Experiments
 \brf{SUTVA} is an \brf{untestable assumption}
 \vfill
 Examples for \brf{violations}: 
@@ -790,10 +960,10 @@ Examples for \brf{violations}:
 
 
 
-## Cookbook for Analyzing a Randomized Experiment
+## Cookbook for Analyzing a Randomised Experiment
 **1) Explain experimental design** in detail, in particular
 
-- How was the randomization carried out
+- How was the randomisation carried out
 - Discuss compliance (or likely non-compliance)
 - Argue why SUTVA holds
 
@@ -818,7 +988,7 @@ x_i=\delta_1 + \delta_2 D_i + \eta_i
 
 
 
-## Cookbook for Analyzing a Randomized Experiment
+## Cookbook for Analyzing a Randomised Experiment
 **3) Show and discuss results**
 
 - **Compare means** across treatment and control groups
@@ -833,7 +1003,7 @@ y_i=\alpha + \beta D_i + \boldsymbol{X_i\gamma} + u_i
 \brf{Why add controls?}
 \pause
 
-- Additional test if randomization worked ($\beta$ should not change)
+- Additional test if randomisation worked ($\beta$ should not change)
 - Estimates become more precise (less noise in the model $\Rightarrow$ lower SE)
 
 
@@ -866,7 +1036,7 @@ Schools had to have **at least 3 classes** to participate.
 \vfill
 Entering cohort **randomly assigned to class type**. Teachers also randomly assigned.
 \vfill
-I.e. randomization was carried out **within schools**
+I.e. randomisation was carried out **within schools**
 \vfill
 Test scores measured towards **end of each school year** in March.
 
@@ -901,7 +1071,7 @@ y_{is}=\alpha + \beta D_{is} + \boldsymbol{X_{is}'\gamma} + \delta_s + u_{is}
 \brf{Why include fixed effects?}
 \pause
 
-- **Randomization** was carried out **within schools**
+- **Randomisation** was carried out **within schools**
 - Children in different school types may **react differently to the treatment**
 - The FE estimator compares children within the same school
 
@@ -925,7 +1095,7 @@ Result: \brf{smaller classes are more effective}
 \vfill
 \brf{Experimental design appears valid}
 
-- Balancing tables point to clean randomization
+- Balancing tables point to clean randomisation
 - Estimates not affected by controls for pre-treatment characteristics
 
 \vfill
@@ -944,14 +1114,14 @@ The \brf{same assumptions apply} to experiments with a \brf{continuous treatment
 \vfill
 Possibilites for researchers:
 
-- **Discretize** and compare mean outcomes (e.g. above/below median)
+- **Discretise** and compare mean outcomes (e.g. above/below median)
 - Estimate **marginal effect in a regression**
 
 
 
 
-## Randomized Experiments as Templates
-\brf{Randomized experiments are often difficult or impossible} to conduct
+## Randomised Experiments as Templates
+\brf{Randomised experiments are often difficult or impossible} to conduct
 \vfill
 But they serve as a **template for estimating causal effects** in non-experimental settings
 \vfill
@@ -979,10 +1149,42 @@ Any study that **claims to estimate a causal effect** should
 
 ## Group Work I
 
-ATE, ATT, ATU
+Suppose you want to study the impact of medical cards on health outcomes in Ireland. Medical cards are means-tested and given to people with low income. Card holders can access medical care for free. You have access to administrative data covering all adults in Ireland, including information on whether they ever held a medical card and their health outcomes. 
+
+\vfill
+Tasks: 
+
+1. Explain: What is the treatment in this case?
+2. Intuitively, explain what the ATE, ATU, ATT are. Which of these parameters is most relevant in a policy evaluation in this context?
+3. What are potential sources of bias here?
 
 
 ## Group Work II
+
+Consider the independence assumption
+
+\begin{align*}
+   (Y_1,Y_0) \perp D
+\end{align*}
+
+\vfill
+Evaluate the following statements (i.e. are they implied by the independence assumption)?
+
+1. $E[Y_1\mid D=1] - E[Y_0\mid D=0]=0$
+2. $E[Y_1\mid D=1] - E[Y_0\mid D=1]=0$
+3. $E[Y_1\mid D=1] - E[Y_1\mid D=0]=0$
+
+
+## Group Work III
+
+Suppose you want to study the impact of local police presence on crime in Dublin.  
+
+\vfill
+Questions: 
+
+- What would be the ideal experiment to run here?
+- Why may this experiment not be feasible?
+- If you can't run an experiment, what else could you do to get at the causal effect?
 
 ## Derivation of SDO Decomposition
 
