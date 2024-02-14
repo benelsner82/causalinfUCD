@@ -14,10 +14,572 @@ classoption: "aspectratio=169, handout"
 ```{r setup, include=FALSE}
 rm(list=ls())
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(knitr)
+
+graphdir <- "../../../causalinf_phd/Graphs/"
+
 ```
 
 ## About this Lecture
 
+
+
+## Resources
+
+As an \brf{introduction}, I recommend Chapter 5 in Scott Cunningham's Mixtape
+
+\vfill
+
+Slightly \brf{more detailed coverage} can be found in 
+
+- Huntington-Klein's The Effect, Chapter 14
+- Huber's Causal Analysis, Chapter 4
+
+\vfill
+Many examples in this chapter, in particular the R codes, have been taken from The Effect or inspired by it.
+
+
+
+## Starting Point: Conditional Independence
+
+\begin{equation*}
+(Y^1,Y^0) \ind D\mid X
+\end{equation*}
+
+\vfill
+For \brf{causal identification}, we require the assumption that the \brf{treatment} $D$ is as good as \brf{randomly assigned conditional on the covariates $X$}
+\vfill
+
+Formally, this means that the potential outcomes are \brf{conditionally independent} of the treatment assignment given the covariates
+
+\begin{align*}
+   E\big[Y^1\mid D=1,X\big]=E\big[Y^1\mid D=0,X\big]
+   \\
+   E\big[Y^0\mid D=1,X\big]=E\big[Y^0\mid D=0,X\big]
+\end{align*}
+
+
+## Conditional Independence and Selection on Observables
+
+If CIA holds, we speak of \brf{selection on observables}
+
+- **Independence does not hold** in general
+- But it holds in the **subpopulations** defined by the covariates $X$
+
+\vfill
+The \brf{groups defined by $X$} (think age, gender, neighbourhood, etc) determine the \brf{treatment assignment}
+
+- But **within each group**, who gets treated is **as good as random**
+
+\vfill
+This is a **strong assumption!**
+
+
+## Example: Smoking and Lung Cancer
+
+\brf{Does smoking cause lung cancer?}
+
+- Today we would say "yes, of course"
+- But answering this question was far from clear in the 1950s
+- There is a **strong correlation** between smoking and lung cancer, but is it causal?
+
+\vfill
+\brf{(Potential) problem: confounders}
+
+- There could be genetic determinants of smoking and lung cancer
+- There could be environmental factors that cause both smoking and lung cancer
+
+\vfill
+We don't have \brf{experimental evidence}
+
+
+## Example: Death Rates per 1,000
+
+The following example from \citet{cochran1968} will illustrate what \brf{selection on observables} and do for us
+
+
+```{r, echo=FALSE, eval=TRUE}
+smoking_data <- data.frame(
+  "Smoking group" = c("Non-smokers", "Cigarettes", "Cigars/pipes"),
+  Canada = c(20.2, 20.5, 35.5),
+  UK = c(11.3, 14.1, 20.7),
+  US = c(13.5, 13.5, 17.4),
+  check.names = FALSE
+)
+
+kable(smoking_data, align = 'c')
+``` 
+
+\vfill
+
+In all countries, the **highest death rates are for cigar and pipe smokers** 
+
+- Does this mean that smoking pipes and cigars is more dangerous than smoking cigarettes?
+
+
+## Smoking and Lung Cancer: Independence?
+
+The \brf{independence assumption} would imply that 
+
+
+\begin{align*}
+   E\big[Y^1\mid \text{Cigarette}\big] =
+   E\big[Y^1\mid \text{Pipe}\big] =
+   E\big[Y^1\mid \text{Cigar}\big]
+   \\
+   E\big[Y^0\mid \text{Cigarette}\big]=
+   E\big[Y^0\mid \text{Pipe}\big] =
+   E\big[Y^0\mid \text{Cigar}\big]
+\end{align*}
+
+\vfill
+Suppose that the \brf{independence assumption} holds
+
+- This would/should also mean that observable characteristics $X$ are similar between the groups
+- I.e. the **covariates should be balanced** between groups
+
+
+
+## Are cigarette smokers similar to pipe and cigar smokers?
+
+Let's ask Dall-E: show me a picture of a cigarette smoker and a cigar smoker
+
+```{r, out.width = '40%', echo=FALSE, fig.align="center"}
+knitr::include_graphics(paste0(graphdir, "smokers.png"))
+```
+
+## Age as a Confounder?
+
+```{r, echo=FALSE, eval=TRUE}
+smoking_data_new <- data.frame(
+  "Smoking group" = c("Non-smokers", "Cigarettes", "Cigars/pipes"),
+  Canada = c(54.9, 50.5, 65.9),
+  UK = c(49.1, 49.8, 55.7),
+  US = c(57.0, 53.2, 59.7),
+  check.names = FALSE
+)
+
+kable(smoking_data_new, align = 'c')
+```
+
+Clearly, \brf{age affects what people smoke and also their death rates}
+
+- Independence is violated: the **distribution of age** is different between the groups
+- There may be other confounders, but let's focus on age for now
+
+\vfill
+We have \brf{covariate imbalance!}. Potential remedy: condition on age (\brf{subclassification})
+
+## Subclassification: Divide Age into Strata
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+                & Death rates & \# of Cigarette smokers & \# of Pipe or cigar smokers \\ \hline
+Age 20–40       & 20          & 65                       & 10                          \\
+Age 41–70       & 40          & 25                       & 25                          \\
+Age $\geq$ 71   & 60          & 10                       & 65                          \\
+Total           &             & 100                      & 100                         \\ \hline
+\end{tabular}
+\end{center}
+
+The **death rate of cigarette smokers in the population** is: 
+
+$$20 \times \dfrac{65}{100} + 40 \times \dfrac{25}{100} + 60 \times \dfrac{10}{100}=29$$
+
+\vfill
+But: the **age distribution is (heavily) imbalanced** between the groups
+
+## Re-weighting: Age-Adjusted Death Rates
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+                & Death rates & \# of Cigarette smokers & \# of Pipe or cigar smokers \\ \hline
+Age 20–40       & 20          & 65                       & 10                          \\
+Age 41–70       & 40          & 25                       & 25                          \\
+Age $\geq$ 71   & 60          & 10                       & 65                          \\
+Total           &             & 100                      & 100                         \\ \hline
+\end{tabular}
+\end{center}
+
+
+The **age-adjusted death rate of cigarette smokers** is:
+
+
+$$20 \times \dfrac{10}{100} + 40 \times \dfrac{25}{100} + 60 \times \dfrac{65}{100}=51$$
+
+
+## Age-Adjusted Death Rates
+
+```{r echo=FALSE, eval=TRUE}
+# Create the data frame
+smoking_data <- data.frame(
+  "Smoking group" = c("Non-smokers", "Cigarettes", "Cigars/pipes"),
+  "Canada" = c(20.2, 29.5, 19.8),
+  "UK" = c(11.3, 14.8, 11.0),
+  "US" = c(13.5, 21.2, 13.7),
+  check.names = FALSE
+)
+
+# Create the table with kable
+kable(smoking_data, align = 'c')
+```
+
+Here we \brf{achieved balance on one covariate: age}
+
+- The **age-adjusted death rates** are now more similar between the groups
+- But there may be an **imbalance on other covariates** (SES, income, health, etc)
+
+\vfill 
+We need to \brf{use a DAG} to identify \brf{all confounders} and adjust for them
+
+
+## Identifying Assumptions
+
+In presence of confounders $X$, we can \brf{identify a causal effect under two assumptions}
+
+1. **Conditional Independence**: $Y^0, Y^1 \perp D \mid X$
+2. **Common Support**: $0 < P(D = 1 \mid X) < 1$ with probability one
+
+\vfill
+\brf{Common support}: for each stratum, we need some units that are treated and others that are control units
+
+- We need **common support** to calculate the **weights for the adjustment**
+
+
+## Causal Identification with Selection on Observables
+
+Under \brf{conditional independence and common support}, the following holds:
+
+\begin{align*}
+   E\big[Y^1-Y^0\mid X\big] & = E\big[Y^1 - Y^0 \mid X,D=1\big]                     
+   \\
+            & = E\big[Y^1\mid X,D=1\big] - E\big[Y^0\mid X,D=0\big]
+   \\
+            & = E\big[Y\mid X,D=1\big] - E\big[Y\mid X,D=0\big]     
+\end{align*}
+
+\vfill
+The \brf{estimator for the ATE} is as follows: 
+
+\begin{align*}
+   \widehat{\delta_{ATE}}= \int \Big(E\big[Y\mid X,D=1\big] - E\big[Y\mid X,D=0\big]\Big)d\Pr(X)
+\end{align*}
+
+
+## The Limits of Subclassification: The Curse of Dimensionality
+
+In the example of smoking and death rates, we adjusted for just one confounder
+
+- The hope was that, by slicing up age into three groups, achieve balance in treated and control groups
+- We did achieve balance on age, but what about other confounders?
+- Also, are three age groups enough or do we need more?
+
+\vfill
+In practice, we have the \brf{problem of a finite sample size}
+
+- There are **limits to how many strata we can create**
+- We cannot have an infinite number of groups defined by one variable (such as age)
+- We cannot have an infinite number of variables to adjust for
+
+\vfill
+This problem is known as the \brf{curse of dimensionality}
+
+
+
+
+
+
+## .
+\tiny
+\bibliographystyle{authordate1}
+\bibliography{../../../causalinf_phd/bibliography_causalinf}
+
+
+
+## APPENDIX
+
+
+
+## Example: Using \citet{broockman_2013} for R examples
+
+\brf{Research question:} are black politicians more likely to help black citizens even if the incentives are low?
+
+\vfill
+\brf{Methodology:} audit study; sent emails to U.S. state legislators; asking them to help them sign up for unemployment benefits
+
+\vfill
+\brf{Experimental variation:}
+
+- Sender with black vs. white name
+- Sender lives in same district as legislator or far away
+
+\vfill
+\brf{Matching}: white and black legislators with similar characteristics
+
+
+## Broockman (2013) data preparation
+
+We use the excellent `Matching` package in R. A great alternative is `MatchIt`
+
+\small
+```{r, eval=TRUE, include=TRUE}
+library(Matching)
+library(causaldata)
+library(tidyverse)
+
+br <- causaldata::black_politicians
+
+# Outcome
+Y <- br %>%
+    pull(responded)
+# Treatment
+D <- br %>%
+    pull(leg_black)
+# Matching variables
+# Note select() is also in the Matching package, so we specify dplyr
+X <- br %>%
+    dplyr::select(medianhhincom, blackpercent, leg_democrat) %>%
+    as.matrix()
+
+```
+ 
+## Mahalanobis distance matching in R
+
+\footnotesize
+```{r, eval=TRUE, include=TRUE}
+# Set weight=2 for Mahalanobis distance
+M <- Match(Y, D, X, Weight = 2, caliper = 1)
+
+# See treatment effect estimate
+summary(M)
+
+```
+
+## Mahalanobis distance matching in R
+Previous slide: the estimate $-0.007346$ means that black legislators were 0.7 percentage points less likely to respond to emails
+
+\vfill
+
+This effect is not statistically significant
+
+
+
+
+## Mahalanobis distance matching in R
+
+\small
+```{r, eval=TRUE, include=TRUE}
+
+
+# Get matched data for use elsewhere. Note that this approach will 
+# duplicate each observation for each time it was matched
+matched_treated <- tibble(id = M$index.treated,
+                          weight = M$weights)
+matched_control <- tibble(id = M$index.control,
+                          weight = M$weights)
+matched_sets <- bind_rows(matched_treated,
+                          matched_control) 
+# Simplify to one row per observation
+matched_sets <- matched_sets %>%
+                    group_by(id) %>%
+                    summarize(weight = sum(weight))
+# And bring back to data
+matched_br <- br %>%
+    mutate(id = row_number()) %>%
+    left_join(matched_sets, by = 'id')
+```
+## Mahalanobis distance matching in R
+
+
+\small
+```{r, eval=TRUE, include=TRUE, echo=TRUE}
+# OLS estimation based on matched sample
+lm(responded~leg_black, data = matched_br, weights = weight)
+```
+
+We can see that the estimate is the same as with matching
+
+## Coarsened Exact Matching in R
+
+Broockman performs CEM to make black and white legislators more comparable
+
+\vfill
+
+We use the `cem` package here. Alternatively we could use the `method_cem` command of the `MatchIt` package.
+
+```{r cem1, eval=TRUE, include=TRUE}
+library(cem); library(tidyverse)
+br <- causaldata::black_politicians
+```
+
+
+## Coarsened Exact Matching in R
+
+\footnotesize
+```{r cem2, eval=TRUE, include=TRUE}
+# Limit to just the relevant variables and omit missings
+brcem <- br %>%
+    dplyr::select(responded, leg_black, medianhhincom, 
+    blackpercent, leg_democrat) %>%
+    na.omit() %>%
+    as.data.frame() # Must be a data.frame, not a tibble
+
+# Two ways to create breaks. Use quantiles to create quantile cuts or manually for evenly spaced (You can also skip this and let it do it automatically,
+# although you MUST do it yourself for binary variables). Be sure
+# to include the "edges" (max and min values).
+inc_bins <- quantile(brcem$medianhhincom, (0:6)/6)
+
+create_even_breaks <- function(x, n) {
+    minx <- min(x)
+    maxx <- max(x)
+    
+    return(minx + ((0:n)/n)*(maxx-minx))
+}
+```
+
+## Coarsened Exact Matching in R
+
+\footnotesize
+```{r cem3, eval=TRUE, include=TRUE}
+bp_bins <- create_even_breaks(brcem$blackpercent, 6)
+
+# For binary, we specifically need two even bins
+ld_bins <- create_even_breaks(brcem$leg_democrat,2)
+
+# Make a list of bins
+allbreaks <- list('medianhhincom' = inc_bins,
+                  'blackpercent' = bp_bins,
+                  'leg_democrat' = ld_bins)
+```
+
+
+
+## Coarsened Exact Matching in R
+
+\footnotesize
+```{r cem4, eval=TRUE, include=TRUE}
+# Match, being sure not to match on the outcome
+# Note the baseline.group is the *treated* group
+c <- cem(treatment = 'leg_black', data = brcem,
+         baseline.group =  '1',
+         drop = 'responded',
+         cutpoints = allbreaks,
+         keep.all = TRUE)
+
+# Get weights for other purposes
+brcem <- brcem %>%
+    mutate(cem_weight = c$w)
+
+```
+
+
+
+## Coarsened Exact Matching in R
+
+\footnotesize
+```{r cem5, eval=TRUE, include=TRUE, echo=TRUE}
+# OLS estimation with weighted dataset
+lm(responded~leg_black, data = brcem, weights = cem_weight)
+```
+
+
+## Coarsened Exact Matching in R
+
+\footnotesize
+```{r cem6, eval=TRUE, include=TRUE, echo=TRUE}
+# Use the inbuilt ATT estimation command from cem
+att(c, responded ~ leg_black, data = brcem)
+```
+
+## PSM in R
+
+To perform PSM, we can use the `MatchIt` package. Here we estimate the propensity score for the LaLonde data
+
+\footnotesize
+```{r psm1, eval=TRUE, include=TRUE, echo=TRUE}
+library("MatchIt")
+library('marginaleffects')
+data("lalonde")
+
+# 1:1 NN PS matching w/o replacement
+m.out1 <- matchit(treat ~ age + educ + race + married + 
+                   nodegree + re74 + re75, data = lalonde,
+                 method = "nearest", distance = "glm")
+```
+
+## PSM in R
+Checking balance after nearest neighbor matching
+
+\scriptsize
+```{r psm2, eval=TRUE, include=TRUE, echo=TRUE}
+summary(m.out1, un = FALSE)
+
+```
+
+
+## PSM in R 
+We can also plot the distribution of propensity scores
+
+```{r psm3, eval=TRUE, include=TRUE, echo=TRUE, out.width="65%"}
+plot(m.out1, type = "jitter", interactive = FALSE)
+```
+
+## PSM in R 
+Or how about this one...
+
+```{r psm4, eval=TRUE, include=TRUE, echo=TRUE, out.width="65%"}
+plot(summary(m.out1))
+```
+
+
+## PSM in R 
+
+\footnotesize
+```{r psm5, eval=TRUE, include=TRUE, echo=TRUE}
+# Generate matched dataset
+m.data <- match.data(m.out1)
+# Run a regression on the matched dataset
+fit <- lm(re78 ~ treat + age + educ + race + married + nodegree + 
+             re74 + re75, data = m.data, weights = weights)
+summary(fit)
+```
+
+## PSM in R 
+
+\footnotesize
+```{r psm6, eval=TRUE, include=TRUE, echo=TRUE}
+# Can also compute the ATT based on the interactions of the treatment
+fit <- lm(re78 ~ treat * (age + educ + race + married + nodegree + 
+             re74 + re75), data = m.data, weights = weights)
+
+avg_comparisons(fit,
+                variables = "treat",
+                vcov = ~subclass,
+                newdata = subset(m.data, treat == 1),
+                wts = "weights")
+```
+
+## PSM in R 
+Another option based on the `Matching` package; PSM done directly here
+\footnotesize
+```{r psm7, eval=TRUE, include=TRUE, echo=TRUE}
+library("Matching")
+attach (lalonde) 
+D <- treat
+Y <- re78 # define outcome
+X <- cbind( age , educ , nodegree , married , re74 , re75) 
+ps<- glm(D ~ X, family=binomial)$fitted 
+psmatching <- Match(Y=Y, Tr=D, X=ps , BiasAdjust = TRUE)
+
+```
+## PSM in R 
+Another option based on the `Matching` package; PSM done directly here
+\footnotesize
+```{r psm8, eval=TRUE, include=TRUE, echo=TRUE}
+summary(psmatching)
+```
 
 
 
