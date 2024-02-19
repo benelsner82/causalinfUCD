@@ -1,6 +1,6 @@
 ---
 title: "[ECON42720 Causal Inference and Policy Evaluation](https://benelsner82.github.io/causalinfUCD/)"
-subtitle: "3 Matching and Re-weighting"
+subtitle: "4 Matching and Re-weighting"
 author: "Ben Elsner (UCD)"
 output:
   beamer_presentation:
@@ -15,12 +15,20 @@ classoption: "aspectratio=169, handout"
 rm(list=ls())
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(knitr)
+library(ggplot2)
+library(grid)
+library(dplyr)
+library(haven)
+library(kableExtra)
+library(gridExtra)
+library(patchwork)
 
 graphdir <- "../../../causalinf_phd/Graphs/"
 
 ```
 
 ## About this Lecture
+
 
 
 
@@ -38,6 +46,10 @@ Slightly \brf{more detailed coverage} can be found in
 \vfill
 Many examples in this chapter, in particular the R codes, have been taken from The Effect or inspired by it.
 
+
+## Credits
+
+Stephen Pettigrew produced some very instructive graphs on matching. You can find his slides on matching here. He has lots of interesting materials on causal inference on his website.
 
 
 ## Starting Point: Conditional Independence
@@ -115,18 +127,21 @@ kable(smoking_data, align = 'c')
 In all countries, the **highest death rates are for cigar and pipe smokers** 
 
 - Does this mean that smoking pipes and cigars is more dangerous than smoking cigarettes?
+- And given the minor differences between cigarette smokers and non-smokers, are cigarettes harmless?
 
 
 ## Smoking and Lung Cancer: Independence?
 
-The \brf{independence assumption} would imply that 
+The \brf{independence assumption} would imply that all three groups have the **same potential outcomes on average**
 
 
 \begin{align*}
+ E\big[Y^1\mid \text{Non-Smoker}\big] =
    E\big[Y^1\mid \text{Cigarette}\big] =
    E\big[Y^1\mid \text{Pipe}\big] =
    E\big[Y^1\mid \text{Cigar}\big]
    \\
+   E\big[Y^0\mid \text{Non-Smoker}\big] =
    E\big[Y^0\mid \text{Cigarette}\big]=
    E\big[Y^0\mid \text{Pipe}\big] =
    E\big[Y^0\mid \text{Cigar}\big]
@@ -168,7 +183,12 @@ Clearly, \brf{age affects what people smoke and also their death rates}
 - There may be other confounders, but let's focus on age for now
 
 \vfill
-We have \brf{covariate imbalance!}. Potential remedy: condition on age (\brf{subclassification})
+We have \brf{covariate imbalance!} 
+
+\vfill
+Potential remedy: condition on age (\brf{subclassification})
+
+
 
 ## Subclassification: Divide Age into Strata
 
@@ -183,6 +203,21 @@ Total           &             & 100                      & 100                  
 \end{tabular}
 \end{center}
 
+
+
+## Subclassification: Divide Age into Strata
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+                & Death rates & \# of Cigarette smokers & \# of Pipe or cigar smokers \\ \hline
+Age 20–40       & \cellcolor{green!25}20          & \cellcolor{green!25}65                       & 10                          \\
+Age 41–70       & \cellcolor{green!25}40          & \cellcolor{green!25}25                       & 25                          \\
+Age $\geq$ 71   & \cellcolor{green!25}60          & \cellcolor{green!25}10                       & 65                          \\
+Total           &             & 100                      & 100                         \\ \hline
+\end{tabular}
+\end{center}
+
 The **death rate of cigarette smokers in the population** is: 
 
 $$20 \times \dfrac{65}{100} + 40 \times \dfrac{25}{100} + 60 \times \dfrac{10}{100}=29$$
@@ -192,13 +227,16 @@ But: the **age distribution is (heavily) imbalanced** between the groups
 
 ## Re-weighting: Age-Adjusted Death Rates
 
+
+Let's **re-weight** the death rates of cigarette smokers by the **age distribution of pipe/cigar smokers**
+
 \begin{center}
 \begin{tabular}{lccc}
 \hline
                 & Death rates & \# of Cigarette smokers & \# of Pipe or cigar smokers \\ \hline
-Age 20–40       & 20          & 65                       & 10                          \\
-Age 41–70       & 40          & 25                       & 25                          \\
-Age $\geq$ 71   & 60          & 10                       & 65                          \\
+Age 20–40       & \cellcolor{green!25}20          & 65                       & \cellcolor{green!25}10                          \\
+Age 41–70       & \cellcolor{green!25}40          & 25                       & \cellcolor{green!25}25                          \\
+Age $\geq$ 71   & \cellcolor{green!25}60          & 10                       & \cellcolor{green!25}65                          \\
 Total           &             & 100                      & 100                         \\ \hline
 \end{tabular}
 \end{center}
@@ -209,8 +247,13 @@ The **age-adjusted death rate of cigarette smokers** is:
 
 $$20 \times \dfrac{10}{100} + 40 \times \dfrac{25}{100} + 60 \times \dfrac{65}{100}=51$$
 
+\vfill
+If **cigarette smokers** had the **same age distribution as pipe/cigar smokers**, their death rate would be 51
+
 
 ## Age-Adjusted Death Rates
+
+Cochran \brf{computes age-adjusted death rates} (based on the population age distribution)
 
 ```{r echo=FALSE, eval=TRUE}
 # Create the data frame
@@ -248,6 +291,22 @@ In presence of confounders $X$, we can \brf{identify a causal effect under two a
 - We need **common support** to calculate the **weights for the adjustment**
 
 
+
+## Summary: Subclassification and Re-weighting
+
+\brf{Treated and control} units often differ in the \brf{distribution of $X$ (confounders)}
+
+\vfill
+We can make **both groups** (somewhat) **comparable** by
+
+1. dividing the sample into **strata based on $X$** (\brf{subclassification})
+2. re-weighting the strata to **achieve balance on $X$** (\brf{re-weighting})
+
+\vfill
+After re-weighting, both groups have the **same distribution of $X$ by construction**
+
+
+
 ## Causal Identification with Selection on Observables
 
 Under \brf{conditional independence and common support}, the following holds:
@@ -270,7 +329,7 @@ The \brf{estimator for the ATE} is as follows:
 
 ## The Limits of Subclassification: The Curse of Dimensionality
 
-In the example of smoking and death rates, we adjusted for just one confounder
+In the example of \brf{smoking and death rates}, we \brf{adjusted for just one confounder}
 
 - The hope was that, by slicing up age into three groups, achieve balance in treated and control groups
 - We did achieve balance on age, but what about other confounders?
@@ -287,6 +346,716 @@ In practice, we have the \brf{problem of a finite sample size}
 This problem is known as the \brf{curse of dimensionality}
 
 
+## The Limits of Subclassification: The Curse of Dimensionality
+
+Let's say we have $k=1,\dots,K$ groups (for example defined by gender and age). We can calculate the ATT as
+
+\begin{align*}
+\widehat{\delta}_{ATT} = \sum_{k=1}^K\Big(\overline{Y}^{1,k} - \overline{Y}^{0,k}\Big)\times \bigg( \dfrac{N^k_T}{N_T} \bigg )
+\end{align*}
+
+where $\overline{Y}^{1,k}$ and $\overline{Y}^{0,k}$ are the average outcomes in group $k$ for treated and control units, and $N^k_T$ is the number of treated units in group $k$.
+
+\vfill
+In **large groups** (small $K$) we will easily find a \brf{control unit for every treated unit}
+
+\vfill
+As $K$ increases and \brf{groups get smaller}, we will have \brf{more and more groups} that only contain \brf{control or treated units but not both}
+
+
+## Possible Solution: Matching
+
+\brf{Idea of matching}: 
+
+- for each **treated unit**, find a **control unit** that is **similar on all confounders**
+- **compare the outcomes** of **treated and control units**
+- The **comparison** gives us an **estimate of the ATT**
+
+\vfill
+Control units: \brf{statistical twins} of treated units
+
+\vfill
+It if also possible to have \brf{multiple control units for each treated unit}
+
+
+## Statistical Twins?
+
+```{r, echo=FALSE, out.width="75%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "charlesosbourne.jpeg"))
+```
+
+
+## Matching and the ATT: One Control Unit per Treated Unit
+With one control unit for each treated unit, we \brf{can calculate the ATT} as
+
+\begin{align*}
+\widehat{\delta}_{ATT} = \dfrac{1}{N_T} \sum_{D_i=1}(Y_i - Y_{j(i)})
+\end{align*}
+
+- $Y_i$ is the outcome for treated unit $i$
+- $Y_{j(i)}$ is the outcome for the control unit $j(i)$
+
+## Matching and the ATT: Multiple Control Units per Treated Unit
+Or if we find $M$ matches for each treated unit, we can calculate the ATT as
+
+\begin{align*}
+\widehat{\delta}_{ATT} = \dfrac{1}{N_T} \sum_{D_i=1} \bigg ( Y_i - \bigg [\dfrac{1}{M} \sum_{m=1}^M Y_{j_m(1)} \bigg ] \bigg )
+\end{align*}
+
+- $Y_{j_m(1)}$ is the outcome for the $m$th control unit matched to treated unit $i$
+
+
+## Matching and the ATE
+
+We can also use \brf{matching to estimate the ATE}. For this, we need to
+
+- Find a similar control unit for each treated unit
+- Find a similar treated unit for each control unit
+
+\vfill
+The \brf{estimator for the ATE} is as follows:
+
+\begin{align*}
+\widehat{\delta}_{ATE} = \dfrac{1}{N} \sum_{i=1}^N (2D_i - 1) \bigg [ Y_i - \bigg ( \dfrac{1}{M} \sum_{m=1}^M Y_{j_m(i)} \bigg ) \bigg ]
+\end{align*}
+
+
+
+## Exact Matching
+
+\brf{Match each treated unit to a control unit} that has **exactly the same covariate values**
+\vfill
+This is called \brf{exact matching} and can be thought of as the \textbf{gold standard
+for matching}
+
+## Exact Matching with One Covariate
+
+```{r echo=FALSE, eval=TRUE, out.width="65%", fig.align='center'}
+
+# Data provided by the user
+df <- data.frame(
+  covariate = rep(seq(1, 5, by = 1), each = 2),
+  outcome = c(2, 4, 2.5, 4.5, 1.5, 3, 1, 2.5, 3.5, 5),
+  group = rep(c('C', 'T'), 5)
+)
+
+# Create the scatter plot
+p <- ggplot(df, aes(x = covariate, y = outcome, label = group, color = group)) +
+  geom_text(size = 10) +
+  scale_color_manual(values = c('C' = 'red', 'T' = 'blue')) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  ) +
+  labs(x = 'Covariate', y = 'Outcome')
+
+# Create a data frame for the arrow data with an offset
+arrow_data <- df[df$group == 'T', ]
+arrow_data$yend <- df[df$group == 'C', 'outcome']
+arrow_data$y_start_offset <- arrow_data$outcome - 0.2  # Start a bit lower than T
+arrow_data$y_end_offset <- arrow_data$yend + 0.2       # End a bit higher than C
+
+# Add arrows to the plot
+p <- p + geom_segment(data = arrow_data, 
+                      aes(x = covariate, xend = covariate, y = y_start_offset, yend = y_end_offset),
+                      arrow = arrow(type = "closed", length = unit(0.3, "inches")),
+                      inherit.aes = FALSE, size = 1, color = "black")
+
+# Print the plot
+print(p)
+
+```
+
+For each treated unit, we find a **control unit with the same covariate value**
+
+
+## Exact Matching with Two Covariates
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+
+# Data provided by the user
+df <- df %>%
+  mutate(covariate1=covariate,
+         covariate2=c(4,4,2,2,3.5,3.5, 1,1, 2.5, 2.5))
+
+# Create the scatter plot
+p <- ggplot(df, aes(x = covariate, y = covariate2, label = group, color = group)) +
+  geom_text(size = 10) +
+  scale_color_manual(values = c('C' = 'red', 'T' = 'blue')) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  ) +
+  labs(x = 'Covariate 1', y = 'Covariate 2')
+
+
+# Print the plot
+print(p)
+
+
+```
+
+
+For each treated unit, we find a control unit with the **same values of covariates 1 and 2**
+
+
+## Example:  Job Training Programme
+
+\scriptsize
+\begin{center}
+\begin{tabular}{|c c c|c c c|}
+\hline
+\multicolumn{3}{|c|}{Trainees} & \multicolumn{3}{|c|}{Non-Trainees} \\ \hline
+Unit & Age & Earnings & Unit & Age & Earnings \\ \hline
+1 & 18 & 9500 & 1 & 20 & 8500 \\ 
+2 & 29 & 12250 & 2 & 27 & 10075 \\ 
+3 & 24 & 11000 & 3 & 21 & 8725 \\ 
+4 & 27 & 11750 & 4 & 39 & 12775 \\ 
+5 & 33 & 13250 & 5 & 38 & 12550 \\ 
+6 & 22 & 10500 & 6 & 29 & 10525 \\ 
+7 & 19 & 9750 & 7 & 39 & 12775 \\ 
+8 & 20 & 10000 & 8 & 33 & 11425 \\ 
+9 & 21 & 10250 & 9 & 24 & 9400 \\ 
+10 & 30 & 12500 & 10 & 30 & 10750 \\ 
+\multicolumn{3}{|c|}{} & 11 & 33 & 11425 \\ 
+\multicolumn{3}{|c|}{} & 12 & 36 & 12100 \\ 
+\multicolumn{3}{|c|}{} & 13 & 22 & 8950 \\ 
+\multicolumn{3}{|c|}{} & 14 & 18 & 8050 \\ 
+\multicolumn{3}{|c|}{} & 15 & 43 & 13675 \\ 
+\multicolumn{3}{|c|}{} & 16 & 39 & 12775 \\ 
+\multicolumn{3}{|c|}{} & 17 & 19 & 8275 \\ 
+\multicolumn{3}{|c|}{} & 18 & 30 & 9000 \\ 
+\multicolumn{3}{|c|}{} & 19 & 51 & 15475 \\ 
+\multicolumn{3}{|c|}{} & 20 & 48 & 14800 \\ \hline
+Mean & 24.3 & \$11,075 & Mean & 31.95 & \$11,101.25 \\ \hline
+\end{tabular}
+\end{center}
+
+\normalsize
+
+## Age Distribution of Trainees vs. Non-Trainees
+
+```{r echo=FALSE, eval=TRUE, out.width="80%", fig.align='center'}
+
+read_data <- function(df)
+{
+  full_path <- paste("https://github.com/scunning1975/mixtape/raw/master/", 
+                     df, sep = "")
+  df <- read_dta(full_path)
+  return(df)
+}
+
+training_example <- read_data("training_example.dta") %>% 
+  slice(1:20)
+
+# Calculate the maximum frequency for both age_treat and age_control
+max_count_treat <- max(hist(training_example$age_treat, breaks = 15, plot = FALSE)$counts, na.rm = TRUE)
+max_count_control <- max(hist(training_example$age_control, breaks = 15, plot = FALSE)$counts, na.rm = TRUE)
+max_count <- max(max_count_treat, max_count_control)
+
+# First histogram for age_treat
+p1 <- ggplot(training_example, aes(x=age_treat)) +
+  geom_histogram(bins = 15, na.rm = TRUE, fill="darkorange2") + 
+  geom_vline(aes(xintercept = mean(age_treat, na.rm = TRUE)), color = "blue", linetype = "dashed", size = 2) +  # Add mean line
+  theme_minimal() +
+  ylim(0, max_count) +
+  theme(aspect.ratio = 1/2) + # Modify aspect ratio
+  ylab("Frequency") + 
+  xlab("Age of Trainees") +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  )
+
+# Second histogram for age_control
+p2 <- ggplot(training_example, aes(x=age_control)) +
+  geom_histogram(bins = 15, na.rm = TRUE, fill="darkorange2") + 
+  geom_vline(aes(xintercept = mean(age_control, na.rm = TRUE)), color = "blue", linetype = "dashed", size = 2) +  # Add mean line
+  theme_minimal() +
+  ylim(0, max_count) +
+  theme(aspect.ratio = 1/2) + # Modify aspect ratio
+  ylab("Frequency") + 
+  xlab("Age of Non-Trainees") +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  )
+
+# Combine the plots side by side with the same y-axis and add space between them
+combined_plot <- p1 + p2 + plot_layout(guides = 'collect') & theme(plot.margin = unit(c(1,1,1,1), "cm"))
+
+# Print the combined plot
+print(combined_plot)
+```
+
+Clearly, the age distribution of trainees and non-trainees is different (mean 24.3 vs. 31.95)
+
+## Creating an (exactly) Matched Sample
+
+\scriptsize
+\begin{center}
+\begin{tabular}{|ccc|ccc|ccc|}
+\hline
+\multicolumn{3}{|c|}{Trainees} & \multicolumn{3}{c|}{Non-Trainees} & \multicolumn{3}{c|}{Matched Sample} \\ \hline
+Unit & Age & Earnings & Unit & Age & Earnings & Unit & Age & Earnings \\ \hline
+1 & 18 & 9500 & 1 & 20 & 8500 & 14 & 18 & 8050 \\
+2 & 29 & 12250 & 2 & 27 & 10075 & 6 & 29 & 10525 \\
+3 & 24 & 11000 & 3 & 21 & 8725 & 9 & 24 & 9400 \\
+4 & 27 & 11750 & 4 & 39 & 12775 & 8 & 27 & 10075 \\
+5 & 33 & 13250 & 5 & 38 & 12550 & 11 & 33 & 11425 \\
+6 & 22 & 10500 & 6 & 29 & 10525 & 13 & 22 & 8950 \\
+7 & 19 & 9750 & 7 & 39 & 12775 & 17 & 19 & 8275 \\
+8 & 20 & 10000 & 8 & 33 & 11425 & 1 & 20 & 8500 \\
+9 & 21 & 10250 & 9 & 24 & 9400 & 3 & 21 & 8725 \\
+10 & 30 & 12500 & 10 & 30 & 10750 & 10,18 & 30 & 9875 \\ 
+\multicolumn{3}{|c|}{} & 11 & 33 & 11425 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 12 & 36 & 12100 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 13 & 22 & 8950 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 14 & 18 & 8050 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 15 & 43 & 13675 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 16 & 39 & 12775 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 17 & 19 & 8275 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 18 & 30 & 9000 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 19 & 51 & 15475 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 20 & 48 & 14800 & \multicolumn{3}{c|}{} \\ \hline
+Mean & \cellcolor{green!25}24.3 & \$11,075 & Mean & 31.95 & \$11,101.25 & Mean & \cellcolor{green!25}24.3 & \$9,380 \\ \hline
+\end{tabular}
+\end{center}
+\normalsize
+
+
+## Treated Sample vs. Matched Control Sample
+
+```{r echo=FALSE, eval=TRUE, out.width="70%", fig.align='center'}
+# Calculate the maximum frequency for both age_treat and age_control
+max_count_treat <- max(hist(training_example$age_treat, breaks = 15, plot = FALSE)$counts, na.rm = TRUE)
+max_count_matched <- max(hist(training_example$age_matched, breaks = 15, plot = FALSE)$counts, na.rm = TRUE)
+max_count <- max(max_count_treat, max_count_matched)
+
+# First histogram for age_treat
+p1 <- ggplot(training_example, aes(x=age_treat)) +
+  geom_histogram(bins = 15, na.rm = TRUE, fill="darkorange2") + 
+  geom_vline(aes(xintercept = mean(age_treat, na.rm = TRUE)), color = "blue", linetype = "dashed", size = 2) +  # Add mean line
+  theme_minimal() +
+  ylim(0, max_count) +
+  theme(aspect.ratio = 1/2) + # Modify aspect ratio
+  ylab("Frequency") + 
+  xlab("Age of Trainees") +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  )
+
+# Second histogram for age_control
+p2 <- ggplot(training_example, aes(x=age_matched)) +
+  geom_histogram(bins = 15, na.rm = TRUE, fill="darkorange2") + 
+  geom_vline(aes(xintercept = mean(age_matched, na.rm = TRUE)), color = "blue", linetype = "dashed", size = 2) +  # Add mean line
+  theme_minimal() +
+  ylim(0, max_count) +
+  theme(aspect.ratio = 1/2) + # Modify aspect ratio
+  ylab("Frequency") + 
+  xlab("Age of Non-Trainees (Matched)") +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  )
+
+# Combine the plots side by side with the same y-axis and add space between them
+combined_plot <- p1 + p2 + plot_layout(guides = 'collect') & theme(plot.margin = unit(c(1,1,1,1), "cm"))
+
+# Print the combined plot
+print(combined_plot)
+```
+
+With \brf{exact matching}, the age distribution of \brf{treated and matched control units are the same}
+
+\vfill 
+If age is the only confounder, we can \brf{estimate the ATT} as
+
+\begin{align*}
+\text{ATT} = \frac{1}{N} \sum_{i=1}^N (Y_i - Y_{i'}) = 11,075 - 9,380 = 1,695
+\end{align*}
+
+So the \brf{estimated causal effect} of the \brf{training programme} is 1,695 dollars
+
+
+## Approximate Matching
+
+In most cases, we \brf{cannot find a perfect match} for each treated unit
+
+- Many **variables are continuous**
+- We have many **covariates**
+- ...and **finite samples**
+
+\vfill
+
+\brf{Approximate matching} allows us to \brf{match similar units}
+
+
+
+## Approximate Matching 
+
+There are two **main methods for approximate matching:**
+
+1. \brf{Distance Matching} $\rightarrow$ minimise distance in $X$
+2. \brf{Propensity Score Matching} $\rightarrow$ match on likelihood of being treated
+
+\vfill
+A third type of matching is \brf{coarsened exact matching} (CEM)
+
+\vfill
+It is also possible to \brf{combine matching methods}
+
+- Example: match exactly on some characteristics and approximately on others
+
+
+
+## Mahalabnobis Distance Matching
+
+\small
+Starting point: \brf{treated and with covariates age and age at which they left education}
+
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala1.png"))
+```
+
+
+
+
+## Mahalabnobis Distance Matching
+
+\small
+\brf{Treated and control units are different} w.r.t. education
+
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala2.png"))
+```
+
+
+
+## Mahalabnobis Distance Matching
+
+\small
+For each treated unit, we \brf{find the "closest" control unit} in terms of $X$
+
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala3.png"))
+```
+
+
+## Mahalabnobis Distance Matching
+
+\small
+\brf{Drop control units} that are \brf{not close enough} to any treated unit
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala4.png"))
+```
+
+## Mahalabnobis Distance Matching
+
+\small
+\brf{Drop control units} that are \brf{not close enough} to any treated unit
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala5.png"))
+```
+
+
+## Mahalabnobis Distance Matching
+
+\normalsize
+\brf{Our estimation sample:}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala6.png"))
+```
+
+## Mahalabnobis Distance Matching with one Covariate
+
+With \brf{one covariate}, the distance is the Euclidean Distance
+
+\begin{align*}
+   ||X_i-X_j|| & = \sqrt{ (X_i-X_j)'(X_i-X_j) }             
+   \\
+            & = \sqrt{\sum_{n=1}^k (X_{ni} - X_{nj})^2 }
+\end{align*}
+
+\vfill
+
+For each treated unit, we find the control unit with the \brf{smallest distance} $||X_i-X_j||$
+
+
+## Mahalabnobis Distance Matching with multiple Covariates
+
+With \brf{multiple covariates} $1, \dots, k$, we take into account the variance-covariance matrix $\widehat{\Sigma}_X$ of the covariates
+
+\begin{align*}
+||X_i-X_j||=\sqrt{ (X_i-X_j)'\widehat{\Sigma}_X^{-1}(X_i - X_j) }
+\end{align*}
+
+\vfill
+
+As before, for each treated unit, we find the control unit with the \brf{smallest distance} $||X_i-X_j||$
+
+\vfill 
+
+**Purpose of weighting** with $\widehat{\Sigma}_X^{-1}$:
+
+- Covariates become \brf{scale-invariant}
+- All distances are \brf{measured in terms of standard deviations}
+
+
+## Mahalanobis Distance Matching: Steps Involved
+
+
+1. \brf{Preprocess (Matching)}
+  
+  - **Calculate the Distance** $||X_i-X_j||=\sqrt{ (X_i-X_j)'\widehat{\Sigma}_X^{-1}(X_i - X_j) }$
+  - **Match** each treated unit to the **nearest control unit**
+  - Prune control units if unused
+  - Prune matches if Distance\(>\)caliper (i.e. if they exceed a certain distance)
+  
+2. \brf{Estimation}: calculate difference in means or run a regression
+
+
+
+
+## Other Distance Matching Methods
+
+
+\brf{Nearest-neighbour Matching (NNM)}
+
+- Match with the nearest neighbour or the **$k$ nearest neighbours** in terms of $X$ 
+- Take the average of these neighbours as the counterfactual
+
+\vfill
+\brf{Radius Matching}
+
+- Match with **all control units** within a **certain radius of the treated unit**
+
+\vfill
+
+\brf{Kernel Matching}
+
+- Match with **all control units** within a certain bandwidth of the treated unit
+- **Weight the control units by their distance** to the treated unit
+
+
+## Distance Matching: Example
+
+
+\begin{columns}
+  
+\begin{column}{.5\textwidth}
+\includegraphics[width=\textwidth]{../../../causalinf_phd/Graphs/matching-raw-1.png}
+\end{column}
+
+\begin{column}{.5\textwidth}
+Example here: \textbf{credit card data}
+
+\vspace{1cm}
+
+\textbf{Matching variables:}
+
+\begin{itemize}
+\item Whether the person was billed in April or September
+\item The amount they were billed
+\end{itemize}
+
+
+\vspace{1cm}
+
+The numbers (e.g. 10,305) just indicate the case number
+\end{column}
+
+\end{columns}
+
+## Distance matching
+
+\begin{columns}
+  
+\begin{column}{.5\textwidth}
+\includegraphics[width=\textwidth]{../../../causalinf_phd/Graphs/matching-raw-1.png}
+\end{column}
+
+\begin{column}{.5\textwidth}
+Finding a match for 10,305
+
+\vspace{1cm}
+\textbf{Match exactly} on the month of billing
+\begin{itemize}
+\item Only look for a match among units billed in September
+\end{itemize}
+
+\vspace{1cm}
+Find the \textbf{closest match in terms of the sum of the bill}
+\begin{itemize}
+\item Observation 27,281 fits the bill...
+\end{itemize}
+
+\end{column}
+\end{columns}
+
+
+
+
+## Kernel Matching
+
+```{r, echo=FALSE, out.width="75%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "matching-select-vs-kernel-1.png"))
+```
+
+Left: only one control observation used as a match
+
+Right: all control observations are used, but with different weights
+
+- **weights decay with distance**
+
+
+## Kernel Matching
+
+
+\begin{columns}
+\begin{column}{.65\textwidth}
+We want to create a weighted average by applying a kernel function
+
+\begin{equation*}
+\bar{Y}=\frac{\displaystyle\sum_{i=1}^n w_i Y_i}{\displaystyle\sum_{i=1}^n w_i}=\frac{\displaystyle\sum_{i=1}^n K(X_i) Y_i}{\displaystyle\sum_{i=1}^n K(X_i)}
+\end{equation*}
+
+\vspace{0.5cm}
+
+There are many Kernel functions; they are typically concave and assign the highest weight to the smallest distance. 
+
+
+
+
+\end{column}
+\begin{column}{.35\textwidth}
+Example: Epanechnikov kernel
+
+\begin{equation*}
+K(X)=\frac{3}{4}(1-X^2)
+\end{equation*}
+\includegraphics[width=\textwidth]{../../../causalinf_phd/Graphs/matching-epan-1.png}
+
+K(X) is only defined between $-1$ and $1$
+\end{column}
+\end{columns}
+
+
+
+
+## Coarsened Exact Matching
+\brf{Idea of CEM}: 
+
+- Coarsen X (for example different age groups)
+- Perform exact matching based on coarsened data
+
+\vfill
+Advantage: **easy and fast**
+\vfill
+Disadvantages: 
+
+- researcher **degrees of freedom** (categories are chosen by the researcher)
+- curse of dimensionality (few categories: many but imprecise matches; many categories: few but more precise matches)
+
+
+
+
+## Coarsened Exact Matching
+
+\small
+
+\brf{Starting point}: same as before
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "cem1.png"))
+```
+
+
+## Coarsened exact matching
+
+\small
+
+Coarsen: \brf{divide variables into categories}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "cem2.png"))
+```
+
+
+## Coarsened exact matching
+\small
+Now see \brf{which cells contain treated and control units}
+
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "cem3.png"))
+```
+
+
+
+
+## Coarsened exact matching
+
+\small
+We \brf{find matches within cells}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "cem4.png"))
+```
+
+
+## Coarsened exact matching
+
+
+We \brf{find matches within cells}
+
+\vfill
+
+We need to **take a stand** regarding **matching within the cells**
+
+- nearest neighbour or k nearest neighbours
+- with or without replacement
+- kernel distance function (usually not necessary)
+  
+
+
+
+
+
+
 
 
 
@@ -300,6 +1069,10 @@ This problem is known as the \brf{curse of dimensionality}
 
 ## APPENDIX
 
+
+## Group Work
+
+Re-weighting
 
 
 ## Example: Using \citet{broockman_2013} for R examples
