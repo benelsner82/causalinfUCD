@@ -1,6 +1,6 @@
 ---
 title: "[ECON42720 Causal Inference and Policy Evaluation](https://benelsner82.github.io/causalinfUCD/)"
-subtitle: "4 Matching and Re-weighting"
+subtitle: "4a Matching and Re-weighting"
 author: "Ben Elsner (UCD)"
 output:
   beamer_presentation:
@@ -22,6 +22,9 @@ library(haven)
 library(kableExtra)
 library(gridExtra)
 library(patchwork)
+library(FNN)
+
+set.seed(1234)
 
 graphdir <- "../../../causalinf_phd/Graphs/"
 
@@ -29,6 +32,19 @@ graphdir <- "../../../causalinf_phd/Graphs/"
 
 ## About this Lecture
 
+This lecture is all \brf{about adjusting for confounders}
+
+- Why we want to adjust for confounders
+- How we can adjust for confounders using re-weighting
+- Limits of re-weighting: the curse of dimensionality
+- How we find suitable control units using matching
+- Differences between regression and matching
+
+\vfill
+Matching is a \brf{powerful tool}, but it's also an art in itself
+
+- There are many techniques out there
+- Learning to use them takes practice
 
 
 
@@ -49,7 +65,10 @@ Many examples in this chapter, in particular the R codes, have been taken from T
 
 ## Credits
 
-Stephen Pettigrew produced some very instructive graphs on matching. You can find his slides on matching here. He has lots of interesting materials on causal inference on his website.
+\brf{Stephen Pettigrew} produced some very instructive graphs on matching. You can find his [slides on matching here](https://www.stephenpettigrew.com/teaching/gov2001/section11_2014.pdf). He has lots of interesting materials on causal inference on [his website](https://www.stephenpettigrew.com/).
+
+\vfill
+\brf{Gary King} has done fundamental work on matching and has a [website with lots of resources](https://gking.harvard.edu/). I have used some of his materials, especially the illustrations of matching, in this lecture. One paper I learned a lot from is \citet{ho_2007}.
 
 
 ## Starting Point: Conditional Independence
@@ -365,6 +384,17 @@ As $K$ increases and \brf{groups get smaller}, we will have \brf{more and more g
 
 ## Possible Solution: Matching
 
+```{r, echo=FALSE, out.width="50%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "matchingcartoon1.png"))
+```
+
+\tiny
+Source: Dall-E
+
+
+
+## Possible Solution: Matching
+
 \brf{Idea of matching}: 
 
 - for each **treated unit**, find a **control unit** that is **similar on all confounders**
@@ -383,6 +413,155 @@ It if also possible to have \brf{multiple control units for each treated unit}
 ```{r, echo=FALSE, out.width="75%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "charlesosbourne.jpeg"))
 ```
+
+\tiny
+
+Source: somewhere on X, before 2023
+
+
+## Why Don't We just Run a Regression
+
+If treated and untreated units have different $X$ and $X$ are confounders, we can include them in a regression
+
+\begin{align*}
+Y_i = \alpha + \beta D_i + \beta \boldsymbol{X_i} + u_i  
+\end{align*}
+
+\vfill
+Don't we then \brf{compare like with like}?
+
+- Answer: it depends on the **functional form** of the relationship between $X$ and $Y$
+- Regression can get it wrong if the relationship is non-linear and/or
+- If there is **not much common support** in the distribution of $X$ between treated and control units
+
+
+## Regression vs. Matching
+
+Suppose we want to look at the effect of a treatment $D$ on an outcome $Y$. Education is a confounder.
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal1.png"))
+```
+
+
+## Regression vs. Matching
+
+Enter the control units; for high and low levels of education, we have no common support
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal2.png"))
+```
+
+
+## Regression vs. Matching
+
+\brf{Separate regression lines} for treated and control groups: 
+
+- the difference is $\widehat{\beta}>0$
+
+```{r, echo=FALSE, out.width="55%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal3.png"))
+```
+
+
+## Regression vs. Matching
+
+If we use a \brf{quadratic term for education}, we get a different result
+
+- The estimate $\widehat{\beta}$ is small and negative
+
+
+```{r, echo=FALSE, out.width="55%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal4.png"))
+```
+
+
+## Regression vs. Matching
+
+The previous slides highlight a \brf{problem with regression}
+
+- with a \brf{lack of common support}, control and treated units are not comparable
+- this can even be the problem if both groups have the same average level of education
+
+\vfill
+
+\brf{Control units with high and low levels of education influence} the regression line
+
+- but these units cannot be compared to any treated units
+- so our regression compares fundamentally different units (apples and oranges)
+
+\vfill
+We have a \brf{covariate imbalance}; regression does not (always) solve the problem
+
+
+
+
+## Regression vs. Matching
+
+Matching \brf{selects units with common support} in the distribution of $X$
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal5.png"))
+```
+
+
+## Regression vs. Matching
+
+Among these units, there is \brf{no difference between treatment and outcome}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal6.png"))
+```
+
+
+
+## Matching Stage 1: Preparation
+
+
+
+1: Choose the **variables you want to match** on 
+
+- Match on **confounders**, but not on colliders or mediators
+
+\vfill
+
+2: Choose a **matching method** (more on this later)
+
+- The method determines how you select control observations
+
+
+
+\vfill
+
+3: **Match treated and control observations**
+
+- Select control observations that are similar in $X$ to treated ones
+- prune observations without good matches
+
+
+## Matching: Stage 2: Refinement and Estimation
+
+
+4: Check if your \brf{dataset is balanced on covariates}
+
+- Treated and control observations should have similar values of $X$
+- If you don't have balance, go back to stage 1
+
+\vfill
+
+5: Run a \brf{simple regression of the outcome on the treatment} 
+
+- Or do a simple difference in outcomes and run a t-test
+
+\vfill
+
+6: \brf{Run sensitivity checks} to see if the results depend on the matching procedure
+
+- Change matching methods
+- Change parameters of the matching method
+
+
+
 
 
 ## Matching and the ATT: One Control Unit per Treated Unit
@@ -442,7 +621,7 @@ df <- data.frame(
 # Create the scatter plot
 p <- ggplot(df, aes(x = covariate, y = outcome, label = group, color = group)) +
   geom_text(size = 10) +
-  scale_color_manual(values = c('C' = 'red', 'T' = 'blue')) +
+  scale_color_manual(values = c('C' = 'blue', 'T' = 'red')) +
   theme_minimal() +
   theme(
     legend.position = "none",
@@ -486,7 +665,7 @@ df <- df %>%
 # Create the scatter plot
 p <- ggplot(df, aes(x = covariate, y = covariate2, label = group, color = group)) +
   geom_text(size = 10) +
-  scale_color_manual(values = c('C' = 'red', 'T' = 'blue')) +
+  scale_color_manual(values = c('C' = 'blue', 'T' = 'red')) +
   theme_minimal() +
   theme(
     legend.position = "none",
@@ -545,7 +724,7 @@ Mean & 24.3 & \$11,075 & Mean & 31.95 & \$11,101.25 \\ \hline
 
 ## Age Distribution of Trainees vs. Non-Trainees
 
-```{r echo=FALSE, eval=TRUE, out.width="80%", fig.align='center'}
+```{r echo=FALSE, eval=TRUE, out.width="80%", fig.align='center', figure.height=3.5}
 
 read_data <- function(df)
 {
@@ -600,7 +779,7 @@ p2 <- ggplot(training_example, aes(x=age_control)) +
   )
 
 # Combine the plots side by side with the same y-axis and add space between them
-combined_plot <- p1 + p2 + plot_layout(guides = 'collect') & theme(plot.margin = unit(c(1,1,1,1), "cm"))
+combined_plot <- p1 + p2 + plot_layout(guides = 'collect') & theme(plot.margin = unit(c(0.5,1,1,1), "cm"))
 
 # Print the combined plot
 print(combined_plot)
@@ -644,7 +823,7 @@ Mean & \cellcolor{green!25}24.3 & \$11,075 & Mean & 31.95 & \$11,101.25 & Mean &
 
 ## Treated Sample vs. Matched Control Sample
 
-```{r echo=FALSE, eval=TRUE, out.width="70%", fig.align='center'}
+```{r echo=FALSE, eval=TRUE, out.width="70%", fig.align='center', fig.height=3}
 # Calculate the maximum frequency for both age_treat and age_control
 max_count_treat <- max(hist(training_example$age_treat, breaks = 15, plot = FALSE)$counts, na.rm = TRUE)
 max_count_matched <- max(hist(training_example$age_matched, breaks = 15, plot = FALSE)$counts, na.rm = TRUE)
@@ -687,7 +866,7 @@ p2 <- ggplot(training_example, aes(x=age_matched)) +
   )
 
 # Combine the plots side by side with the same y-axis and add space between them
-combined_plot <- p1 + p2 + plot_layout(guides = 'collect') & theme(plot.margin = unit(c(1,1,1,1), "cm"))
+combined_plot <- p1 + p2 + plot_layout(guides = 'collect') & theme(plot.margin = unit(c(0.1,1,1,1), "cm"))
 
 # Print the combined plot
 print(combined_plot)
@@ -705,391 +884,7 @@ If age is the only confounder, we can \brf{estimate the ATT} as
 So the \brf{estimated causal effect} of the \brf{training programme} is 1,695 dollars
 
 
-## Approximate Matching
-
-In most cases, we \brf{cannot find a perfect match} for each treated unit
-
-- Many **variables are continuous**
-- We have many **covariates**
-- ...and **finite samples**
-
-\vfill
-
-\brf{Approximate matching} allows us to \brf{match similar units}
-
-
-
-## Approximate Matching 
-
-There are two **main methods for approximate matching:**
-
-1. \brf{Distance Matching} $\rightarrow$ minimise distance in $X$
-2. \brf{Propensity Score Matching} $\rightarrow$ match on likelihood of being treated
-
-\vfill
-A third type of matching is \brf{coarsened exact matching} (CEM)
-
-\vfill
-It is also possible to \brf{combine matching methods}
-
-- Example: match exactly on some characteristics and approximately on others
-
-
-
-## Mahalabnobis Distance Matching
-
-\small
-Starting point: \brf{treated and with covariates age and age at which they left education}
-
-
-```{r, echo=FALSE, out.width="60%", fig.align='center'}
-knitr::include_graphics(paste0(graphdir, "mahala1.png"))
-```
-
-
-
-
-## Mahalabnobis Distance Matching
-
-\small
-\brf{Treated and control units are different} w.r.t. education
-
-
-```{r, echo=FALSE, out.width="60%", fig.align='center'}
-knitr::include_graphics(paste0(graphdir, "mahala2.png"))
-```
-
-
-
-## Mahalabnobis Distance Matching
-
-\small
-For each treated unit, we \brf{find the "closest" control unit} in terms of $X$
-
-
-```{r, echo=FALSE, out.width="60%", fig.align='center'}
-knitr::include_graphics(paste0(graphdir, "mahala3.png"))
-```
-
-
-## Mahalabnobis Distance Matching
-
-\small
-\brf{Drop control units} that are \brf{not close enough} to any treated unit
-
-```{r, echo=FALSE, out.width="60%", fig.align='center'}
-knitr::include_graphics(paste0(graphdir, "mahala4.png"))
-```
-
-## Mahalabnobis Distance Matching
-
-\small
-\brf{Drop control units} that are \brf{not close enough} to any treated unit
-
-```{r, echo=FALSE, out.width="60%", fig.align='center'}
-knitr::include_graphics(paste0(graphdir, "mahala5.png"))
-```
-
-
-## Mahalabnobis Distance Matching
-
-\normalsize
-\brf{Our estimation sample:}
-
-```{r, echo=FALSE, out.width="60%", fig.align='center'}
-knitr::include_graphics(paste0(graphdir, "mahala6.png"))
-```
-
-## Mahalabnobis Distance Matching with one Covariate
-
-With \brf{one covariate}, the distance is the Euclidean Distance
-
-\begin{align*}
-   ||X_i-X_j|| & = \sqrt{ (X_i-X_j)'(X_i-X_j) }             
-   \\
-            & = \sqrt{\sum_{n=1}^k (X_{ni} - X_{nj})^2 }
-\end{align*}
-
-\vfill
-
-For each treated unit, we find the control unit with the \brf{smallest distance} $||X_i-X_j||$
-
-
-## Mahalabnobis Distance Matching with multiple Covariates
-
-With \brf{multiple covariates} $1, \dots, k$, we take into account the variance-covariance matrix $\widehat{\Sigma}_X$ of the covariates
-
-\begin{align*}
-||X_i-X_j||=\sqrt{ (X_i-X_j)'\widehat{\Sigma}_X^{-1}(X_i - X_j) }
-\end{align*}
-
-\vfill
-
-As before, for each treated unit, we find the control unit with the \brf{smallest distance} $||X_i-X_j||$
-
-\vfill 
-
-**Purpose of weighting** with $\widehat{\Sigma}_X^{-1}$:
-
-- Covariates become \brf{scale-invariant}
-- All distances are \brf{measured in terms of standard deviations}
-
-
-## Mahalanobis Distance Matching: Steps Involved
-
-
-1. \brf{Preprocess (Matching)}
-  
-  - **Calculate the Distance** $||X_i-X_j||=\sqrt{ (X_i-X_j)'\widehat{\Sigma}_X^{-1}(X_i - X_j) }$
-  - **Match** each treated unit to the **nearest control unit**
-  - Prune control units if unused
-  - Prune matches if Distance\(>\)caliper (i.e. if they exceed a certain distance)
-  
-2. \brf{Estimation}: calculate difference in means or run a regression
-
-
-
-
-## Other Distance Matching Methods
-
-
-\brf{Nearest-neighbour Matching (NNM)}
-
-- Match with the nearest neighbour or the **$k$ nearest neighbours** in terms of $X$ 
-- Take the average of these neighbours as the counterfactual
-
-\vfill
-\brf{Radius Matching}
-
-- Match with **all control units** within a **certain radius of the treated unit**
-
-\vfill
-
-\brf{Kernel Matching}
-
-- Match with **all control units** within a certain bandwidth of the treated unit
-- **Weight the control units by their distance** to the treated unit
-
-
-## Distance Matching: Example
-
-
-\begin{columns}
-  
-\begin{column}{.5\textwidth}
-\includegraphics[width=\textwidth]{../../../causalinf_phd/Graphs/matching-raw-1.png}
-\end{column}
-
-\begin{column}{.5\textwidth}
-Example here: \textbf{credit card data}
-
-\vspace{1cm}
-
-\textbf{Matching variables:}
-
-\begin{itemize}
-\item Whether the person was billed in April or September
-\item The amount they were billed
-\end{itemize}
-
-
-\vspace{1cm}
-
-The numbers (e.g. 10,305) just indicate the case number
-\end{column}
-
-\end{columns}
-
-## Distance matching
-
-\begin{columns}
-  
-\begin{column}{.5\textwidth}
-\includegraphics[width=\textwidth]{../../../causalinf_phd/Graphs/matching-raw-1.png}
-\end{column}
-
-\begin{column}{.5\textwidth}
-Finding a match for 10,305
-
-\vspace{1cm}
-\textbf{Match exactly} on the month of billing
-\begin{itemize}
-\item Only look for a match among units billed in September
-\end{itemize}
-
-\vspace{1cm}
-Find the \textbf{closest match in terms of the sum of the bill}
-\begin{itemize}
-\item Observation 27,281 fits the bill...
-\end{itemize}
-
-\end{column}
-\end{columns}
-
-
-
-
-## Kernel Matching
-
-```{r, echo=FALSE, out.width="75%", fig.align='center'}
-knitr::include_graphics(paste0(graphdir, "matching-select-vs-kernel-1.png"))
-```
-
-Left: only one control observation used as a match
-
-Right: all control observations are used, but with different weights
-
-- **weights decay with distance**
-
-
-## Kernel Matching
-
-
-\begin{columns}
-\begin{column}{.65\textwidth}
-We want to create a weighted average by applying a kernel function
-
-\begin{equation*}
-\bar{Y}=\frac{\displaystyle\sum_{i=1}^n w_i Y_i}{\displaystyle\sum_{i=1}^n w_i}=\frac{\displaystyle\sum_{i=1}^n K(X_i) Y_i}{\displaystyle\sum_{i=1}^n K(X_i)}
-\end{equation*}
-
-\vspace{0.5cm}
-
-There are many Kernel functions; they are typically concave and assign the highest weight to the smallest distance. 
-
-
-
-
-\end{column}
-\begin{column}{.35\textwidth}
-Example: Epanechnikov kernel
-
-\begin{equation*}
-K(X)=\frac{3}{4}(1-X^2)
-\end{equation*}
-\includegraphics[width=\textwidth]{../../../causalinf_phd/Graphs/matching-epan-1.png}
-
-K(X) is only defined between $-1$ and $1$
-\end{column}
-\end{columns}
-
-
-
-
-## Coarsened Exact Matching
-\brf{Idea of CEM}: 
-
-- Coarsen X (for example different age groups)
-- Perform exact matching based on coarsened data
-
-\vfill
-Advantage: **easy and fast**
-\vfill
-Disadvantages: 
-
-- researcher **degrees of freedom** (categories are chosen by the researcher)
-- curse of dimensionality (few categories: many but imprecise matches; many categories: few but more precise matches)
-
-
-
-
-## Coarsened Exact Matching
-
-\small
-
-\brf{Starting point}: same as before
-
-```{r, echo=FALSE, out.width="60%", fig.align='center'}
-knitr::include_graphics(paste0(graphdir, "cem1.png"))
-```
-
-
-## Coarsened exact matching
-
-\small
-
-Coarsen: \brf{divide variables into categories}
-
-```{r, echo=FALSE, out.width="60%", fig.align='center'}
-knitr::include_graphics(paste0(graphdir, "cem2.png"))
-```
-
-
-## Coarsened exact matching
-\small
-Now see \brf{which cells contain treated and control units}
-
-
-```{r, echo=FALSE, out.width="60%", fig.align='center'}
-knitr::include_graphics(paste0(graphdir, "cem3.png"))
-```
-
-
-
-
-## Coarsened exact matching
-
-\small
-We \brf{find matches within cells}
-
-```{r, echo=FALSE, out.width="60%", fig.align='center'}
-knitr::include_graphics(paste0(graphdir, "cem4.png"))
-```
-
-
-## Coarsened exact matching
-
-
-We \brf{find matches within cells}
-
-\vfill
-
-We need to **take a stand** regarding **matching within the cells**
-
-- nearest neighbour or k nearest neighbours
-- with or without replacement
-- kernel distance function (usually not necessary)
-  
-
-
-
-
-
-
-
-
-
-
-## .
-\tiny
-\bibliographystyle{authordate1}
-\bibliography{../../../causalinf_phd/bibliography_causalinf}
-
-
-
-## APPENDIX
-
-
-## Group Work
-
-Re-weighting
-
-
-## Example: Using \citet{broockman_2013} for R examples
-
-\brf{Research question:} are black politicians more likely to help black citizens even if the incentives are low?
-
-\vfill
-\brf{Methodology:} audit study; sent emails to U.S. state legislators; asking them to help them sign up for unemployment benefits
-
-\vfill
-\brf{Experimental variation:}
-
-- Sender with black vs. white name
-- Sender lives in same district as legislator or far away
-
-\vfill
-\brf{Matching}: white and black legislators with similar characteristics
+<!-- ## Example:  Job Training Programme
 
 
 ## Broockman (2013) data preparation
@@ -1117,6 +912,9 @@ X <- br %>%
     as.matrix()
 
 ```
+ 
+ 
+ 
  
 ## Mahalanobis distance matching in R
 
@@ -1167,6 +965,10 @@ matched_br <- br %>%
 
 
 \small
+
+Here we estimate the treatment effect with OLS, using the matched sample
+
+
 ```{r, eval=TRUE, include=TRUE, echo=TRUE}
 # OLS estimation based on matched sample
 lm(responded~leg_black, data = matched_br, weights = weight)
@@ -1180,10 +982,11 @@ Broockman performs CEM to make black and white legislators more comparable
 
 \vfill
 
-We use the `cem` package here. Alternatively we could use the `method_cem` command of the `MatchIt` package.
+We use the `MatchIt` package here. Alternatively we could use the `cem` 
 
 ```{r cem1, eval=TRUE, include=TRUE}
-library(cem); library(tidyverse)
+library(MatchIt)
+library(tidyverse)
 br <- causaldata::black_politicians
 ```
 
@@ -1234,12 +1037,12 @@ allbreaks <- list('medianhhincom' = inc_bins,
 \footnotesize
 ```{r cem4, eval=TRUE, include=TRUE}
 # Match, being sure not to match on the outcome
-# Note the baseline.group is the *treated* group
-c <- cem(treatment = 'leg_black', data = brcem,
-         baseline.group =  '1',
-         drop = 'responded',
-         cutpoints = allbreaks,
-         keep.all = TRUE)
+c <- matchit(formula = leg_black ~ medianhhincom + blackpercent + leg_democrat,
+             method="cem",
+             data = brcem,
+             cutpoints = allbreaks
+)
+
 
 # Get weights for other purposes
 brcem <- brcem %>%
@@ -1253,16 +1056,52 @@ brcem <- brcem %>%
 
 \footnotesize
 ```{r cem5, eval=TRUE, include=TRUE, echo=TRUE}
-# OLS estimation with weighted dataset
+# OLS estimation with weighted dataset -> ATT
 lm(responded~leg_black, data = brcem, weights = cem_weight)
 ```
 
 
+
+
+## .
+\tiny
+\bibliographystyle{authordate1}
+\bibliography{../../../causalinf_phd/bibliography_causalinf}
+
+
+
+## APPENDIX
+
+
+## Group Work
+
+Re-weighting
+
+
+
+<!--
 ## Coarsened Exact Matching in R
 
 \footnotesize
 ```{r cem6, eval=TRUE, include=TRUE, echo=TRUE}
 # Use the inbuilt ATT estimation command from cem
+# att(c, responded ~ leg_black, data = brcem)
+```
+-->
+
+## Alternative: the CEM Package
+
+\footnotesize
+```{r, eval=FALSE, include=TRUE, echo=TRUE}
+library(cem)
+# Perform the matching
+c <- cem(treatment = 'leg_black', data = brcem,
+         baseline.group =  '1',
+         drop = 'responded',
+         cutpoints = allbreaks,
+         keep.all = TRUE)
+
+# Calculate the ATT
 att(c, responded ~ leg_black, data = brcem)
 ```
 
@@ -1354,7 +1193,7 @@ Another option based on the `Matching` package; PSM done directly here
 summary(psmatching)
 ```
 
-
+-->
 
 ## .
 

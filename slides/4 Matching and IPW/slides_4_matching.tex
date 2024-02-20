@@ -1,0 +1,1351 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+  aspectratio=169, handout]{beamer}
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\newif\ifbibliography
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+\usepackage{caption}
+% Make caption package work with longtable
+\makeatletter
+\def\fnum@table{\tablename~\thetable}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+  \PassOptionsToPackage{dvipsnames}{xcolor}
+  \definecolor{brickred}{rgb}{0.8, 0.25, 0.33}
+  \definecolor{burntorange}{rgb}{0.8, 0.33, 0.0}
+  \definecolor{lightskyblue}{RGB}{135,206,250}
+  \definecolor{darkgreen}{RGB}{0, 150, 0}
+  \usecolortheme[named=brickred]{structure}
+  \usepackage{hyperref}
+  \usepackage{booktabs}
+  \usepackage{longtable}
+  \usepackage{amsmath}
+  \usepackage{comment}
+  \usepackage{mathtools}
+  \usepackage{bbm}
+  \usepackage{pdfpages}
+  \usepackage{natbib}
+  \usepackage{amssymb}
+  \usepackage{siunitx}
+  \usepackage{booktabs}
+  \usepackage{colortbl}
+
+
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+
+\newcommand{\br}[1]{\textcolor{brickred}{#1}}
+\newcommand{\brf}[1]{\textcolor{brickred}{\textbf{#1}}}
+\newcommand{\ind}{\mathrel{\perp\!\!\!\perp}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%\newcommand{\br}[1]{\textcolor{burntorange}{#1}}
+%\newcommand{\brf}[1]{\textcolor{burntorange}{\textbf{#1}}}
+
+
+% \setbeamersize{text margin right=5cm}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={ECON42720 Causal Inference and Policy Evaluation},
+  pdfauthor={Ben Elsner (UCD)},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{\href{https://benelsner82.github.io/causalinfUCD/}{ECON42720
+Causal Inference and Policy Evaluation}}
+\subtitle{4a Matching and Re-weighting}
+\author{Ben Elsner (UCD)}
+\date{}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{About this Lecture}
+\protect\hypertarget{about-this-lecture}{}
+This lecture is all \brf{about adjusting for confounders}
+
+\begin{itemize}
+\tightlist
+\item
+  Why we want to adjust for confounders
+\item
+  How we can adjust for confounders using re-weighting
+\item
+  Limits of re-weighting: the curse of dimensionality
+\item
+  How we find suitable control units using matching
+\item
+  Differences between regression and matching
+\end{itemize}
+
+\vfill
+
+Matching is a \brf{powerful tool}, but it's also an art in itself
+
+\begin{itemize}
+\tightlist
+\item
+  There are many techniques out there
+\item
+  Learning to use them takes practice
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Resources}
+\protect\hypertarget{resources}{}
+As an \brf{introduction}, I recommend Chapter 5 in Scott Cunningham's
+Mixtape
+
+\vfill
+
+Slightly \brf{more detailed coverage} can be found in
+
+\begin{itemize}
+\tightlist
+\item
+  Huntington-Klein's The Effect, Chapter 14
+\item
+  Huber's Causal Analysis, Chapter 4
+\end{itemize}
+
+\vfill
+
+Many examples in this chapter, in particular the R codes, have been
+taken from The Effect or inspired by it.
+\end{frame}
+
+\begin{frame}{Credits}
+\protect\hypertarget{credits}{}
+\brf{Stephen Pettigrew} produced some very instructive graphs on
+matching. You can find his
+\href{https://www.stephenpettigrew.com/teaching/gov2001/section11_2014.pdf}{slides
+on matching here}. He has lots of interesting materials on causal
+inference on \href{https://www.stephenpettigrew.com/}{his website}.
+
+\vfill
+
+\brf{Gary King} has done fundamental work on matching and has a
+\href{https://gking.harvard.edu/}{website with lots of resources}. I
+have used some of his materials, especially the illustrations of
+matching, in this lecture. One paper I learned a lot from is
+\citet{ho_2007}.
+\end{frame}
+
+\begin{frame}{Starting Point: Conditional Independence}
+\protect\hypertarget{starting-point-conditional-independence}{}
+\begin{equation*}
+(Y^1,Y^0) \ind D\mid X
+\end{equation*}
+
+\vfill
+
+For \brf{causal identification}, we require the assumption that the
+\brf{treatment} \(D\) is as good as
+\brf{randomly assigned conditional on the covariates $X$} \vfill
+
+Formally, this means that the potential outcomes are
+\brf{conditionally independent} of the treatment assignment given the
+covariates
+
+\begin{align*}
+   E\big[Y^1\mid D=1,X\big]=E\big[Y^1\mid D=0,X\big]
+   \\
+   E\big[Y^0\mid D=1,X\big]=E\big[Y^0\mid D=0,X\big]
+\end{align*}
+\end{frame}
+
+\begin{frame}{Conditional Independence and Selection on Observables}
+\protect\hypertarget{conditional-independence-and-selection-on-observables}{}
+If CIA holds, we speak of \brf{selection on observables}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Independence does not hold} in general
+\item
+  But it holds in the \textbf{subpopulations} defined by the covariates
+  \(X\)
+\end{itemize}
+
+\vfill
+
+The \brf{groups defined by $X$} (think age, gender, neighbourhood, etc)
+determine the \brf{treatment assignment}
+
+\begin{itemize}
+\tightlist
+\item
+  But \textbf{within each group}, who gets treated is \textbf{as good as
+  random}
+\end{itemize}
+
+\vfill
+
+This is a \textbf{strong assumption!}
+\end{frame}
+
+\begin{frame}{Example: Smoking and Lung Cancer}
+\protect\hypertarget{example-smoking-and-lung-cancer}{}
+\brf{Does smoking cause lung cancer?}
+
+\begin{itemize}
+\tightlist
+\item
+  Today we would say ``yes, of course''
+\item
+  But answering this question was far from clear in the 1950s
+\item
+  There is a \textbf{strong correlation} between smoking and lung
+  cancer, but is it causal?
+\end{itemize}
+
+\vfill
+\brf{(Potential) problem: confounders}
+
+\begin{itemize}
+\tightlist
+\item
+  There could be genetic determinants of smoking and lung cancer
+\item
+  There could be environmental factors that cause both smoking and lung
+  cancer
+\end{itemize}
+
+\vfill
+
+We don't have \brf{experimental evidence}
+\end{frame}
+
+\begin{frame}{Example: Death Rates per 1,000}
+\protect\hypertarget{example-death-rates-per-1000}{}
+The following example from \citet{cochran1968} will illustrate what
+\brf{selection on observables} and do for us
+
+\begin{longtable}[]{@{}cccc@{}}
+\toprule\noalign{}
+Smoking group & Canada & UK & US \\
+\midrule\noalign{}
+\endhead
+Non-smokers & 20.2 & 11.3 & 13.5 \\
+Cigarettes & 20.5 & 14.1 & 13.5 \\
+Cigars/pipes & 35.5 & 20.7 & 17.4 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+\vfill
+
+In all countries, the \textbf{highest death rates are for cigar and pipe
+smokers}
+
+\begin{itemize}
+\tightlist
+\item
+  Does this mean that smoking pipes and cigars is more dangerous than
+  smoking cigarettes?
+\item
+  And given the minor differences between cigarette smokers and
+  non-smokers, are cigarettes harmless?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Smoking and Lung Cancer: Independence?}
+\protect\hypertarget{smoking-and-lung-cancer-independence}{}
+The \brf{independence assumption} would imply that all three groups have
+the \textbf{same potential outcomes on average}
+
+\begin{align*}
+ E\big[Y^1\mid \text{Non-Smoker}\big] =
+   E\big[Y^1\mid \text{Cigarette}\big] =
+   E\big[Y^1\mid \text{Pipe}\big] =
+   E\big[Y^1\mid \text{Cigar}\big]
+   \\
+   E\big[Y^0\mid \text{Non-Smoker}\big] =
+   E\big[Y^0\mid \text{Cigarette}\big]=
+   E\big[Y^0\mid \text{Pipe}\big] =
+   E\big[Y^0\mid \text{Cigar}\big]
+\end{align*}
+
+\vfill
+
+Suppose that the \brf{independence assumption} holds
+
+\begin{itemize}
+\tightlist
+\item
+  This would/should also mean that observable characteristics \(X\) are
+  similar between the groups
+\item
+  I.e. the \textbf{covariates should be balanced} between groups
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Are cigarette smokers similar to pipe and cigar smokers?}
+\protect\hypertarget{are-cigarette-smokers-similar-to-pipe-and-cigar-smokers}{}
+Let's ask Dall-E: show me a picture of a cigarette smoker and a cigar
+smoker
+
+\begin{center}\includegraphics[width=0.4\linewidth]{../../../causalinf_phd/Graphs/smokers} \end{center}
+\end{frame}
+
+\begin{frame}{Age as a Confounder?}
+\protect\hypertarget{age-as-a-confounder}{}
+\begin{longtable}[]{@{}cccc@{}}
+\toprule\noalign{}
+Smoking group & Canada & UK & US \\
+\midrule\noalign{}
+\endhead
+Non-smokers & 54.9 & 49.1 & 57.0 \\
+Cigarettes & 50.5 & 49.8 & 53.2 \\
+Cigars/pipes & 65.9 & 55.7 & 59.7 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+Clearly, \brf{age affects what people smoke and also their death rates}
+
+\begin{itemize}
+\tightlist
+\item
+  Independence is violated: the \textbf{distribution of age} is
+  different between the groups
+\item
+  There may be other confounders, but let's focus on age for now
+\end{itemize}
+
+\vfill
+
+We have \brf{covariate imbalance!}
+
+\vfill
+
+Potential remedy: condition on age (\brf{subclassification})
+\end{frame}
+
+\begin{frame}{Subclassification: Divide Age into Strata}
+\protect\hypertarget{subclassification-divide-age-into-strata}{}
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+                & Death rates & \# of Cigarette smokers & \# of Pipe or cigar smokers \\ \hline
+Age 20–40       & 20          & 65                       & 10                          \\
+Age 41–70       & 40          & 25                       & 25                          \\
+Age $\geq$ 71   & 60          & 10                       & 65                          \\
+Total           &             & 100                      & 100                         \\ \hline
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}{Subclassification: Divide Age into Strata}
+\protect\hypertarget{subclassification-divide-age-into-strata-1}{}
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+                & Death rates & \# of Cigarette smokers & \# of Pipe or cigar smokers \\ \hline
+Age 20–40       & \cellcolor{green!25}20          & \cellcolor{green!25}65                       & 10                          \\
+Age 41–70       & \cellcolor{green!25}40          & \cellcolor{green!25}25                       & 25                          \\
+Age $\geq$ 71   & \cellcolor{green!25}60          & \cellcolor{green!25}10                       & 65                          \\
+Total           &             & 100                      & 100                         \\ \hline
+\end{tabular}
+\end{center}
+
+The \textbf{death rate of cigarette smokers in the population} is:
+
+\[20 \times \dfrac{65}{100} + 40 \times \dfrac{25}{100} + 60 \times \dfrac{10}{100}=29\]
+
+\vfill
+
+But: the \textbf{age distribution is (heavily) imbalanced} between the
+groups
+\end{frame}
+
+\begin{frame}{Re-weighting: Age-Adjusted Death Rates}
+\protect\hypertarget{re-weighting-age-adjusted-death-rates}{}
+Let's \textbf{re-weight} the death rates of cigarette smokers by the
+\textbf{age distribution of pipe/cigar smokers}
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+                & Death rates & \# of Cigarette smokers & \# of Pipe or cigar smokers \\ \hline
+Age 20–40       & \cellcolor{green!25}20          & 65                       & \cellcolor{green!25}10                          \\
+Age 41–70       & \cellcolor{green!25}40          & 25                       & \cellcolor{green!25}25                          \\
+Age $\geq$ 71   & \cellcolor{green!25}60          & 10                       & \cellcolor{green!25}65                          \\
+Total           &             & 100                      & 100                         \\ \hline
+\end{tabular}
+\end{center}
+
+The \textbf{age-adjusted death rate of cigarette smokers} is:
+
+\[20 \times \dfrac{10}{100} + 40 \times \dfrac{25}{100} + 60 \times \dfrac{65}{100}=51\]
+
+\vfill
+
+If \textbf{cigarette smokers} had the \textbf{same age distribution as
+pipe/cigar smokers}, their death rate would be 51
+\end{frame}
+
+\begin{frame}{Age-Adjusted Death Rates}
+\protect\hypertarget{age-adjusted-death-rates}{}
+Cochran \brf{computes age-adjusted death rates} (based on the population
+age distribution)
+
+\begin{longtable}[]{@{}cccc@{}}
+\toprule\noalign{}
+Smoking group & Canada & UK & US \\
+\midrule\noalign{}
+\endhead
+Non-smokers & 20.2 & 11.3 & 13.5 \\
+Cigarettes & 29.5 & 14.8 & 21.2 \\
+Cigars/pipes & 19.8 & 11.0 & 13.7 \\
+\bottomrule\noalign{}
+\end{longtable}
+
+Here we \brf{achieved balance on one covariate: age}
+
+\begin{itemize}
+\tightlist
+\item
+  The \textbf{age-adjusted death rates} are now more similar between the
+  groups
+\item
+  But there may be an \textbf{imbalance on other covariates} (SES,
+  income, health, etc)
+\end{itemize}
+
+\vfill
+
+We need to \brf{use a DAG} to identify \brf{all confounders} and adjust
+for them
+\end{frame}
+
+\begin{frame}{Identifying Assumptions}
+\protect\hypertarget{identifying-assumptions}{}
+In presence of confounders \(X\), we can
+\brf{identify a causal effect under two assumptions}
+
+\begin{enumerate}
+\tightlist
+\item
+  \textbf{Conditional Independence}: \(Y^0, Y^1 \perp D \mid X\)
+\item
+  \textbf{Common Support}: \(0 < P(D = 1 \mid X) < 1\) with probability
+  one
+\end{enumerate}
+
+\vfill
+
+\brf{Common support}: for each stratum, we need some units that are
+treated and others that are control units
+
+\begin{itemize}
+\tightlist
+\item
+  We need \textbf{common support} to calculate the \textbf{weights for
+  the adjustment}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Summary: Subclassification and Re-weighting}
+\protect\hypertarget{summary-subclassification-and-re-weighting}{}
+\brf{Treated and control} units often differ in the
+\brf{distribution of $X$ (confounders)}
+
+\vfill
+
+We can make \textbf{both groups} (somewhat) \textbf{comparable} by
+
+\begin{enumerate}
+\tightlist
+\item
+  dividing the sample into \textbf{strata based on \(X\)}
+  (\brf{subclassification})
+\item
+  re-weighting the strata to \textbf{achieve balance on \(X\)}
+  (\brf{re-weighting})
+\end{enumerate}
+
+\vfill
+
+After re-weighting, both groups have the \textbf{same distribution of
+\(X\) by construction}
+\end{frame}
+
+\begin{frame}{Causal Identification with Selection on Observables}
+\protect\hypertarget{causal-identification-with-selection-on-observables}{}
+Under \brf{conditional independence and common support}, the following
+holds:
+
+\begin{align*}
+   E\big[Y^1-Y^0\mid X\big] & = E\big[Y^1 - Y^0 \mid X,D=1\big]                     
+   \\
+            & = E\big[Y^1\mid X,D=1\big] - E\big[Y^0\mid X,D=0\big]
+   \\
+            & = E\big[Y\mid X,D=1\big] - E\big[Y\mid X,D=0\big]     
+\end{align*}
+
+\vfill
+
+The \brf{estimator for the ATE} is as follows:
+
+\begin{align*}
+   \widehat{\delta_{ATE}}= \int \Big(E\big[Y\mid X,D=1\big] - E\big[Y\mid X,D=0\big]\Big)d\Pr(X)
+\end{align*}
+\end{frame}
+
+\begin{frame}{The Limits of Subclassification: The Curse of
+Dimensionality}
+\protect\hypertarget{the-limits-of-subclassification-the-curse-of-dimensionality}{}
+In the example of \brf{smoking and death rates}, we
+\brf{adjusted for just one confounder}
+
+\begin{itemize}
+\tightlist
+\item
+  The hope was that, by slicing up age into three groups, achieve
+  balance in treated and control groups
+\item
+  We did achieve balance on age, but what about other confounders?
+\item
+  Also, are three age groups enough or do we need more?
+\end{itemize}
+
+\vfill
+
+In practice, we have the \brf{problem of a finite sample size}
+
+\begin{itemize}
+\tightlist
+\item
+  There are \textbf{limits to how many strata we can create}
+\item
+  We cannot have an infinite number of groups defined by one variable
+  (such as age)
+\item
+  We cannot have an infinite number of variables to adjust for
+\end{itemize}
+
+\vfill
+
+This problem is known as the \brf{curse of dimensionality}
+\end{frame}
+
+\begin{frame}{The Limits of Subclassification: The Curse of
+Dimensionality}
+\protect\hypertarget{the-limits-of-subclassification-the-curse-of-dimensionality-1}{}
+Let's say we have \(k=1,\dots,K\) groups (for example defined by gender
+and age). We can calculate the ATT as
+
+\begin{align*}
+\widehat{\delta}_{ATT} = \sum_{k=1}^K\Big(\overline{Y}^{1,k} - \overline{Y}^{0,k}\Big)\times \bigg( \dfrac{N^k_T}{N_T} \bigg )
+\end{align*}
+
+where \(\overline{Y}^{1,k}\) and \(\overline{Y}^{0,k}\) are the average
+outcomes in group \(k\) for treated and control units, and \(N^k_T\) is
+the number of treated units in group \(k\).
+
+\vfill
+
+In \textbf{large groups} (small \(K\)) we will easily find a
+\brf{control unit for every treated unit}
+
+\vfill
+
+As \(K\) increases and \brf{groups get smaller}, we will have
+\brf{more and more groups} that only contain
+\brf{control or treated units but not both}
+\end{frame}
+
+\begin{frame}{Possible Solution: Matching}
+\protect\hypertarget{possible-solution-matching}{}
+\begin{center}\includegraphics[width=0.5\linewidth]{../../../causalinf_phd/Graphs/matchingcartoon1} \end{center}
+
+\tiny
+
+Source: Dall-E
+\end{frame}
+
+\begin{frame}{Possible Solution: Matching}
+\protect\hypertarget{possible-solution-matching-1}{}
+\brf{Idea of matching}:
+
+\begin{itemize}
+\tightlist
+\item
+  for each \textbf{treated unit}, find a \textbf{control unit} that is
+  \textbf{similar on all confounders}
+\item
+  \textbf{compare the outcomes} of \textbf{treated and control units}
+\item
+  The \textbf{comparison} gives us an \textbf{estimate of the ATT}
+\end{itemize}
+
+\vfill
+
+Control units: \brf{statistical twins} of treated units
+
+\vfill
+
+It if also possible to have
+\brf{multiple control units for each treated unit}
+\end{frame}
+
+\begin{frame}{Statistical Twins?}
+\protect\hypertarget{statistical-twins}{}
+\begin{center}\includegraphics[width=0.75\linewidth]{../../../causalinf_phd/Graphs/charlesosbourne} \end{center}
+
+\tiny
+
+Source: somewhere on X, before 2023
+\end{frame}
+
+\begin{frame}{Why Don't We just Run a Regression}
+\protect\hypertarget{why-dont-we-just-run-a-regression}{}
+If treated and untreated units have different \(X\) and \(X\) are
+confounders, we can include them in a regression
+
+\begin{align*}
+Y_i = \alpha + \beta D_i + \beta \boldsymbol{X_i} + u_i  
+\end{align*}
+
+\vfill
+
+Don't we then \brf{compare like with like}?
+
+\begin{itemize}
+\tightlist
+\item
+  Answer: it depends on the \textbf{functional form} of the relationship
+  between \(X\) and \(Y\)
+\item
+  Regression can get it wrong if the relationship is non-linear and/or
+\item
+  If there is \textbf{not much common support} in the distribution of
+  \(X\) between treated and control units
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Regression vs.~Matching}
+\protect\hypertarget{regression-vs.-matching}{}
+Suppose we want to look at the effect of a treatment \(D\) on an outcome
+\(Y\). Education is a confounder.
+
+\begin{center}\includegraphics[width=0.6\linewidth]{../../../causalinf_phd/Graphs/hoetal1} \end{center}
+\end{frame}
+
+\begin{frame}{Regression vs.~Matching}
+\protect\hypertarget{regression-vs.-matching-1}{}
+Enter the control units; for high and low levels of education, we have
+no common support
+
+\begin{center}\includegraphics[width=0.6\linewidth]{../../../causalinf_phd/Graphs/hoetal2} \end{center}
+\end{frame}
+
+\begin{frame}{Regression vs.~Matching}
+\protect\hypertarget{regression-vs.-matching-2}{}
+\brf{Separate regression lines} for treated and control groups:
+
+\begin{itemize}
+\tightlist
+\item
+  the difference is \(\widehat{\beta}>0\)
+\end{itemize}
+
+\begin{center}\includegraphics[width=0.55\linewidth]{../../../causalinf_phd/Graphs/hoetal3} \end{center}
+\end{frame}
+
+\begin{frame}{Regression vs.~Matching}
+\protect\hypertarget{regression-vs.-matching-3}{}
+If we use a \brf{quadratic term for education}, we get a different
+result
+
+\begin{itemize}
+\tightlist
+\item
+  The estimate \(\widehat{\beta}\) is small and negative
+\end{itemize}
+
+\begin{center}\includegraphics[width=0.55\linewidth]{../../../causalinf_phd/Graphs/hoetal4} \end{center}
+\end{frame}
+
+\begin{frame}{Regression vs.~Matching}
+\protect\hypertarget{regression-vs.-matching-4}{}
+The previous slides highlight a \brf{problem with regression}
+
+\begin{itemize}
+\tightlist
+\item
+  with a \brf{lack of common support}, control and treated units are not
+  comparable
+\item
+  this can even be the problem if both groups have the same average
+  level of education
+\end{itemize}
+
+\vfill
+
+\brf{Control units with high and low levels of education influence} the
+regression line
+
+\begin{itemize}
+\tightlist
+\item
+  but these units cannot be compared to any treated units
+\item
+  so our regression compares fundamentally different units (apples and
+  oranges)
+\end{itemize}
+
+\vfill
+
+We have a \brf{covariate imbalance}; regression does not (always) solve
+the problem
+\end{frame}
+
+\begin{frame}{Regression vs.~Matching}
+\protect\hypertarget{regression-vs.-matching-5}{}
+Matching \brf{selects units with common support} in the distribution of
+\(X\)
+
+\begin{center}\includegraphics[width=0.6\linewidth]{../../../causalinf_phd/Graphs/hoetal5} \end{center}
+\end{frame}
+
+\begin{frame}{Regression vs.~Matching}
+\protect\hypertarget{regression-vs.-matching-6}{}
+Among these units, there is
+\brf{no difference between treatment and outcome}
+
+\begin{center}\includegraphics[width=0.6\linewidth]{../../../causalinf_phd/Graphs/hoetal6} \end{center}
+\end{frame}
+
+\begin{frame}{Matching Stage 1: Preparation}
+\protect\hypertarget{matching-stage-1-preparation}{}
+1: Choose the \textbf{variables you want to match} on
+
+\begin{itemize}
+\tightlist
+\item
+  Match on \textbf{confounders}, but not on colliders or mediators
+\end{itemize}
+
+\vfill
+
+2: Choose a \textbf{matching method} (more on this later)
+
+\begin{itemize}
+\tightlist
+\item
+  The method determines how you select control observations
+\end{itemize}
+
+\vfill
+
+3: \textbf{Match treated and control observations}
+
+\begin{itemize}
+\tightlist
+\item
+  Select control observations that are similar in \(X\) to treated ones
+\item
+  prune observations without good matches
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Matching: Stage 2: Refinement and Estimation}
+\protect\hypertarget{matching-stage-2-refinement-and-estimation}{}
+4: Check if your \brf{dataset is balanced on covariates}
+
+\begin{itemize}
+\tightlist
+\item
+  Treated and control observations should have similar values of \(X\)
+\item
+  If you don't have balance, go back to stage 1
+\end{itemize}
+
+\vfill
+
+5: Run a \brf{simple regression of the outcome on the treatment}
+
+\begin{itemize}
+\tightlist
+\item
+  Or do a simple difference in outcomes and run a t-test
+\end{itemize}
+
+\vfill
+
+6: \brf{Run sensitivity checks} to see if the results depend on the
+matching procedure
+
+\begin{itemize}
+\tightlist
+\item
+  Change matching methods
+\item
+  Change parameters of the matching method
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Matching and the ATT: One Control Unit per Treated Unit}
+\protect\hypertarget{matching-and-the-att-one-control-unit-per-treated-unit}{}
+With one control unit for each treated unit, we
+\brf{can calculate the ATT} as
+
+\begin{align*}
+\widehat{\delta}_{ATT} = \dfrac{1}{N_T} \sum_{D_i=1}(Y_i - Y_{j(i)})
+\end{align*}
+
+\begin{itemize}
+\tightlist
+\item
+  \(Y_i\) is the outcome for treated unit \(i\)
+\item
+  \(Y_{j(i)}\) is the outcome for the control unit \(j(i)\)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Matching and the ATT: Multiple Control Units per Treated
+Unit}
+\protect\hypertarget{matching-and-the-att-multiple-control-units-per-treated-unit}{}
+Or if we find \(M\) matches for each treated unit, we can calculate the
+ATT as
+
+\begin{align*}
+\widehat{\delta}_{ATT} = \dfrac{1}{N_T} \sum_{D_i=1} \bigg ( Y_i - \bigg [\dfrac{1}{M} \sum_{m=1}^M Y_{j_m(1)} \bigg ] \bigg )
+\end{align*}
+
+\begin{itemize}
+\tightlist
+\item
+  \(Y_{j_m(1)}\) is the outcome for the \(m\)th control unit matched to
+  treated unit \(i\)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Matching and the ATE}
+\protect\hypertarget{matching-and-the-ate}{}
+We can also use \brf{matching to estimate the ATE}. For this, we need to
+
+\begin{itemize}
+\tightlist
+\item
+  Find a similar control unit for each treated unit
+\item
+  Find a similar treated unit for each control unit
+\end{itemize}
+
+\vfill
+
+The \brf{estimator for the ATE} is as follows:
+
+\begin{align*}
+\widehat{\delta}_{ATE} = \dfrac{1}{N} \sum_{i=1}^N (2D_i - 1) \bigg [ Y_i - \bigg ( \dfrac{1}{M} \sum_{m=1}^M Y_{j_m(i)} \bigg ) \bigg ]
+\end{align*}
+\end{frame}
+
+\begin{frame}{Exact Matching}
+\protect\hypertarget{exact-matching}{}
+\brf{Match each treated unit to a control unit} that has \textbf{exactly
+the same covariate values} \vfill This is called \brf{exact matching}
+and can be thought of as the \textbf{gold standard
+for matching}
+\end{frame}
+
+\begin{frame}{Exact Matching with One Covariate}
+\protect\hypertarget{exact-matching-with-one-covariate}{}
+\begin{center}\includegraphics[width=0.65\linewidth]{slides_4_matching_files/figure-beamer/unnamed-chunk-13-1} \end{center}
+
+For each treated unit, we find a \textbf{control unit with the same
+covariate value}
+\end{frame}
+
+\begin{frame}{Exact Matching with Two Covariates}
+\protect\hypertarget{exact-matching-with-two-covariates}{}
+\begin{center}\includegraphics[width=0.6\linewidth]{slides_4_matching_files/figure-beamer/unnamed-chunk-14-1} \end{center}
+
+For each treated unit, we find a control unit with the \textbf{same
+values of covariates 1 and 2}
+\end{frame}
+
+\begin{frame}{Example: Job Training Programme}
+\protect\hypertarget{example-job-training-programme}{}
+\scriptsize
+\begin{center}
+\begin{tabular}{|c c c|c c c|}
+\hline
+\multicolumn{3}{|c|}{Trainees} & \multicolumn{3}{|c|}{Non-Trainees} \\ \hline
+Unit & Age & Earnings & Unit & Age & Earnings \\ \hline
+1 & 18 & 9500 & 1 & 20 & 8500 \\ 
+2 & 29 & 12250 & 2 & 27 & 10075 \\ 
+3 & 24 & 11000 & 3 & 21 & 8725 \\ 
+4 & 27 & 11750 & 4 & 39 & 12775 \\ 
+5 & 33 & 13250 & 5 & 38 & 12550 \\ 
+6 & 22 & 10500 & 6 & 29 & 10525 \\ 
+7 & 19 & 9750 & 7 & 39 & 12775 \\ 
+8 & 20 & 10000 & 8 & 33 & 11425 \\ 
+9 & 21 & 10250 & 9 & 24 & 9400 \\ 
+10 & 30 & 12500 & 10 & 30 & 10750 \\ 
+\multicolumn{3}{|c|}{} & 11 & 33 & 11425 \\ 
+\multicolumn{3}{|c|}{} & 12 & 36 & 12100 \\ 
+\multicolumn{3}{|c|}{} & 13 & 22 & 8950 \\ 
+\multicolumn{3}{|c|}{} & 14 & 18 & 8050 \\ 
+\multicolumn{3}{|c|}{} & 15 & 43 & 13675 \\ 
+\multicolumn{3}{|c|}{} & 16 & 39 & 12775 \\ 
+\multicolumn{3}{|c|}{} & 17 & 19 & 8275 \\ 
+\multicolumn{3}{|c|}{} & 18 & 30 & 9000 \\ 
+\multicolumn{3}{|c|}{} & 19 & 51 & 15475 \\ 
+\multicolumn{3}{|c|}{} & 20 & 48 & 14800 \\ \hline
+Mean & 24.3 & \$11,075 & Mean & 31.95 & \$11,101.25 \\ \hline
+\end{tabular}
+\end{center}
+
+\normalsize
+\end{frame}
+
+\begin{frame}{Age Distribution of Trainees vs.~Non-Trainees}
+\protect\hypertarget{age-distribution-of-trainees-vs.-non-trainees}{}
+\begin{center}\includegraphics[width=0.8\linewidth]{slides_4_matching_files/figure-beamer/unnamed-chunk-15-1} \end{center}
+
+Clearly, the age distribution of trainees and non-trainees is different
+(mean 24.3 vs.~31.95)
+\end{frame}
+
+\begin{frame}{Creating an (exactly) Matched Sample}
+\protect\hypertarget{creating-an-exactly-matched-sample}{}
+\scriptsize
+\begin{center}
+\begin{tabular}{|ccc|ccc|ccc|}
+\hline
+\multicolumn{3}{|c|}{Trainees} & \multicolumn{3}{c|}{Non-Trainees} & \multicolumn{3}{c|}{Matched Sample} \\ \hline
+Unit & Age & Earnings & Unit & Age & Earnings & Unit & Age & Earnings \\ \hline
+1 & 18 & 9500 & 1 & 20 & 8500 & 14 & 18 & 8050 \\
+2 & 29 & 12250 & 2 & 27 & 10075 & 6 & 29 & 10525 \\
+3 & 24 & 11000 & 3 & 21 & 8725 & 9 & 24 & 9400 \\
+4 & 27 & 11750 & 4 & 39 & 12775 & 8 & 27 & 10075 \\
+5 & 33 & 13250 & 5 & 38 & 12550 & 11 & 33 & 11425 \\
+6 & 22 & 10500 & 6 & 29 & 10525 & 13 & 22 & 8950 \\
+7 & 19 & 9750 & 7 & 39 & 12775 & 17 & 19 & 8275 \\
+8 & 20 & 10000 & 8 & 33 & 11425 & 1 & 20 & 8500 \\
+9 & 21 & 10250 & 9 & 24 & 9400 & 3 & 21 & 8725 \\
+10 & 30 & 12500 & 10 & 30 & 10750 & 10,18 & 30 & 9875 \\ 
+\multicolumn{3}{|c|}{} & 11 & 33 & 11425 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 12 & 36 & 12100 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 13 & 22 & 8950 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 14 & 18 & 8050 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 15 & 43 & 13675 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 16 & 39 & 12775 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 17 & 19 & 8275 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 18 & 30 & 9000 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 19 & 51 & 15475 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 20 & 48 & 14800 & \multicolumn{3}{c|}{} \\ \hline
+Mean & \cellcolor{green!25}24.3 & \$11,075 & Mean & 31.95 & \$11,101.25 & Mean & \cellcolor{green!25}24.3 & \$9,380 \\ \hline
+\end{tabular}
+\end{center}
+\normalsize
+\end{frame}
+
+\begin{frame}{Treated Sample vs.~Matched Control Sample}
+\protect\hypertarget{treated-sample-vs.-matched-control-sample}{}
+\begin{center}\includegraphics[width=0.7\linewidth]{slides_4_matching_files/figure-beamer/unnamed-chunk-16-1} \end{center}
+
+With \brf{exact matching}, the age distribution of
+\brf{treated and matched control units are the same}
+
+\vfill
+
+If age is the only confounder, we can \brf{estimate the ATT} as
+
+\begin{align*}
+\text{ATT} = \frac{1}{N} \sum_{i=1}^N (Y_i - Y_{i'}) = 11,075 - 9,380 = 1,695
+\end{align*}
+
+So the \brf{estimated causal effect} of the \brf{training programme} is
+1,695 dollars
+\end{frame}
+
+\begin{frame}[fragile]{Alternative: the CEM Package}
+\protect\hypertarget{alternative-the-cem-package}{}
+\footnotesize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(cem)}
+\CommentTok{\# Perform the matching}
+\NormalTok{c }\OtherTok{\textless{}{-}} \FunctionTok{cem}\NormalTok{(}\AttributeTok{treatment =} \StringTok{\textquotesingle{}leg\_black\textquotesingle{}}\NormalTok{, }\AttributeTok{data =}\NormalTok{ brcem,}
+         \AttributeTok{baseline.group =}  \StringTok{\textquotesingle{}1\textquotesingle{}}\NormalTok{,}
+         \AttributeTok{drop =} \StringTok{\textquotesingle{}responded\textquotesingle{}}\NormalTok{,}
+         \AttributeTok{cutpoints =}\NormalTok{ allbreaks,}
+         \AttributeTok{keep.all =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Calculate the ATT}
+\FunctionTok{att}\NormalTok{(c, responded }\SpecialCharTok{\textasciitilde{}}\NormalTok{ leg\_black, }\AttributeTok{data =}\NormalTok{ brcem)}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{PSM in R}
+\protect\hypertarget{psm-in-r}{}
+To perform PSM, we can use the \texttt{MatchIt} package. Here we
+estimate the propensity score for the LaLonde data
+
+\footnotesize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"MatchIt"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(}\StringTok{\textquotesingle{}marginaleffects\textquotesingle{}}\NormalTok{)}
+\FunctionTok{data}\NormalTok{(}\StringTok{"lalonde"}\NormalTok{)}
+
+\CommentTok{\# 1:1 NN PS matching w/o replacement}
+\NormalTok{m.out1 }\OtherTok{\textless{}{-}} \FunctionTok{matchit}\NormalTok{(treat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ educ }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ married }\SpecialCharTok{+} 
+\NormalTok{                   nodegree }\SpecialCharTok{+}\NormalTok{ re74 }\SpecialCharTok{+}\NormalTok{ re75, }\AttributeTok{data =}\NormalTok{ lalonde,}
+                 \AttributeTok{method =} \StringTok{"nearest"}\NormalTok{, }\AttributeTok{distance =} \StringTok{"glm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{PSM in R}
+\protect\hypertarget{psm-in-r-1}{}
+Checking balance after nearest neighbor matching
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(m.out1, }\AttributeTok{un =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## matchit(formula = treat ~ age + educ + race + married + nodegree + 
+##     re74 + re75, data = lalonde, method = "nearest", distance = "glm")
+## 
+## Summary of Balance for Matched Data:
+##            Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean
+## distance          0.5774        0.3629          0.9739     0.7566    0.1321
+## age              25.8162       25.3027          0.0718     0.4568    0.0847
+## educ             10.3459       10.6054         -0.1290     0.5721    0.0239
+## raceblack         0.8432        0.4703          1.0259          .    0.3730
+## racehispan        0.0595        0.2162         -0.6629          .    0.1568
+## racewhite         0.0973        0.3135         -0.7296          .    0.2162
+## married           0.1892        0.2108         -0.0552          .    0.0216
+## nodegree          0.7081        0.6378          0.1546          .    0.0703
+## re74           2095.5737     2342.1076         -0.0505     1.3289    0.0469
+## re75           1532.0553     1614.7451         -0.0257     1.4956    0.0452
+##            eCDF Max Std. Pair Dist.
+## distance     0.4216          0.9740
+## age          0.2541          1.3938
+## educ         0.0757          1.2474
+## raceblack    0.3730          1.0259
+## racehispan   0.1568          1.0743
+## racewhite    0.2162          0.8390
+## married      0.0216          0.8281
+## nodegree     0.0703          1.0106
+## re74         0.2757          0.7965
+## re75         0.2054          0.7381
+## 
+## Sample Sizes:
+##           Control Treated
+## All           429     185
+## Matched       185     185
+## Unmatched     244       0
+## Discarded       0       0
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{PSM in R}
+\protect\hypertarget{psm-in-r-2}{}
+We can also plot the distribution of propensity scores
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(m.out1, }\AttributeTok{type =} \StringTok{"jitter"}\NormalTok{, }\AttributeTok{interactive =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=0.65\linewidth]{slides_4_matching_files/figure-beamer/psm3-1}
+\end{frame}
+
+\begin{frame}[fragile]{PSM in R}
+\protect\hypertarget{psm-in-r-3}{}
+Or how about this one\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{summary}\NormalTok{(m.out1))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=0.65\linewidth]{slides_4_matching_files/figure-beamer/psm4-1}
+\end{frame}
+
+\begin{frame}[fragile]{PSM in R}
+\protect\hypertarget{psm-in-r-4}{}
+\footnotesize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate matched dataset}
+\NormalTok{m.data }\OtherTok{\textless{}{-}} \FunctionTok{match.data}\NormalTok{(m.out1)}
+\CommentTok{\# Run a regression on the matched dataset}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(re78 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ treat }\SpecialCharTok{+}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ educ }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ married }\SpecialCharTok{+}\NormalTok{ nodegree }\SpecialCharTok{+} 
+\NormalTok{             re74 }\SpecialCharTok{+}\NormalTok{ re75, }\AttributeTok{data =}\NormalTok{ m.data, }\AttributeTok{weights =}\NormalTok{ weights)}
+\FunctionTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = re78 ~ treat + age + educ + race + married + nodegree + 
+##     re74 + re75, data = m.data, weights = weights)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -8891  -5063  -1703   3422  53495 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)   
+## (Intercept) -2.582e+03  3.296e+03  -0.783  0.43394   
+## treat        1.345e+03  7.898e+02   1.703  0.08945 . 
+## age          7.804e+00  4.292e+01   0.182  0.85581   
+## educ         6.022e+02  2.241e+02   2.688  0.00753 **
+## racehispan   1.533e+03  1.128e+03   1.360  0.17471   
+## racewhite    4.694e+02  1.010e+03   0.465  0.64234   
+## married     -1.583e+02  9.863e+02  -0.160  0.87262   
+## nodegree     9.233e+02  1.110e+03   0.832  0.40604   
+## re74         2.636e-02  1.029e-01   0.256  0.79803   
+## re75         2.207e-01  1.596e-01   1.383  0.16751   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 6940 on 360 degrees of freedom
+## Multiple R-squared:  0.04885,    Adjusted R-squared:  0.02507 
+## F-statistic: 2.054 on 9 and 360 DF,  p-value: 0.0329
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{PSM in R}
+\protect\hypertarget{psm-in-r-5}{}
+\footnotesize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Can also compute the ATT based on the interactions of the treatment}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(re78 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ treat }\SpecialCharTok{*}\NormalTok{ (age }\SpecialCharTok{+}\NormalTok{ educ }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ married }\SpecialCharTok{+}\NormalTok{ nodegree }\SpecialCharTok{+} 
+\NormalTok{             re74 }\SpecialCharTok{+}\NormalTok{ re75), }\AttributeTok{data =}\NormalTok{ m.data, }\AttributeTok{weights =}\NormalTok{ weights)}
+
+\FunctionTok{avg\_comparisons}\NormalTok{(fit,}
+                \AttributeTok{variables =} \StringTok{"treat"}\NormalTok{,}
+                \AttributeTok{vcov =} \SpecialCharTok{\textasciitilde{}}\NormalTok{subclass,}
+                \AttributeTok{newdata =} \FunctionTok{subset}\NormalTok{(m.data, treat }\SpecialCharTok{==} \DecValTok{1}\NormalTok{),}
+                \AttributeTok{wts =} \StringTok{"weights"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##   Term Contrast Estimate Std. Error    z Pr(>|z|)   S 2.5 % 97.5 %
+##  treat    1 - 0     1121        837 1.34    0.181 2.5  -520   2763
+## 
+## Columns: term, contrast, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high 
+## Type:  response
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{PSM in R}
+\protect\hypertarget{psm-in-r-6}{}
+Another option based on the \texttt{Matching} package; PSM done directly
+here \footnotesize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"Matching"}\NormalTok{)}
+\FunctionTok{attach}\NormalTok{ (lalonde) }
+\NormalTok{D }\OtherTok{\textless{}{-}}\NormalTok{ treat}
+\NormalTok{Y }\OtherTok{\textless{}{-}}\NormalTok{ re78 }\CommentTok{\# define outcome}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{( age , educ , nodegree , married , re74 , re75) }
+\NormalTok{ps}\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(D }\SpecialCharTok{\textasciitilde{}}\NormalTok{ X, }\AttributeTok{family=}\NormalTok{binomial)}\SpecialCharTok{$}\NormalTok{fitted }
+\NormalTok{psmatching }\OtherTok{\textless{}{-}} \FunctionTok{Match}\NormalTok{(}\AttributeTok{Y=}\NormalTok{Y, }\AttributeTok{Tr=}\NormalTok{D, }\AttributeTok{X=}\NormalTok{ps , }\AttributeTok{BiasAdjust =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{PSM in R}
+\protect\hypertarget{psm-in-r-7}{}
+Another option based on the \texttt{Matching} package; PSM done directly
+here \footnotesize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(psmatching)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Estimate...  597.88 
+## AI SE......  913.53 
+## T-stat.....  0.65447 
+## p.val......  0.51281 
+## 
+## Original number of observations..............  614 
+## Original number of treated obs...............  185 
+## Matched number of observations...............  185 
+## Matched number of observations  (unweighted).  289
+\end{verbatim}
+
+--\textgreater{}
+\end{frame}
+
+\begin{frame}{.}
+\protect\hypertarget{section}{}
+\begin{large}
+\begin{tabular}{m{1cm} l}
+  \includegraphics[width=1cm]{../Templates/emailicon.png} & \href{mailto:benjamin.elsner@ucd.ie}{benjamin.elsner@ucd.ie} \\
+  \includegraphics[width=1.2cm]{../Templates/interneticon.jpeg} & \href{https://benjaminelsner.com}{www.benjaminelsner.com} \\   
+  \includegraphics[width=1.2cm]{../Templates/calendlyicon.png} & \href{https://calendly.com/benjamin-elsner/office-hour}{Sign up for office hours} \\  
+  \includegraphics[width=1cm]{../Templates/youtubeicon.png} & \href{www.youtube.com/@ben_elsner}{YouTube Channel} \\    
+  \includegraphics[width=1cm]{../Templates/xicon.png} & \href{https://twitter.com/ben_elsner}{@ben\_elsner} \\ 
+    \includegraphics[width=1cm]{../Templates/linkedinicon.png} & \href{www.linkedin.com/in/benjamin-elsner-b71b98bb}{LinkedIn} \\     
+\end{tabular}
+\end{large}
+\end{frame}
+
+\begin{frame}{Contact}
+\protect\hypertarget{contact}{}
+\textbf{Prof.~Benjamin Elsner}\\
+University College Dublin\\
+School of Economics\\
+Newman Building, Office G206\\
+\href{mailto:benjamin.elsner@ucd.ie}{\nolinkurl{benjamin.elsner@ucd.ie}}
+\vfill Office hours: book on
+\href{https://calendly.com/benjamin-elsner/office-hour}{Calendly}
+\end{frame}
+
+\end{document}
