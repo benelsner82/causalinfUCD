@@ -1,0 +1,908 @@
+---
+title: "[ECON42720 Causal Inference and Policy Evaluation](https://benelsner82.github.io/causalinfUCD/)"
+subtitle: "4a Matching and Re-weighting"
+author: "Ben Elsner (UCD)"
+output:
+  beamer_presentation:
+    includes:
+      in_header: "../Templates/template_metrics.tex"
+classoption: "aspectratio=169, handout" 
+
+
+--- 
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(knitr)
+library(ggplot2)
+library(grid)
+library(dplyr)
+library(haven)
+library(kableExtra)
+library(gridExtra)
+library(patchwork)
+library(FNN)
+
+set.seed(1234)
+
+graphdir <- "../../../causalinf_phd/Graphs/"
+
+```
+
+## About this Lecture
+
+This lecture is all \brf{about adjusting for confounders}
+
+- Why we want to adjust for confounders
+- How we can adjust for confounders using re-weighting
+- Limits of re-weighting: the curse of dimensionality
+- How we find suitable control units using matching
+- Differences between regression and matching
+
+\vfill
+Matching is a \brf{powerful tool}, but it's also an art in itself
+
+- There are many techniques out there
+- Learning to use them takes practice
+
+
+
+## Resources
+
+As an \brf{introduction}, I recommend Chapter 5 in Scott Cunningham's Mixtape
+
+\vfill
+
+Slightly \brf{more detailed coverage} can be found in 
+
+- Huntington-Klein's The Effect, Chapter 14
+- Huber's Causal Analysis, Chapter 4
+
+\vfill
+Many examples in this chapter, in particular the R codes, have been taken from The Effect or inspired by it.
+
+
+## Credits
+
+\brf{Stephen Pettigrew} produced some very instructive graphs on matching. You can find his [slides on matching here](https://www.stephenpettigrew.com/teaching/gov2001/section11_2014.pdf). He has lots of interesting materials on causal inference on [his website](https://www.stephenpettigrew.com/).
+
+\vfill
+\brf{Gary King} has done fundamental work on matching and has a [website with lots of resources](https://gking.harvard.edu/). I have used some of his materials, especially the illustrations of matching, in this lecture. One paper I learned a lot from is \citet{ho_2007}.
+
+
+## Starting Point: Conditional Independence
+
+\begin{equation*}
+(Y^1,Y^0) \ind D\mid X
+\end{equation*}
+
+\vfill
+For \brf{causal identification}, we require the assumption that the \brf{treatment} $D$ is as good as \brf{randomly assigned conditional on the covariates $X$}
+\vfill
+
+Formally, this means that the potential outcomes are \brf{conditionally independent} of the treatment assignment given the covariates
+
+\begin{align*}
+   E\big[Y^1\mid D=1,X\big]=E\big[Y^1\mid D=0,X\big]
+   \\
+   E\big[Y^0\mid D=1,X\big]=E\big[Y^0\mid D=0,X\big]
+\end{align*}
+
+
+## Conditional Independence and Selection on Observables
+
+If CIA holds, we speak of \brf{selection on observables}
+
+- **Independence does not hold** in general
+- But it holds in the **subpopulations** defined by the covariates $X$
+
+\vfill
+The \brf{groups defined by $X$} (think age, gender, neighbourhood, etc) determine the \brf{treatment assignment}
+
+- But **within each group**, who gets treated is **as good as random**
+
+\vfill
+This is a **strong assumption!**
+
+
+## Example: Smoking and Lung Cancer
+
+\brf{Does smoking cause lung cancer?}
+
+- Today we would say "yes, of course"
+- But answering this question was far from clear in the 1950s
+- There is a **strong correlation** between smoking and lung cancer, but is it causal?
+
+\vfill
+\brf{(Potential) problem: confounders}
+
+- There could be genetic determinants of smoking and lung cancer
+- There could be environmental factors that cause both smoking and lung cancer
+
+\vfill
+We don't have \brf{experimental evidence}
+
+
+## Example: Death Rates per 1,000
+
+The following example from \citet{cochran1968} will illustrate what \brf{selection on observables} and do for us
+
+
+```{r, echo=FALSE, eval=TRUE}
+smoking_data <- data.frame(
+  "Smoking group" = c("Non-smokers", "Cigarettes", "Cigars/pipes"),
+  Canada = c(20.2, 20.5, 35.5),
+  UK = c(11.3, 14.1, 20.7),
+  US = c(13.5, 13.5, 17.4),
+  check.names = FALSE
+)
+
+kable(smoking_data, align = 'c')
+``` 
+
+\vfill
+
+In all countries, the **highest death rates are for cigar and pipe smokers** 
+
+- Does this mean that smoking pipes and cigars is more dangerous than smoking cigarettes?
+- And given the minor differences between cigarette smokers and non-smokers, are cigarettes harmless?
+
+
+## Smoking and Lung Cancer: Independence?
+
+The \brf{independence assumption} would imply that all three groups have the **same potential outcomes on average**
+
+
+\begin{align*}
+ E\big[Y^1\mid \text{Non-Smoker}\big] =
+   E\big[Y^1\mid \text{Cigarette}\big] =
+   E\big[Y^1\mid \text{Pipe}\big] =
+   E\big[Y^1\mid \text{Cigar}\big]
+   \\
+   E\big[Y^0\mid \text{Non-Smoker}\big] =
+   E\big[Y^0\mid \text{Cigarette}\big]=
+   E\big[Y^0\mid \text{Pipe}\big] =
+   E\big[Y^0\mid \text{Cigar}\big]
+\end{align*}
+
+\vfill
+Suppose that the \brf{independence assumption} holds
+
+- This would/should also mean that observable characteristics $X$ are similar between the groups
+- I.e. the **covariates should be balanced** between groups
+
+
+
+## Are cigarette smokers similar to pipe and cigar smokers?
+
+Let's ask Dall-E: show me a picture of a cigarette smoker and a cigar smoker
+
+```{r, out.width = '40%', echo=FALSE, fig.align="center"}
+knitr::include_graphics(paste0(graphdir, "smokers.png"))
+```
+
+## Age as a Confounder?
+
+```{r, echo=FALSE, eval=TRUE}
+smoking_data_new <- data.frame(
+  "Smoking group" = c("Non-smokers", "Cigarettes", "Cigars/pipes"),
+  Canada = c(54.9, 50.5, 65.9),
+  UK = c(49.1, 49.8, 55.7),
+  US = c(57.0, 53.2, 59.7),
+  check.names = FALSE
+)
+
+kable(smoking_data_new, align = 'c')
+```
+
+Clearly, \brf{age affects what people smoke and also their death rates}
+
+- Independence is violated: the **distribution of age** is different between the groups
+- There may be other confounders, but let's focus on age for now
+
+\vfill
+We have \brf{covariate imbalance!} 
+
+\vfill
+Potential remedy: condition on age (\brf{subclassification})
+
+
+
+## Subclassification: Divide Age into Strata
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+                & Death rates & \# of Cigarette smokers & \# of Pipe or cigar smokers \\ \hline
+Age 20–40       & 20          & 65                       & 10                          \\
+Age 41–70       & 40          & 25                       & 25                          \\
+Age $\geq$ 71   & 60          & 10                       & 65                          \\
+Total           &             & 100                      & 100                         \\ \hline
+\end{tabular}
+\end{center}
+
+
+
+## Subclassification: Divide Age into Strata
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+                & Death rates & \# of Cigarette smokers & \# of Pipe or cigar smokers \\ \hline
+Age 20–40       & \cellcolor{green!25}20          & \cellcolor{green!25}65                       & 10                          \\
+Age 41–70       & \cellcolor{green!25}40          & \cellcolor{green!25}25                       & 25                          \\
+Age $\geq$ 71   & \cellcolor{green!25}60          & \cellcolor{green!25}10                       & 65                          \\
+Total           &             & 100                      & 100                         \\ \hline
+\end{tabular}
+\end{center}
+
+The **death rate of cigarette smokers in the population** is: 
+
+$$20 \times \dfrac{65}{100} + 40 \times \dfrac{25}{100} + 60 \times \dfrac{10}{100}=29$$
+
+\vfill
+But: the **age distribution is (heavily) imbalanced** between the groups
+
+## Re-weighting: Age-Adjusted Death Rates
+
+
+Let's **re-weight** the death rates of cigarette smokers by the **age distribution of pipe/cigar smokers**
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+                & Death rates & \# of Cigarette smokers & \# of Pipe or cigar smokers \\ \hline
+Age 20–40       & \cellcolor{green!25}20          & 65                       & \cellcolor{green!25}10                          \\
+Age 41–70       & \cellcolor{green!25}40          & 25                       & \cellcolor{green!25}25                          \\
+Age $\geq$ 71   & \cellcolor{green!25}60          & 10                       & \cellcolor{green!25}65                          \\
+Total           &             & 100                      & 100                         \\ \hline
+\end{tabular}
+\end{center}
+
+
+The **age-adjusted death rate of cigarette smokers** is:
+
+
+$$20 \times \dfrac{10}{100} + 40 \times \dfrac{25}{100} + 60 \times \dfrac{65}{100}=51$$
+
+\vfill
+If **cigarette smokers** had the **same age distribution as pipe/cigar smokers**, their death rate would be 51
+
+
+## Age-Adjusted Death Rates
+
+Cochran \brf{computes age-adjusted death rates} (based on the population age distribution)
+
+```{r echo=FALSE, eval=TRUE}
+# Create the data frame
+smoking_data <- data.frame(
+  "Smoking group" = c("Non-smokers", "Cigarettes", "Cigars/pipes"),
+  "Canada" = c(20.2, 29.5, 19.8),
+  "UK" = c(11.3, 14.8, 11.0),
+  "US" = c(13.5, 21.2, 13.7),
+  check.names = FALSE
+)
+
+# Create the table with kable
+kable(smoking_data, align = 'c')
+```
+
+Here we \brf{achieved balance on one covariate: age}
+
+- The **age-adjusted death rates** are now more similar between the groups
+- But there may be an **imbalance on other covariates** (SES, income, health, etc)
+
+\vfill 
+We need to \brf{use a DAG} to identify \brf{all confounders} and adjust for them
+
+
+## Identifying Assumptions
+
+In presence of confounders $X$, we can \brf{identify a causal effect under two assumptions}
+
+1. **Conditional Independence**: $Y^0, Y^1 \perp D \mid X$
+2. **Common Support**: $0 < P(D = 1 \mid X) < 1$ with probability one
+
+\vfill
+\brf{Common support}: for each stratum, we need some units that are treated and others that are control units
+
+- We need **common support** to calculate the **weights for the adjustment**
+
+
+
+## Summary: Subclassification and Re-weighting
+
+\brf{Treated and control} units often differ in the \brf{distribution of $X$ (confounders)}
+
+\vfill
+We can make **both groups** (somewhat) **comparable** by
+
+1. dividing the sample into **strata based on $X$** (\brf{subclassification})
+2. re-weighting the strata to **achieve balance on $X$** (\brf{re-weighting})
+
+\vfill
+After re-weighting, both groups have the **same distribution of $X$ by construction**
+
+
+
+## Causal Identification with Selection on Observables
+
+Under \brf{conditional independence and common support}, the following holds:
+
+\begin{align*}
+   E\big[Y^1-Y^0\mid X\big] & = E\big[Y^1 - Y^0 \mid X,D=1\big]                     
+   \\
+            & = E\big[Y^1\mid X,D=1\big] - E\big[Y^0\mid X,D=0\big]
+   \\
+            & = E\big[Y\mid X,D=1\big] - E\big[Y\mid X,D=0\big]     
+\end{align*}
+
+\vfill
+The \brf{estimator for the ATE} is as follows: 
+
+\begin{align*}
+   \widehat{\delta_{ATE}}= \int \Big(E\big[Y\mid X,D=1\big] - E\big[Y\mid X,D=0\big]\Big)d\Pr(X)
+\end{align*}
+
+
+## The Limits of Subclassification: The Curse of Dimensionality
+
+In the example of \brf{smoking and death rates}, we \brf{adjusted for just one confounder}
+
+- The hope was that, by slicing up age into three groups, achieve balance in treated and control groups
+- We did achieve balance on age, but what about other confounders?
+- Also, are three age groups enough or do we need more?
+
+\vfill
+In practice, we have the \brf{problem of a finite sample size}
+
+- There are **limits to how many strata we can create**
+- We cannot have an infinite number of groups defined by one variable (such as age)
+- We cannot have an infinite number of variables to adjust for
+
+\vfill
+This problem is known as the \brf{curse of dimensionality}
+
+
+## The Limits of Subclassification: The Curse of Dimensionality
+
+Let's say we have $k=1,\dots,K$ groups (for example defined by gender and age). We can calculate the ATT as
+
+\begin{align*}
+\widehat{\delta}_{ATT} = \sum_{k=1}^K\Big(\overline{Y}^{1,k} - \overline{Y}^{0,k}\Big)\times \bigg( \dfrac{N^k_T}{N_T} \bigg )
+\end{align*}
+
+where $\overline{Y}^{1,k}$ and $\overline{Y}^{0,k}$ are the average outcomes in group $k$ for treated and control units, and $N^k_T$ is the number of treated units in group $k$.
+
+\vfill
+In **large groups** (small $K$) we will easily find a \brf{control unit for every treated unit}
+
+\vfill
+As $K$ increases and \brf{groups get smaller}, we will have \brf{more and more groups} that only contain \brf{control or treated units but not both}
+
+
+## Possible Solution: Matching
+
+```{r, echo=FALSE, out.width="50%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "matchingcartoon1.png"))
+```
+
+\tiny
+Source: Dall-E
+
+
+
+## Possible Solution: Matching
+
+\brf{Idea of matching}: 
+
+- for each **treated unit**, find a **control unit** that is **similar on all confounders**
+- **compare the outcomes** of **treated and control units**
+- The **comparison** gives us an **estimate of the ATT**
+
+\vfill
+Control units: \brf{statistical twins} of treated units
+
+\vfill
+It if also possible to have \brf{multiple control units for each treated unit}
+
+
+## Statistical Twins?
+
+```{r, echo=FALSE, out.width="75%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "charlesosbourne.jpeg"))
+```
+
+\tiny
+
+Source: somewhere on X, before 2023
+
+
+## Why Don't We just Run a Regression
+
+If treated and untreated units have different $X$ and $X$ are confounders, we can include them in a regression
+
+\begin{align*}
+Y_i = \alpha + \beta D_i + \beta \boldsymbol{X_i} + u_i  
+\end{align*}
+
+\vfill
+Don't we then \brf{compare like with like}?
+
+- Answer: it depends on the **functional form** of the relationship between $X$ and $Y$
+- Regression can get it wrong if the relationship is non-linear and/or
+- If there is **not much common support** in the distribution of $X$ between treated and control units
+
+
+## Regression vs. Matching
+
+Suppose we want to look at the effect of a treatment $D$ on an outcome $Y$. Education is a confounder.
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal1.png"))
+```
+
+
+## Regression vs. Matching
+
+Enter the control units; for high and low levels of education, we have no common support
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal2.png"))
+```
+
+
+## Regression vs. Matching
+
+\brf{Separate regression lines} for treated and control groups: 
+
+- the difference is $\widehat{\beta}>0$
+
+```{r, echo=FALSE, out.width="55%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal3.png"))
+```
+
+
+## Regression vs. Matching
+
+If we use a \brf{quadratic term for education}, we get a different result
+
+- The estimate $\widehat{\beta}$ is small and negative
+
+
+```{r, echo=FALSE, out.width="55%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal4.png"))
+```
+
+
+## Regression vs. Matching
+
+The previous slides highlight a \brf{problem with regression}
+
+- with a \brf{lack of common support}, control and treated units are not comparable
+- this can even be the problem if both groups have the same average level of education
+
+\vfill
+
+\brf{Control units with high and low levels of education influence} the regression line
+
+- but these units cannot be compared to any treated units
+- so our regression compares fundamentally different units (apples and oranges)
+
+\vfill
+We have a \brf{covariate imbalance}; regression does not (always) solve the problem
+
+
+
+
+## Regression vs. Matching
+
+Matching \brf{selects units with common support} in the distribution of $X$
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal5.png"))
+```
+
+
+## Regression vs. Matching
+
+Among these units, there is \brf{no difference between treatment and outcome}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "hoetal6.png"))
+```
+
+
+## Matching Stage 1: Preparation
+
+
+
+1: Choose the **variables you want to match** on 
+
+- Match on **confounders**, but not on colliders or mediators
+
+\vfill
+
+2: Choose a **matching method** (more on this later)
+
+- The method determines how you select control observations
+
+
+
+\vfill
+
+3: **Match treated and control observations**
+
+- Select control observations that are similar in $X$ to treated ones
+- prune observations without good matches
+
+
+## Matching: Stage 2: Refinement and Estimation
+
+
+4: Check if your \brf{dataset is balanced on covariates}
+
+- Treated and control observations should have similar values of $X$
+- If you don't have balance, go back to stage 1
+
+\vfill
+
+5: Run a \brf{simple regression of the outcome on the treatment} 
+
+- Or do a simple difference in outcomes and run a t-test
+
+\vfill
+
+6: \brf{Run sensitivity checks} to see if the results depend on the matching procedure
+
+- Change matching methods
+- Change parameters of the matching method
+
+
+
+
+
+## Matching and the ATT: One Control Unit per Treated Unit
+With one control unit for each treated unit, we \brf{can calculate the ATT} as
+
+\begin{align*}
+\widehat{\delta}_{ATT} = \dfrac{1}{N_T} \sum_{D_i=1}(Y_i - Y_{j(i)})
+\end{align*}
+
+- $Y_i$ is the outcome for treated unit $i$
+- $Y_{j(i)}$ is the outcome for the control unit $j(i)$
+
+## Matching and the ATT: Multiple Control Units per Treated Unit
+Or if we find $M$ matches for each treated unit, we can calculate the ATT as
+
+\begin{align*}
+\widehat{\delta}_{ATT} = \dfrac{1}{N_T} \sum_{D_i=1} \bigg ( Y_i - \bigg [\dfrac{1}{M} \sum_{m=1}^M Y_{j_m(1)} \bigg ] \bigg )
+\end{align*}
+
+- $Y_{j_m(1)}$ is the outcome for the $m$th control unit matched to treated unit $i$
+
+
+## Matching and the ATE
+
+We can also use \brf{matching to estimate the ATE}. For this, we need to
+
+- Find a similar control unit for each treated unit
+- Find a similar treated unit for each control unit
+
+\vfill
+The \brf{estimator for the ATE} is as follows:
+
+\begin{align*}
+\widehat{\delta}_{ATE} = \dfrac{1}{N} \sum_{i=1}^N (2D_i - 1) \bigg [ Y_i - \bigg ( \dfrac{1}{M} \sum_{m=1}^M Y_{j_m(i)} \bigg ) \bigg ]
+\end{align*}
+
+
+
+## Exact Matching
+
+\brf{Match each treated unit to a control unit} that has **exactly the same covariate values**
+\vfill
+This is called \brf{exact matching} and can be thought of as the \textbf{gold standard
+for matching}
+
+## Exact Matching with One Covariate
+
+```{r echo=FALSE, eval=TRUE, out.width="65%", fig.align='center'}
+
+# Data provided by the user
+df <- data.frame(
+  covariate = rep(seq(1, 5, by = 1), each = 2),
+  outcome = c(2, 4, 2.5, 4.5, 1.5, 3, 1, 2.5, 3.5, 5),
+  group = rep(c('C', 'T'), 5)
+)
+
+# Create the scatter plot
+p <- ggplot(df, aes(x = covariate, y = outcome, label = group, color = group)) +
+  geom_text(size = 10) +
+  scale_color_manual(values = c('C' = 'blue', 'T' = 'red')) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  ) +
+  labs(x = 'Covariate', y = 'Outcome')
+
+# Create a data frame for the arrow data with an offset
+arrow_data <- df[df$group == 'T', ]
+arrow_data$yend <- df[df$group == 'C', 'outcome']
+arrow_data$y_start_offset <- arrow_data$outcome - 0.2  # Start a bit lower than T
+arrow_data$y_end_offset <- arrow_data$yend + 0.2       # End a bit higher than C
+
+# Add arrows to the plot
+p <- p + geom_segment(data = arrow_data, 
+                      aes(x = covariate, xend = covariate, y = y_start_offset, yend = y_end_offset),
+                      arrow = arrow(type = "closed", length = unit(0.3, "inches")),
+                      inherit.aes = FALSE, size = 1, color = "black")
+
+# Print the plot
+print(p)
+
+```
+
+For each treated unit, we find a **control unit with the same covariate value**
+
+
+## Exact Matching with Two Covariates
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+
+# Data provided by the user
+df <- df %>%
+  mutate(covariate1=covariate,
+         covariate2=c(4,4,2,2,3.5,3.5, 1,1, 2.5, 2.5))
+
+# Create the scatter plot
+p <- ggplot(df, aes(x = covariate, y = covariate2, label = group, color = group)) +
+  geom_text(size = 10) +
+  scale_color_manual(values = c('C' = 'blue', 'T' = 'red')) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  ) +
+  labs(x = 'Covariate 1', y = 'Covariate 2')
+
+
+# Print the plot
+print(p)
+
+
+```
+
+
+For each treated unit, we find a control unit with the **same values of covariates 1 and 2**
+
+
+## Example:  Job Training Programme
+
+\scriptsize
+\begin{center}
+\begin{tabular}{|c c c|c c c|}
+\hline
+\multicolumn{3}{|c|}{Trainees} & \multicolumn{3}{|c|}{Non-Trainees} \\ \hline
+Unit & Age & Earnings & Unit & Age & Earnings \\ \hline
+1 & 18 & 9500 & 1 & 20 & 8500 \\ 
+2 & 29 & 12250 & 2 & 27 & 10075 \\ 
+3 & 24 & 11000 & 3 & 21 & 8725 \\ 
+4 & 27 & 11750 & 4 & 39 & 12775 \\ 
+5 & 33 & 13250 & 5 & 38 & 12550 \\ 
+6 & 22 & 10500 & 6 & 29 & 10525 \\ 
+7 & 19 & 9750 & 7 & 39 & 12775 \\ 
+8 & 20 & 10000 & 8 & 33 & 11425 \\ 
+9 & 21 & 10250 & 9 & 24 & 9400 \\ 
+10 & 30 & 12500 & 10 & 30 & 10750 \\ 
+\multicolumn{3}{|c|}{} & 11 & 33 & 11425 \\ 
+\multicolumn{3}{|c|}{} & 12 & 36 & 12100 \\ 
+\multicolumn{3}{|c|}{} & 13 & 22 & 8950 \\ 
+\multicolumn{3}{|c|}{} & 14 & 18 & 8050 \\ 
+\multicolumn{3}{|c|}{} & 15 & 43 & 13675 \\ 
+\multicolumn{3}{|c|}{} & 16 & 39 & 12775 \\ 
+\multicolumn{3}{|c|}{} & 17 & 19 & 8275 \\ 
+\multicolumn{3}{|c|}{} & 18 & 30 & 9000 \\ 
+\multicolumn{3}{|c|}{} & 19 & 51 & 15475 \\ 
+\multicolumn{3}{|c|}{} & 20 & 48 & 14800 \\ \hline
+Mean & 24.3 & \$11,075 & Mean & 31.95 & \$11,101.25 \\ \hline
+\end{tabular}
+\end{center}
+
+\normalsize
+
+## Age Distribution of Trainees vs. Non-Trainees
+
+```{r echo=FALSE, eval=TRUE, out.width="80%", fig.align='center', figure.height=3.5}
+
+read_data <- function(df)
+{
+  full_path <- paste("https://github.com/scunning1975/mixtape/raw/master/", 
+                     df, sep = "")
+  df <- read_dta(full_path)
+  return(df)
+}
+
+training_example <- read_data("training_example.dta") %>% 
+  slice(1:20)
+
+# Calculate the maximum frequency for both age_treat and age_control
+max_count_treat <- max(hist(training_example$age_treat, breaks = 15, plot = FALSE)$counts, na.rm = TRUE)
+max_count_control <- max(hist(training_example$age_control, breaks = 15, plot = FALSE)$counts, na.rm = TRUE)
+max_count <- max(max_count_treat, max_count_control)
+
+# First histogram for age_treat
+p1 <- ggplot(training_example, aes(x=age_treat)) +
+  geom_histogram(bins = 15, na.rm = TRUE, fill="darkorange2") + 
+  geom_vline(aes(xintercept = mean(age_treat, na.rm = TRUE)), color = "blue", linetype = "dashed", size = 2) +  # Add mean line
+  theme_minimal() +
+  ylim(0, max_count) +
+  theme(aspect.ratio = 1/2) + # Modify aspect ratio
+  ylab("Frequency") + 
+  xlab("Age of Trainees") +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  )
+
+# Second histogram for age_control
+p2 <- ggplot(training_example, aes(x=age_control)) +
+  geom_histogram(bins = 15, na.rm = TRUE, fill="darkorange2") + 
+  geom_vline(aes(xintercept = mean(age_control, na.rm = TRUE)), color = "blue", linetype = "dashed", size = 2) +  # Add mean line
+  theme_minimal() +
+  ylim(0, max_count) +
+  theme(aspect.ratio = 1/2) + # Modify aspect ratio
+  ylab("Frequency") + 
+  xlab("Age of Non-Trainees") +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  )
+
+# Combine the plots side by side with the same y-axis and add space between them
+combined_plot <- p1 + p2 + plot_layout(guides = 'collect') & theme(plot.margin = unit(c(0.5,1,1,1), "cm"))
+
+# Print the combined plot
+print(combined_plot)
+```
+
+Clearly, the age distribution of trainees and non-trainees is different (mean 24.3 vs. 31.95)
+
+## Creating an (exactly) Matched Sample
+
+\scriptsize
+\begin{center}
+\begin{tabular}{|ccc|ccc|ccc|}
+\hline
+\multicolumn{3}{|c|}{Trainees} & \multicolumn{3}{c|}{Non-Trainees} & \multicolumn{3}{c|}{Matched Sample} \\ \hline
+Unit & Age & Earnings & Unit & Age & Earnings & Unit & Age & Earnings \\ \hline
+1 & 18 & 9500 & 1 & 20 & 8500 & 14 & 18 & 8050 \\
+2 & 29 & 12250 & 2 & 27 & 10075 & 6 & 29 & 10525 \\
+3 & 24 & 11000 & 3 & 21 & 8725 & 9 & 24 & 9400 \\
+4 & 27 & 11750 & 4 & 39 & 12775 & 8 & 27 & 10075 \\
+5 & 33 & 13250 & 5 & 38 & 12550 & 11 & 33 & 11425 \\
+6 & 22 & 10500 & 6 & 29 & 10525 & 13 & 22 & 8950 \\
+7 & 19 & 9750 & 7 & 39 & 12775 & 17 & 19 & 8275 \\
+8 & 20 & 10000 & 8 & 33 & 11425 & 1 & 20 & 8500 \\
+9 & 21 & 10250 & 9 & 24 & 9400 & 3 & 21 & 8725 \\
+10 & 30 & 12500 & 10 & 30 & 10750 & 10,18 & 30 & 9875 \\ 
+\multicolumn{3}{|c|}{} & 11 & 33 & 11425 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 12 & 36 & 12100 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 13 & 22 & 8950 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 14 & 18 & 8050 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 15 & 43 & 13675 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 16 & 39 & 12775 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 17 & 19 & 8275 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 18 & 30 & 9000 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 19 & 51 & 15475 & \multicolumn{3}{c|}{} \\ 
+\multicolumn{3}{|c|}{} & 20 & 48 & 14800 & \multicolumn{3}{c|}{} \\ \hline
+Mean & \cellcolor{green!25}24.3 & \$11,075 & Mean & 31.95 & \$11,101.25 & Mean & \cellcolor{green!25}24.3 & \$9,380 \\ \hline
+\end{tabular}
+\end{center}
+\normalsize
+
+
+## Treated Sample vs. Matched Control Sample
+
+```{r echo=FALSE, eval=TRUE, out.width="70%", fig.align='center', fig.height=3}
+# Calculate the maximum frequency for both age_treat and age_control
+max_count_treat <- max(hist(training_example$age_treat, breaks = 15, plot = FALSE)$counts, na.rm = TRUE)
+max_count_matched <- max(hist(training_example$age_matched, breaks = 15, plot = FALSE)$counts, na.rm = TRUE)
+max_count <- max(max_count_treat, max_count_matched)
+
+# First histogram for age_treat
+p1 <- ggplot(training_example, aes(x=age_treat)) +
+  geom_histogram(bins = 15, na.rm = TRUE, fill="darkorange2") + 
+  geom_vline(aes(xintercept = mean(age_treat, na.rm = TRUE)), color = "blue", linetype = "dashed", size = 2) +  # Add mean line
+  theme_minimal() +
+  ylim(0, max_count) +
+  theme(aspect.ratio = 1/2) + # Modify aspect ratio
+  ylab("Frequency") + 
+  xlab("Age of Trainees") +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  )
+
+# Second histogram for age_control
+p2 <- ggplot(training_example, aes(x=age_matched)) +
+  geom_histogram(bins = 15, na.rm = TRUE, fill="darkorange2") + 
+  geom_vline(aes(xintercept = mean(age_matched, na.rm = TRUE)), color = "blue", linetype = "dashed", size = 2) +  # Add mean line
+  theme_minimal() +
+  ylim(0, max_count) +
+  theme(aspect.ratio = 1/2) + # Modify aspect ratio
+  ylab("Frequency") + 
+  xlab("Age of Non-Trainees (Matched)") +
+  theme(
+    legend.position = "none",
+    axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(size = 1)
+  )
+
+# Combine the plots side by side with the same y-axis and add space between them
+combined_plot <- p1 + p2 + plot_layout(guides = 'collect') & theme(plot.margin = unit(c(0.1,1,1,1), "cm"))
+
+# Print the combined plot
+print(combined_plot)
+```
+
+With \brf{exact matching}, the age distribution of \brf{treated and matched control units are the same}
+
+\vfill 
+If age is the only confounder, we can \brf{estimate the ATT} as
+
+\begin{align*}
+\text{ATT} = \frac{1}{N} \sum_{i=1}^N (Y_i - Y_{i'}) = 11,075 - 9,380 = 1,695
+\end{align*}
+
+So the \brf{estimated causal effect} of the \brf{training programme} is 1,695 dollars
+
+
+
+
+## .
+\tiny
+\bibliographystyle{authordate1}
+\bibliography{../../../causalinf_phd/bibliography_causalinf}
+
+
+
+## .
+
+
+```{r child = '../Templates/socialmedia.Rmd'}
+```
+
+
+## Contact
+
+```{r child = '../Templates/contactpage.Rmd'}
+```
+
+
+

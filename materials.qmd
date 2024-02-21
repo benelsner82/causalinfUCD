@@ -39,7 +39,7 @@ These two videos explain the foundations of causal inference based on directed a
 
 ## 4 Matching
 
-#### Slides
+#### [Slides A](/slides/4 Matching and IPW/slides_4a_matching.pdf), [Slides B](/slides/4 Matching and IPW/slides_4a_matching.pdf)
 
 
 

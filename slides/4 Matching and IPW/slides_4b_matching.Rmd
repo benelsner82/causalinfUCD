@@ -1,0 +1,1362 @@
+---
+title: "[ECON42720 Causal Inference and Policy Evaluation](https://benelsner82.github.io/causalinfUCD/)"
+subtitle: "4b Matching and Re-weighting"
+author: "Ben Elsner (UCD)"
+output:
+  beamer_presentation:
+    includes:
+      in_header: "../Templates/template_metrics.tex"
+classoption: "aspectratio=169, handout" 
+
+
+--- 
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(knitr)
+library(ggplot2)
+library(grid)
+library(dplyr)
+library(haven)
+library(kableExtra)
+library(gridExtra)
+library(patchwork)
+library(FNN)
+library(stargazer)
+
+
+set.seed(1234)
+
+graphdir <- "../../../causalinf_phd/Graphs/"
+
+```
+
+
+## Approximate Matching
+
+In most cases, we \brf{cannot find a perfect match} for each treated unit
+
+- Many **variables are continuous**
+- We have many **covariates**
+- ...and **finite samples**
+
+\vfill
+
+\brf{Approximate matching} allows us to \brf{match similar units}
+
+
+
+
+
+## Approximate Matching: Questions to Ask Yourself
+
+
+\begin{columns}
+  
+\begin{column}{.4\textwidth}
+\includegraphics[width=\textwidth]{../../../causalinf_phd/Graphs/nerdymatch.png}
+\end{column}
+
+\begin{column}{.6\textwidth}
+1: Which \textbf{distance measure} to use?
+
+\begin{itemize}
+\item These determine how we measure similarity
+\end{itemize}
+
+\vfill
+
+2: How to turn \textbf{distance into matches}
+
+\begin{itemize}
+\item Which matches are "good enough"?
+\item Unique or multiple matches?
+\item Cut-off points (calipers), number of neighbours?
+\end{itemize}
+
+
+\vfill
+
+3: How do we \textbf{prune the data}?
+
+\begin{itemize}
+\item What do we do with units that are not matched?
+\end{itemize}
+
+
+\vfill
+
+4: Match \textbf{with or without replacement}?
+
+\begin{itemize}
+\item Do we allow control units to be matched to multiple treated units?
+\end{itemize}
+
+
+
+
+\end{column}
+
+\end{columns}
+
+
+
+
+## Approximate Matching 
+
+There are two **main methods for approximate matching:**
+
+1. \brf{Distance Matching} $\rightarrow$ minimise distance in $X$
+2. \brf{Propensity Score Matching} $\rightarrow$ match on likelihood of being treated
+
+\vfill
+A third type of matching is \brf{coarsened exact matching} (CEM)
+
+\vfill
+It is also possible to \brf{combine matching methods}
+
+- Example: match exactly on some characteristics and approximately on others
+
+
+## Distance Matching: Questions to Ask
+
+How do we measure \brf{distance, i.e. the similarity} between treated and control units?
+
+\vfill
+
+What is the \brf{cut-off point} for a good match?
+
+\vfill
+
+Do we consider \brf{multiple matches} for each treated unit?
+
+- If so, what criterion determines which unit is a match? 
+- And should **each control unit get the same weight**?
+
+
+## Distance Matching: Nearest Neighbour
+
+\small
+Starting point: \brf{treated units, with covariates age and age at which they left education}
+
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala1.png"))
+```
+
+
+
+
+## Distance Matching: Nearest Neighbour
+
+\small
+\brf{Treated and control units are different} w.r.t. education
+
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala2.png"))
+```
+
+
+
+## Distance Matching: Nearest Neighbour
+
+\small
+For each treated unit, we \brf{find the "closest" control unit} in terms of $X$ (\textit{Euclidean Distance})
+
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala3.png"))
+```
+
+
+## Distance Matching: Nearest Neighbour
+
+\small
+\brf{Drop control units} that are \brf{not close enough} to any treated unit
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala4.png"))
+```
+
+## Distance Matching: Nearest Neighbour
+
+\small
+\brf{Drop control units} that are \brf{not close enough} to any treated unit
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala5.png"))
+```
+
+
+## Distance Matching: Nearest Neighbour
+\normalsize
+\brf{Our estimation sample:}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mahala6.png"))
+```
+
+## Distance Matching: Nearest Neighbour
+
+With \brf{one covariate}, the distance is the Euclidean Distance
+
+\begin{align*}
+   ||X_i-X_j|| & = \sqrt{ (X_i-X_j)'(X_i-X_j) }             
+   \\
+            & = \sqrt{\sum_{n=1}^k (X_{ni} - X_{nj})^2 }
+\end{align*}
+
+\vfill
+
+For each treated unit, we find the control unit with the \brf{smallest distance} $||X_i-X_j||$
+
+
+## Multiple Covariates: Mahalanobis Distance
+
+With \brf{multiple covariates} $1, \dots, k$, we take into account the variance-covariance matrix $\widehat{\Sigma}_X$ of the covariates
+
+\begin{align*}
+||X_i-X_j||=\sqrt{ (X_i-X_j)'\widehat{\Sigma}_X^{-1}(X_i - X_j) }
+\end{align*}
+
+\vfill
+
+As before, for each treated unit, we find the control unit with the \brf{smallest distance} $||X_i-X_j||$
+
+\vfill 
+
+**Purpose of weighting** with $\widehat{\Sigma}_X^{-1}$:
+
+- Covariates become \brf{scale-invariant}
+- All distances are \brf{measured in terms of standard deviations}
+
+
+## Nearest Neighbour Matching: Steps Involved
+
+
+1. \brf{Preprocess (Matching)}
+  
+  - **Calculate the Mahalanobis Distance** $||X_i-X_j||=\sqrt{ (X_i-X_j)'\widehat{\Sigma}_X^{-1}(X_i - X_j) }$
+  - **Match** each treated unit to the **nearest control unit**
+  - Prune control units if unused
+  - Prune matches if Distance\(>\)caliper (i.e. if they exceed a certain distance)
+  
+2. \brf{Estimation}: calculate difference in means or run a regression
+
+
+
+
+## Other Distance Matching Methods
+
+
+\brf{k-Nearest-neighbour Matching (NNM)}
+
+- Match with the nearest neighbour or the **$k$ nearest neighbours** in terms of $X$ 
+- Take the average of these neighbours as the counterfactual
+
+\vfill
+\brf{Radius and Kernel Matching}
+
+- Match with **all control units** within a **certain radius of the treated unit**
+- If all control units have equal weight, we call this **radius matching**
+- If weights decay with distance, we call this **kernel matching**
+
+
+## Nearest Neighbour Matching with $k=3$
+
+\small
+Suppose you have a dataset with 2 treated and many control units
+
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+ncontrol <- 40
+# Create a dataframe with one treated and the rest control units
+df <- data.frame(
+  Education = c(3.868295, 9.000371, runif(ncontrol, min = 2, max = 10)), # Random education levels
+  Age = c(2.114500, 6.474310, runif(ncontrol, min = 2, max = 10)),      # Random ages
+  Type = c('T', 'T', rep('C', ncontrol))                                # Two treated, rest controls
+)
+df$Inside <- FALSE
+
+k <- 3
+
+
+# Ensure that 'Inside' is a logical column
+df$Inside <- as.logical(df$Inside)
+
+# Split the data into treated and control
+treated <- df[df$Type == 'T', ]
+control <- df[df$Type == 'C', ]
+
+# Initialize a vector to store the indices of nearest neighbours for control units
+nearest_indices <- integer(0)
+
+# Find k nearest neighbours for each treated unit
+for (i in 1:nrow(treated)) {
+  # Compute the distances and indices of the nearest neighbours
+  knn <- get.knnx(data = control[, c('Education', 'Age')], query = treated[i, c('Education', 'Age')], k = k)
+  # Store the indices
+  nearest_indices <- c(nearest_indices, knn$nn.index)
+}
+
+# Mark the nearest neighbours in the control dataset
+control$Inside <- FALSE
+control$Inside[nearest_indices] <- TRUE
+
+# Combine the treated and control datasets back together
+df <- rbind(treated, control)
+
+# Assign colors and labels
+df$Color <- ifelse(df$Type == 'T', 'red', 'blue')
+df$Label <- ifelse(df$Type == 'T', 'T', 'C')
+
+# Now, let's create a ggplot
+nnm1 <- ggplot(data = df, aes(x = Education, y = Age, label = Label, color = Color)) +
+  geom_text(size = 10) +
+  scale_color_identity() + # Use the colors as is
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        axis.text = element_text(size = 30),
+        axis.title = element_text(size = 30)) +
+  labs(x = 'Education', y = 'Age')
+
+# Print the plot
+print(nnm1)
+```
+
+
+
+## Nearest Neighbour Matching with $k=3$
+
+\small 
+Now we select the three nearest neighbours for each treated unit; their average $Y$ is the counterfactual for the treated unit
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+# Create a dataframe for the lines
+lines_data <- data.frame(x = numeric(0), y = numeric(0), xend = numeric(0), yend = numeric(0))
+
+# Populate the dataframe with line coordinates
+for (i in 1:nrow(treated)) {
+  # Indices of the nearest neighbours for the current treated unit
+  nearest_indices <- get.knnx(data = control[, c('Education', 'Age')], query = treated[i, c('Education', 'Age')], k = k)$nn.index
+  # Coordinates of the treated unit
+  x_treated <- treated[i, 'Education']
+  y_treated <- treated[i, 'Age']
+  
+  # Coordinates of each nearest neighbour
+  for (j in nearest_indices) {
+    lines_data <- rbind(lines_data, c(x_treated, y_treated, control[j, 'Education'], control[j, 'Age']))
+  }
+}
+
+# Rename columns appropriately for ggplot
+colnames(lines_data) <- c('x', 'y', 'xend', 'yend')
+
+# Update the color assignment in df
+df$Color <- ifelse(df$Type == 'T', 'red', ifelse(df$Inside, 'blue', 'lightblue'))
+
+# Now let's create the ggplot with dashed lines
+nnm2 <- ggplot(data = df, aes(x = Education, y = Age)) +
+  geom_text(aes(label = Label, color = Color), size = 10) +
+  geom_segment(data = lines_data, aes(x = x, y = y, xend = xend, yend = yend), 
+               linetype = "dashed", color = "black") + # Add the dashed lines
+  scale_color_identity() + # Use the colors as is
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        axis.text = element_text(size = 30),
+        axis.title = element_text(size = 30)) +
+  labs(x = 'Education', y = 'Age')
+
+# Print the plot
+print(nnm2)
+```
+
+
+
+## Nearest Neighbour Matching with $k=10$
+
+\small 
+Now we select the ten nearest neighbours for each treated unit
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+
+
+k <- 10
+
+
+# Ensure that 'Inside' is a logical column
+df$Inside <- as.logical(df$Inside)
+
+# Split the data into treated and control
+treated <- df[df$Type == 'T', ]
+control <- df[df$Type == 'C', ]
+
+# Initialize a vector to store the indices of nearest neighbours for control units
+nearest_indices <- integer(0)
+
+# Find k nearest neighbours for each treated unit
+for (i in 1:nrow(treated)) {
+  # Compute the distances and indices of the nearest neighbours
+  knn <- get.knnx(data = control[, c('Education', 'Age')], query = treated[i, c('Education', 'Age')], k = k)
+  # Store the indices
+  nearest_indices <- c(nearest_indices, knn$nn.index)
+}
+
+# Mark the nearest neighbours in the control dataset
+control$Inside <- FALSE
+control$Inside[nearest_indices] <- TRUE
+
+# Combine the treated and control datasets back together
+df <- rbind(treated, control)
+
+# Assign colors and labels
+df$Color <- ifelse(df$Type == 'T', 'red', 'blue')
+df$Label <- ifelse(df$Type == 'T', 'T', 'C')
+
+
+
+# Create a dataframe for the lines
+lines_data <- data.frame(x = numeric(0), y = numeric(0), xend = numeric(0), yend = numeric(0))
+
+# Populate the dataframe with line coordinates
+for (i in 1:nrow(treated)) {
+  # Indices of the nearest neighbours for the current treated unit
+  nearest_indices <- get.knnx(data = control[, c('Education', 'Age')], query = treated[i, c('Education', 'Age')], k = k)$nn.index
+  # Coordinates of the treated unit
+  x_treated <- treated[i, 'Education']
+  y_treated <- treated[i, 'Age']
+  
+  # Coordinates of each nearest neighbour
+  for (j in nearest_indices) {
+    lines_data <- rbind(lines_data, c(x_treated, y_treated, control[j, 'Education'], control[j, 'Age']))
+  }
+}
+
+# Rename columns appropriately for ggplot
+colnames(lines_data) <- c('x', 'y', 'xend', 'yend')
+
+
+# Update the color assignment in df
+df$Color <- ifelse(df$Type == 'T', 'red', ifelse(df$Inside, 'blue', 'lightblue'))
+
+# Now let's create the ggplot with dashed lines
+nnm3 <- ggplot(data = df, aes(x = Education, y = Age)) +
+  geom_text(aes(label = Label, color = Color), size = 10) +
+  geom_segment(data = lines_data, aes(x = x, y = y, xend = xend, yend = yend), 
+               linetype = "dashed", color = "black") + # Add the dashed lines
+  scale_color_identity() + # Use the colors as is
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        axis.text = element_text(size = 30),
+        axis.title = element_text(size = 30)) +
+  labs(x = 'Education', y = 'Age')
+
+# Print the plot
+print(nnm3)
+```
+
+
+## Radius Matching
+
+\small
+Here the researcher specifies a \brf{radius} ($r=2$) around the treated unit
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+# Example data - replace this with your actual data
+ncontrol <- 40
+df <- data.frame(
+  Education = runif(ncontrol+1, min = 2, max = 10), # Random education levels
+  Age = runif(ncontrol+1, min = 2, max = 10),      # Random ages
+  Type = c('T', rep('C', ncontrol)),              # 1 treated, 19 controls
+  Inside = c(TRUE, sample(c(TRUE, FALSE), ncontrol, replace = TRUE)) # Whether they are inside the radius
+)
+
+# Define the position of the treated unit
+treated_position <- df[df$Type == 'T', c('Education', 'Age')]
+
+# Define the radius
+radius <- 2 # This is an example value, adjust as needed
+
+# Add a circle around the treated unit to represent the radius
+df$Inside <- sqrt((df$Education - treated_position$Education)^2 + 
+                    (df$Age - treated_position$Age)^2) <= radius
+
+# Create the plot
+ggplot_object <- ggplot(data = df, aes(x = Education, y = Age, label = Type)) +
+  geom_text(aes(color = Type), size = 10) +
+  scale_color_manual(values = c('T' = 'red', 'C' = 'blue')) +
+  theme_minimal() +
+  theme(legend.position = "none",  # Remove the legend
+        panel.grid.major = element_blank(),  # Remove major grid lines
+        panel.grid.minor = element_blank(),  # Remove minor grid lines
+        axis.line = element_line(colour = "black"),    
+        axis.text = element_text(size = 30),
+    axis.title = element_text(size = 30)) +  # Make axis lines solid
+  labs(x = 'Education', y = 'Age') +
+  annotate("path",
+           x = seq(treated_position$Education - radius, 
+                   treated_position$Education + radius, length.out = 100),
+           y = sqrt(radius^2 - (seq(-radius, radius, length.out = 100))^2) + 
+             treated_position$Age,
+           colour = "grey50") +
+  annotate("path",
+           x = seq(treated_position$Education - radius, 
+                   treated_position$Education + radius, length.out = 100),
+           y = -sqrt(radius^2 - (seq(-radius, radius, length.out = 100))^2) + 
+             treated_position$Age,
+           colour = "grey50")
+# Print the plot
+print(ggplot_object)
+```
+
+
+
+## Radius Matching
+
+Each \brf{control unit within the radius has equal weight}
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+df$Color <- ifelse(df$Type == 'T', 'red', ifelse(df$Inside, 'blue', 'lightblue'))
+
+# Create the plot
+ggplot_object2 <- ggplot(data = df, aes(x = Education, y = Age, label = Type)) +
+  geom_text(aes(color = Color), size = 10) +
+  scale_color_identity() +
+  theme_minimal() +
+  theme(legend.position = "none",  # Remove the legend
+        panel.grid.major = element_blank(),  # Remove major grid lines
+        panel.grid.minor = element_blank(),  # Remove minor grid lines
+        axis.line = element_line(colour = "black"),    
+        axis.text = element_text(size = 30),
+        axis.title = element_text(size = 30)) +  # Make axis lines solid
+  labs(x = 'Education', y = 'Age') +
+  annotate("path",
+           x = seq(treated_position$Education - radius, 
+                   treated_position$Education + radius, length.out = 100),
+           y = sqrt(radius^2 - (seq(-radius, radius, length.out = 100))^2) + 
+             treated_position$Age,
+           colour = "grey50") +
+  annotate("path",
+           x = seq(treated_position$Education - radius, 
+                   treated_position$Education + radius, length.out = 100),
+           y = -sqrt(radius^2 - (seq(-radius, radius, length.out = 100))^2) + 
+             treated_position$Age,
+           colour = "grey50") +
+  # Add dashed lines for control units inside the circle
+  geom_segment(data = df[df$Inside, ],
+               aes(xend = treated_position$Education, yend = treated_position$Age),
+               linetype = "dashed",
+               color = "darkgrey")
+
+# Print the plot
+print(ggplot_object2)
+```
+
+## Radius Matching: Larger Radius ($r=4$)
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+# Define the radius
+radius <- 4 # This is an example value, adjust as needed
+
+# Add a circle around the treated unit to represent the radius
+df$Inside <- sqrt((df$Education - treated_position$Education)^2 + 
+                    (df$Age - treated_position$Age)^2) <= radius
+
+
+df$Color <- ifelse(df$Type == 'T', 'red', ifelse(df$Inside, 'blue', 'lightblue'))
+
+# Create the plot
+ggplot_object3 <- ggplot(data = df, aes(x = Education, y = Age, label = Type)) +
+  geom_text(aes(color = Color), size = 10) +
+  scale_color_identity() +
+  theme_minimal() +
+  theme(legend.position = "none",  # Remove the legend
+        panel.grid.major = element_blank(),  # Remove major grid lines
+        panel.grid.minor = element_blank(),  # Remove minor grid lines
+        axis.line = element_line(colour = "black"),    
+        axis.text = element_text(size = 30),
+        axis.title = element_text(size = 30)) +  # Make axis lines solid
+  labs(x = 'Education', y = 'Age') +
+  annotate("path",
+           x = seq(treated_position$Education - radius, 
+                   treated_position$Education + radius, length.out = 100),
+           y = sqrt(radius^2 - (seq(-radius, radius, length.out = 100))^2) + 
+             treated_position$Age,
+           colour = "grey50") +
+  annotate("path",
+           x = seq(treated_position$Education - radius, 
+                   treated_position$Education + radius, length.out = 100),
+           y = -sqrt(radius^2 - (seq(-radius, radius, length.out = 100))^2) + 
+             treated_position$Age,
+           colour = "grey50") +
+  # Add dashed lines for control units inside the circle
+  geom_segment(data = df[df$Inside, ],
+               aes(xend = treated_position$Education, yend = treated_position$Age),
+               linetype = "dashed",
+               color = "darkgrey")
+
+# Print the plot
+print(ggplot_object3)
+
+```
+
+
+## Kernel Matching
+Consider the following sample
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+ncontrol <- 20
+df <- data.frame(
+  Education = runif(ncontrol+1, min = 2, max = 10), # Random education levels
+  Age = runif(ncontrol+1, min = 2, max = 10),      # Random ages
+  Type = c('T', rep('C', ncontrol)),              # 1 treated, 19 controls
+  Inside = c(TRUE, sample(c(TRUE, FALSE), ncontrol, replace = TRUE)) # Whether they are inside the radius
+)
+
+kernel1 <- ggplot(df, aes(x = Education, y = Age, label = Type)) +
+  geom_text(aes(color = Type), size = 10) +
+  scale_color_manual(values = c('T' = 'red', 'C' = 'blue')) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        axis.text = element_text(size = 30),
+        axis.title = element_text(size = 30)) +
+  labs(x = 'Education', y = 'Age')
+print(kernel1)
+```
+
+
+## Kernel Matching
+Now suppose each control unit gets equal weight
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+
+treated_coords <- df[df$Type == 'T', c('Education', 'Age')]
+
+# Create the second plot with dashed lines
+kernel2 <- ggplot(df, aes(x = Education, y = Age, label = Type)) +
+  geom_text(aes(color = Type), size = 10) +
+  geom_segment(data = df[df$Type == 'C', ], 
+               aes(xend = treated_coords$Education, yend = treated_coords$Age),
+               linetype = "dashed", color = "gray") +
+  scale_color_manual(values = c('T' = 'red', 'C' = 'blue')) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        axis.text = element_text(size = 30),
+        axis.title = element_text(size = 30)) +
+  labs(x = 'Education', y = 'Age')
+
+# Print the second plot
+print(kernel2)
+```
+
+## Kernel Matching
+
+Now let's use an Epanechnikov Kernel: further away $\Rightarrow$ smaller weight
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+# Define the Epanechnikov Kernel function
+epanechnikov_kernel <- function(u) {
+  ifelse(abs(u) <= 1, 0.75 * (1 - u^2), 0)
+}
+
+# Calculate standardized distances of control units from the treated unit
+max_distance <- max(dist(rbind(treated_coords, df[df$Type == 'C', c('Education', 'Age')])))
+df$Distance <- sqrt((df$Education - treated_coords$Education)^2 + (df$Age - treated_coords$Age)^2) / max_distance
+
+# Apply Epanechnikov Kernel to distances to get weights
+df$Weight <- sapply(df$Distance, epanechnikov_kernel)
+
+# Adjust the size of control units based on weights
+# For the treated unit, ensure the size is similar to the highest weight
+df$Size <- ifelse(df$Type == 'C', df$Weight * 20, max(df$Weight * 20, na.rm = TRUE))
+
+# Create the plot with Kernel weighting
+kernel_weighted <- ggplot(df, aes(x = Education, y = Age, label = Type)) +
+  geom_text(aes(color = Type, size = Size), show.legend = FALSE) +
+  geom_segment(data = df[df$Type == 'C', ], 
+               aes(xend = treated_coords$Education, yend = treated_coords$Age),
+               linetype = "dashed", color = "gray") +
+  scale_color_manual(values = c('T' = 'red', 'C' = 'blue')) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        axis.text = element_text(size = 30),
+        axis.title = element_text(size = 30)) +
+  labs(x = 'Education', y = 'Age')
+
+# Print the plot with Kernel weighting
+print(kernel_weighted)
+```
+
+
+
+## Kernel Matching
+
+
+\begin{columns}
+\begin{column}{.65\textwidth}
+We want to create a weighted average by applying a kernel function
+
+\begin{equation*}
+\bar{Y}=\frac{\displaystyle\sum_{i=1}^n w_i Y_i}{\displaystyle\sum_{i=1}^n w_i}=\frac{\displaystyle\sum_{i=1}^n K(X_i) Y_i}{\displaystyle\sum_{i=1}^n K(X_i)}
+\end{equation*}
+
+\vspace{0.5cm}
+
+There are many Kernel functions; they are typically concave and assign the highest weight to the smallest distance. 
+
+
+
+
+\end{column}
+\begin{column}{.35\textwidth}
+Example: Epanechnikov kernel
+
+\begin{equation*}
+K(X)=\frac{3}{4}(1-X^2)
+\end{equation*}
+\includegraphics[width=\textwidth]{../../../causalinf_phd/Graphs/matching-epan-1.png}
+
+K(X) is only defined between $-1$ and $1$
+\end{column}
+\end{columns}
+
+
+
+## Kernel Matching Within a Radius
+We often use \brf{kernel weighting within a radius} or the set of $k$ nearest neighbours
+
+```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
+# Define the radius
+radius <- 5
+
+# Calculate the Euclidean distance from each unit to the treated unit
+df$DistanceFromTreated <- sqrt((df$Education - treated_coords$Education)^2 + (df$Age - treated_coords$Age)^2)
+
+# Filter out observations that are outside the radius
+df_within_radius <- df[df$DistanceFromTreated <= radius, ]
+
+# Apply Epanechnikov Kernel to distances within the radius to get weights
+df_within_radius$Weight <- sapply(df_within_radius$DistanceFromTreated / max_distance, epanechnikov_kernel)
+
+# Adjust the size of control units based on weights within the radius
+df_within_radius$Size <- ifelse(df_within_radius$Type == 'C', df_within_radius$Weight * 20, max(df_within_radius$Weight * 20, na.rm = TRUE))
+
+# Coordinates for the circle
+theta <- seq(0, 2 * pi, length.out = 100)
+circle_x <- treated_coords$Education + radius * cos(theta)
+circle_y <- treated_coords$Age + radius * sin(theta)
+
+# Create the plot with Kernel weighting for units within the radius
+kernel_weighted_within_radius <- ggplot(df_within_radius, aes(x = Education, y = Age, label = Type)) +
+  geom_text(aes(color = Type, size = Size), show.legend = FALSE) +
+  geom_segment(data = df_within_radius[df_within_radius$Type == 'C', ], 
+               aes(xend = treated_coords$Education, yend = treated_coords$Age),
+               linetype = "dashed", color = "gray") +
+  annotate("path", x = circle_x, y = circle_y, linetype = "solid", color = "black") +
+  scale_color_manual(values = c('T' = 'red', 'C' = 'blue')) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14)) +
+  labs(x = 'Education', y = 'Age')
+
+# Print the plot with Kernel weighting for units within the radius
+print(kernel_weighted_within_radius)
+```
+
+## More vs Better: the Bias-Variance Tradeoff
+
+We often need to decide between unique matches and multiple control units
+
+\vfill
+
+Researchers need to \brf{solve a bias-variance trade-off}
+
+\vfill
+
+\brf{Unique matches}:
+
+- Matches are precise but few $\rightarrow$ \brf{low bias, high variance}
+
+\vfill
+
+\brf{Weighted average of multiple control units}
+
+- Find many matches, but these are imprecise $\rightarrow$ \brf{high bias, low variance}
+
+
+
+## Coarsened Exact Matching
+\brf{Idea of CEM}: 
+
+- Coarsen X (for example different age groups)
+- Perform exact matching based on coarsened data
+
+\vfill
+Advantage: **easy and fast**
+\vfill
+Disadvantages: 
+
+- researcher **degrees of freedom** (categories are chosen by the researcher)
+- curse of dimensionality (few categories: many but imprecise matches; many categories: few but more precise matches)
+
+
+
+
+## Coarsened Exact Matching
+
+\small
+
+\brf{Starting point}: same as before
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "cem1.png"))
+```
+
+
+## Coarsened exact matching
+
+\small
+
+Coarsen: \brf{divide variables into categories}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "cem2.png"))
+```
+
+
+## Coarsened exact matching
+\small
+Now see \brf{which cells contain treated and control units}
+
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "cem3.png"))
+```
+
+
+
+
+## Coarsened exact matching
+
+\small
+We \brf{find matches within cells}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "cem4.png"))
+```
+
+
+## Coarsened exact matching
+
+
+We \brf{find matches within cells}
+
+\vfill
+
+We need to **take a stand** regarding **matching within the cells**
+
+- nearest neighbour or k nearest neighbours
+- with or without replacement
+- kernel distance function (usually not necessary)
+  
+
+
+
+## Propensity Score Matching
+
+
+Idea: predict the \brf{probability that a given unit is treated} based on $X$
+
+- The probability $Pr(D_i=1 | X)$ is called the \brf{propensity score}
+
+\vfill
+
+\brf{Match units with a similar probability} of being treated (\brf{propensity score})
+
+\vfill
+
+\brf{Estimate the ATT} based on the matched dataset
+
+
+
+
+## Propensity score matching
+
+Starting point: treated and control units
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "psm1.png"))
+```
+
+
+
+## Propensity score matching
+
+For each unit, we want to predict the probability that it is treated based on $X$
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "psm2.png"))
+```
+
+
+
+
+## Propensity score matching
+
+Let's do this: predict the probability of being treated
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "psm3.png"))
+```
+
+
+
+
+
+## Propensity score matching
+
+For each treated unit, find the control unit with the closest propensity score
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "psm4.png"))
+```
+
+
+
+
+
+## Propensity score matching
+
+Prune control units that have not been matched
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "psm5.png"))
+```
+
+
+
+
+
+## Propensity score matching
+
+The result is your matched dataset
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "psm6.png"))
+```
+
+
+
+
+
+## Propensity score matching
+
+The result is your matched dataset
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "psm7.png"))
+```
+
+
+
+
+
+## Propensity score matching
+
+We can now regress the outcome on the treatment status
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "psm8.png"))
+```
+
+
+
+
+
+## Estimation of the propensity score
+
+The propensity score must satisfy the \brf{balancing property}. It implies:
+
+- Observations with the \textbf{same propensity score have the same distribution
+of observable covariates} independently of treatment status;
+- For a given propensity score **assignment to treatment is random**, hence treated and control units are on average observationally identical.
+
+
+
+
+## Estimation of the propensity score
+Can use any \brf{standard probability model} to estimate the
+propensity score, e.g. a logit model:
+\begin{equation*}\label{eq23}
+Pr\{D_{i} = 1|X_{i}\} = \frac{e^{\lambda h(X_{i})}}{1 + e^{\lambda h(X_{i})}},
+\end{equation*}
+where \(h(X_{i})\) is a \textbf{function of covariates with linear and higher order
+terms.}
+
+
+
+
+## Inverse Probability Weighting (IPW)
+
+\brf{IPW is based on the propensity score}. Ingredients: 
+
+- The propensity score of being treated: $p(X)$
+- The propensity score of beign untreated: $1-p(X)$
+
+\vfill
+\brf{Units are weighted} by the \brf{inverse propensity score} of THEIR treatment status
+
+\vfill
+\brf{Why does this work?}
+
+- Weights "create" similar observations in terms of $X$
+- Treated observations with similar $X$ as untreated get a high weight because they are similar
+
+
+## Inverse Probability Weighting and the ATE
+It can be shown that IPW identifies the ATE in the population: 
+\begin{equation*}
+\begin{aligned}
+\Delta & =E\left[\mu_1(X)-\mu_0(X)\right]=E\left[\frac{E[Y \cdot D \mid X] \cdot D}{p(X)}-\frac{E[Y \cdot(1-D) \mid X] \cdot(1-D)}{1-p(X)}\right] \\
+& =E\left[\frac{Y \cdot D}{p(X)}-\frac{Y \cdot(1-D)}{1-p(X)}\right]
+\end{aligned}
+\end{equation*}
+
+
+## Inverse Probability Weighting and the ATT
+The ATT is identified by 
+\begin{equation*}
+\Delta_{D=1}=E\left[\frac{Y \cdot D}{\operatorname{Pr}(D=1)}-\frac{Y \cdot(1-D) \cdot p(X)}{(1-p(X)) \cdot \operatorname{Pr}(D=1)}\right]
+\end{equation*}
+
+
+
+
+
+## IPW Weights Example
+
+| Observation | Treated | PS ($p(x)$) | weight |
+|---------|---------|---------|---------|
+| 1  | 1  | 0.6  | $\frac{1}{p(x)}=\frac{1}{0.6}=1.67$ |
+| 2  | 0  | 0.6  | $\frac{1}{1-p(x)}=\frac{1}{0.4}=2.5$ |
+| 3  | 1  | 0.9  | $\frac{1}{p(x)}=\frac{1}{0.9}=1.11$ |
+| 4  | 0  | 0.9  | $\frac{1}{1-p(x)}=\frac{1}{0.1}=10$ |
+
+Here, observations 2 and 4 (untreated) get fairly large weights because they have similar $X$ to typical treated units
+
+\vfill
+Observation 3 (treated) gets a low weight because it is dissimilar to most untreated units
+
+
+
+
+
+## Matching and Causal Inference
+
+\brf{Matching is NOT a causal identification strategy}
+
+- Neither is regression
+- It is a \brf{data reduction/pre-processing} technique
+
+\vfill
+It helps us to achieve \brf{balance on observables $X$}
+
+\vfill
+\brf{Causal identification} rests on the \brf{conditional independence assumption}
+
+- given $X$, $D$ should be as good as randomly assigned
+- i.e. $X$ has to capture all confounders
+
+
+## Matching and Causal Inference: a DAG
+
+If this is the correct DAG, our \brf{matching needs to account for A, B and C}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "matching-distancedag-1.png"))
+```
+
+## PSM and Causal Inference
+
+With PSM, the additional assumption is that the \brf{propensity score is correctly specified and closes all backdoor paths}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "matching-psmdag-1.png"))
+```
+
+
+
+## Matching Example: \citet{broockman_2013}
+
+\brf{Research question:} are black politicians more likely to help black citizens even if the incentives are low?
+
+\vfill
+\brf{Methodology:} audit study; sent emails to U.S. state legislators; asking them to help them sign up for unemployment benefits
+
+\vfill
+\brf{Experimental variation:}
+
+- Sender with black vs. white name
+- Sender lives in same district as legislator or far away
+
+\vfill
+\brf{Matching}: white and black legislators with similar characteristics
+
+
+## Step 1: Check for Common Support
+
+
+```{r, echo=FALSE, out.width="65%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "matching-common-support-1.png"))
+```
+
+Left: share of black voters in the district
+
+\vfill
+
+Right: distribution of propensity scores 
+
+- \brf{propensity score $p$} (probability of being black) based on share of black voters, median household income, legislator is a democrat
+
+
+## Step 1: Common Support
+
+\small 
+
+Problem: areas with high $p$ have no white legislators, areas with low $p$ have no black legislators
+
+- Solution: \brf{prune areas without common support} (at least 10 control obs within a .02 bin)
+
+```{r, echo=FALSE, out.width="65%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "matching-common-support-trimmed-1.png"))
+```
+
+
+
+
+## Balance in \citet{broockman_2013}
+
+Broockman performs Mahalanobis (nearest neighbour) matching; here is the balancing table
+
+\footnotesize
+
+
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & Before Matching & After Matching \\ 
+\midrule
+\textbf{Median Household Income} & & \\
+Mean Treatment & 3.33 & 3.333 \\
+Mean Control & 4.435 & 3.316 \\
+Std. Mean Diff & -97.057 & 1.455 \\
+t-test p-value & <.0001 & 0.164 \\
+\addlinespace
+\textbf{Black Percent} & & \\
+Mean Treatment & 0.517 & 0.515 \\
+Mean Control & 0.063 & 0.513 \\
+Std. Mean Diff & 224.74 & 1.288 \\
+t-test p-value & <.0001 & 0.034 \\
+\addlinespace
+\textbf{Legislator is a Democrat} & & \\
+Mean Treatment & 0.978 & 0.978 \\
+Mean Control & 0.501 & 0.978 \\
+Std. Mean Diff & 325.14 & 0 \\
+t-test p-value & <.0001 & 1 \\
+\bottomrule
+\end{tabular}
+
+\normalsize
+
+## Careful when Performing Balancing Tests
+
+Focusing just on mean differences can be deceptive. Consider these two distributions:
+
+```{r, echo=FALSE, out.width="65%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "matching-bad-balance-distribution-1.png"))
+```
+
+Always check the \brf{full distribution} of covariates before and after matching
+
+
+
+## Full Distribution of $X$ and $p$ after IPW
+
+```{r, echo=FALSE, out.width="65%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "matching-ps-after-weighting-1.png"))
+```
+
+Not perfect, but not so bad either...
+
+
+
+
+## Data preparation in R
+
+
+We use the excellent `Matching` package in R. A great alternative is `MatchIt`
+
+\small
+
+```{r, eval=TRUE, include=TRUE}
+library(Matching)
+library(causaldata)
+library(tidyverse)
+
+br <- causaldata::black_politicians
+
+# Outcome
+Y <- br %>%
+  pull(responded)
+# Treatment
+D <- br %>%
+  pull(leg_black)
+# Matching variables
+# Note select() is also in the Matching package, so we specify dplyr
+X <- br %>%
+  dplyr::select(medianhhincom, blackpercent, leg_democrat) %>%
+  as.matrix()
+
+```
+
+## Mahalanobis distance matching in R
+
+\footnotesize
+
+```{r, eval=TRUE, include=TRUE}
+# Set weight=2 for Mahalanobis distance
+M <- Match(Y, D, X, Weight = 2, caliper = 1)
+
+# See treatment effect estimate
+summary(M)
+
+```
+
+\normalsize
+
+## Mahalanobis distance matching in R
+Previous slide: the estimate $-0.007346$ means that black legislators were 0.7 percentage points less likely to respond to emails
+
+\vfill
+
+This effect is not statistically significant
+
+## Comparison with OLS 
+
+\scriptsize
+
+```{r, eval=TRUE, include=TRUE, echo=FALSE, results='asis'}
+plainols1 <- lm(responded~leg_black, data = br)
+plainols2 <- lm(responded~leg_black+medianhhincom+blackpercent+leg_democrat, data = br)
+stargazer(plainols1, plainols2, type = "latex", header=FALSE)
+```
+
+\normalsize
+
+
+## Comparison with OLS 
+
+The covariate plots showed that there is little common support
+
+\vfill
+
+Matching rests on comparable observations with common support in $X$
+
+\vfill
+OLS uses observations without common support; this explains the difference in the estimates
+
+
+
+## Matching and Re-Weighting: Conclusion
+
+\brf{Matching and re-weighting} are \brf{data subsetting techniques}
+
+- They help to **achieve balance on observables $X$**
+- They are particularly useful when there is **little common support**
+
+
+\vfill
+\brf{Matching and re-weighting are not causal identification strategies}
+
+- we need to rely on the \brf{conditional independence assumption} to identify causal effects
+- whether this holds depends on the context
+- even the best matching procedure in the world cannot fix a bad research design
+
+
+## Matching and Re-Weighting: Conclusion
+
+There are \brf{many matching procedures}
+
+- It is easy to get lost in the details
+- The most important thing is to **achieve balance on observables $X$**
+- When choosing a method, **keep the bias-variance tradeoff in mind**
+
+
+\vfill
+\brf{Showing robustness to different matching procedures} is very important
+
+
+## Matching in R
+
+\brf{R has many packages for matching}; most of them do similar things but have their strengths and weaknesses. Here are some very good ones: 
+
+
+- `Matching`
+- `MatchIt`
+- `cem` for Coarsened Exact Matching
+- `optmatch`
+
+\vfill
+
+`MatchIt` covers all the bases
+
+
+
+
+
+## .
+\tiny
+\bibliographystyle{authordate1}
+\bibliography{../../../causalinf_phd/bibliography_causalinf}
+
+
+
+
+
+
+
+## .
+
+
+```{r child = '../Templates/socialmedia.Rmd'}
+```
+
+
+## Contact
+
+```{r child = '../Templates/contactpage.Rmd'}
+```
+
