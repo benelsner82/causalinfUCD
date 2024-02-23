@@ -4,7 +4,8 @@
 # Ben Elsner
 #-------------------------------------------------
 
-path <- "/Users/ben_elsner/github repos/causalinfUCD/slides/assignments/"
+ucd <- 1 # Set to 1 if working on UCD computer, 0 for laptop
+
 
 library(wooldridge)
 library(tidyverse)
@@ -13,6 +14,12 @@ library(gridExtra)
 library(MatchIt)
 library(cobalt)
 library(reshape2)
+
+if (ucd == 0) {
+  path <- "/Users/ben_elsner/github repos/causalinfUCD/slides/assignments/"
+} else {
+  path <- "/Users/benjaminelsner/github_repos/causalinfUCD/slides/assignments"
+}
 
 
 set.seed(123)
