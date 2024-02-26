@@ -45,7 +45,7 @@ These two videos explain the foundations of causal inference based on directed a
 
 ## 5 Instrumental Variables
 
-#### Slides
+#### [Slides](/slides/5 IV/slides_5_iv.pdf)
 
 #### Videos
 

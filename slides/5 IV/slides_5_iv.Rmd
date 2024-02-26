@@ -1,0 +1,1334 @@
+---
+title: "ECON42720 Causal Inference and Policy Evaluation"
+subtitle: "5 Instrumental Variables"
+author: "Ben Elsner (UCD)"
+output:
+  beamer_presentation:
+    includes:
+      in_header: "../Templates/template_metrics.tex"
+classoption: "aspectratio=169, handout" 
+
+
+--- 
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+
+graphdir <- "../../../causalinf_phd/Graphs/"
+```
+
+## Resources
+
+
+Most \brf{textbooks have a chapter on IV}
+
+- In the applied world, Cunningham's Mixtape (Ch. 7) and Huntington-Klein's The Effect (Ch. 19) are good resources
+- Angrist and Pischke's Mostly Harmless Econometrics (Ch. 4) is slightly more technical
+
+
+
+
+## IV: Starting Point
+\begin{equation*}
+y_i=\alpha + \beta D_i + u_i
+\end{equation*}
+
+\vfill
+\brf{CIA $cov(D_i, u_i)=0$ often doesn't hold} $\Rightarrow$ \brf{OLS estimates of $\beta$ are biased}
+
+  - **Unobserved heterogeneity**: we may not observe all confounding variables
+ - $D_i$ may be **measured with error**
+-  Simultaneity or **reverse causality**
+
+
+
+
+## Instrumental Variables
+In theory, \brf{instrumental variables} offer a way to
+
+- break the correlation $cov(D_i, u_i)$ 
+- and obtain a \brf{consistent causal estimate of the treatment on $y_i$}
+
+\vfill
+\pause
+**Idea behind an instrumental variable (Z):**
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "DAG_iv1.png"))
+```
+
+
+
+## Instrumental Variables
+1) The IV \brf{must not be correlated with unobservable characteristics} (conditional independence)
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "DAG_iv2.png"))
+```
+
+
+2) An IV \brf{affects Y \underline{only} through its effect on D}
+
+
+## Instrumental Variables
+One way to think about an IV:
+
+- **people/firms make optimal choices** that affect their **treatment status**
+- Z is a **shock that changes the behavior** of at least some people/firms
+- Z has to be **unrelated to people's characteristics**
+- i.e. it should be assigned as good as randomly
+
+\vfill
+\pause
+And another:
+
+- The instrument $Z$ is a \brf{treatment/incentive that is offered} to units/people
+- $D$ measures if the unit **actually takes up the treatment**
+- The instrument $Z$ should be **as good as randomly assigned**
+- Example: randomly assigned **school vouchers**
+
+
+
+
+
+
+## Instrumental Variables
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "DAG_iv2.png"))
+```
+And another:
+
+- OLS uses all the variation in D to explain y
+- IV uses **only the variation in D that is related to Z**
+- So this means less variation is used, but at least Z is unrelated to u
+
+
+
+
+
+## Instrumental Variables Lingo
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "DAG_iv2.png"))
+```
+\vfill
+\brf{IV requires three ingredients:}
+
+- \brf{First stage:} $cov(Z,D) \neq 0$
+- \brf{(Conditional) independence}: $cov(Z,u)=0$
+- \brf{Exclusion restriction:} affects $Y$ only through $D$ and no other channel
+
+
+
+
+
+## First Stage and Exclusion Restriction
+The \brf{first-stage relationship is testable}
+ 
+- we can run a regression of D on Z
+- it is also possible to include covariates
+
+\vfill
+The \brf{exclusion restriction is not testable}
+ 
+- it is an **identification assumption**
+- we **need to make a convincing argument** in favor of it
+- this is difficult and the reason for heated debates in seminars
+
+\vfill
+\pause
+Some say: **friends tell their friends not to use IV...**
+
+
+
+
+## IV Equations: Two-Stage Least Quares (2SLS)
+\brf{Relationship of interest}
+\begin{equation*}
+y_i=\alpha + \beta D_i  + X_i'\gamma + u_i
+\end{equation*}
+\vfill
+\brf{First stage}
+\begin{equation*}
+D_i=\delta_0 + \delta_1 Z_i  + X_i'\rho + e_i
+\end{equation*}
+\vfill
+\pause
+\brf{Second stage} ($\widehat{D_i}$ from first stage)
+\begin{equation*}
+y_i=\tilde{\alpha} + \tilde{\beta }\widehat{D_i}  + X_i'\kappa + \varepsilon_i
+\end{equation*}
+\vfill
+\pause
+\brf{Reduced form}
+\begin{equation*}
+y_i=\lambda_0 + \lambda_1  Z_i  + X_i'\sigma + \eta_i
+\end{equation*}
+
+
+
+
+## IV in Theory
+It can be shown that 
+\begin{equation*}
+\widehat{\beta^{IV}}=\frac{cov(Y,Z)}{cov(D,Z)}=\frac{\widehat{\lambda_1}}{\widehat{\delta_1}}
+\end{equation*}
+is a \brf{consistent estimator of $\beta$} under the \brf{exclusion restriction $cov(Z,u)=0$}
+\vfill
+This estimator is nothing but the **reduced-form coefficient** $\widehat{\lambda_1}=\frac{\widehat{cov(y,Z)}}{\widehat{var(Z)}}$
+\vfill
+**divided by the first stage** $\widehat{\delta_1}=\frac{\widehat{cov(D,Z)}}{\widehat{var(Z)}}$
+\vfill
+Later we will see that this interpretation is useful
+
+
+## IV Illustration
+
+
+\brf{First stage:} we predict the treatment $X$ based on the instrument $Z$
+
+```{r, echo=FALSE, out.width="75%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "ivgraph3.png"))
+```
+
+\tiny
+Credit: Huntington-Klein, The Effect, Ch. 19
+
+
+## IV Illustration
+
+Relate the outcome $Y$ to the \brf{predicted $X$ from the first stage}, and calculate the difference in outcomes for different levels of $Z$
+
+
+```{r, echo=FALSE, out.width="75%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "ivgraph2.png"))
+```
+
+\tiny
+Credit: Huntington-Klein, The Effect, Ch. 19
+
+
+## IV Illustration
+
+\brf{Putting it all together}: a change in the predicted $X$ leads to a different $Y$
+
+```{r, echo=FALSE, out.width="75%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "ivgraph1.png"))
+```
+
+\tiny
+Credit: Huntington-Klein, The Effect, Ch. 19
+
+
+
+
+
+## Classic IV Example: Moving to Opportunity
+\brf{Research question}: does **moving to a better neighborhood** affect adults and children?
+\vfill
+The \brf{Moving to Opportunity Program (MTO)}
+
+- **Large-scale experiment** with people in public housing in several US cities in 1996
+- \brf{Treatment group 1}: voucher for private rental housing in low-poverty neighborhood
+- \brf{Treatment group 2}: voucher for private rental housing (no strings attached)
+- \brf{Control group}: no voucher
+
+\vfill
+This experiment has been evaluated by \citet{kling_2007}.
+
+
+
+
+## Classic IV Example: Moving to Opportunity
+50\% of voucher recipients actually moved; most to better neighborhoods
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mto3.png"))
+```
+
+
+## Moving to Opportunity: Empirical Challenge
+MTO was a \brf{randomized experiment}
+
+- $Z \in \{0,1\}$ is the instrument, $D \in \{0,1\}$ is the treatment
+- but **not everyone** who received a voucher **actually moved**
+
+\vfill
+\pause
+We can estimate an \brf{Intention-to-Treat (ITT)} effect by using the \brf{reduced form}
+\begin{equation*}
+y_i=\gamma_0 + \gamma_1 Z_i + \varepsilon_i
+\end{equation*}
+\vfill
+\brf{ITT is useful} for policy evaluation
+
+- But it does not tell us much about the **causal effect of moving**
+
+
+
+
+
+## Moving to Opportunity
+Suppose we are interested in the \brf{treatment effect on the treated}, in this case the **causal effect of moving**
+
+- but we cannot force voucher recipients to move...
+
+\vfill
+\pause
+\brf{IV allows us to estimate this treatment effect} under three conditions
+
+1. $Z$ is as good as **randomly assigned**
+2. $Z$ has **no direct effect** on the outcome
+3. $Z$ has a **sufficiently strong effect** on $D$
+
+
+
+
+
+## Moving to Opportunity: The Wald Estimator
+We can estimate \brf{three causal effects}
+
+1. \brf{First stage:} the causal effect of $Z$ on $D$: $P(D=1|Z=1)-P(D=1|Z=0)$
+\pause
+2. \brf{Reduced form (ITT):} the causal effect of $Z$ on $Y$: $E(Y|Z=1)-E(Y|Z=0)$
+\pause
+3. \brf{Treatment effect of interest:} the causal effect of $D$ on $Y$: $Y(1)-Y(0)=E(Y|D=1)-E(Y|D=0)$
+
+\pause
+\vfill
+The \brf{Wald Estimator} relates all three effects
+\begin{equation}
+E(Y|D=1)-E(Y|D=0)=\frac{E(Y|Z=1)-E(Y|Z=0)}{P(D=1|Z=1)-P(D=1|Z=0)}
+\end{equation}
+
+
+
+
+
+
+## Moving to Opportunity: The Wald Estimator
+
+\begin{equation*}
+\widehat{\beta}^{IV}=E(Y|D=1)-E(Y|D=0)=\frac{E(Y|Z=1)-E(Y|Z=0)}{P(D=1|Z=1)-P(D=1|Z=0)}
+\end{equation*}
+\vfill
+
+- **difference in outcomes** by groups intended and not intended for treatment
+- divided by **difference in the actual treatment** 
+
+
+
+
+## Interpretation of the Wald Estimator
+
+
+\brf{What we want to know:} the impact of moving: $\Delta D=P(D=1)-P(D=0)=1$
+
+\vfill
+\brf{What we do know{: 
+
+- the impact of the instrument on moving: $\Delta D(Z)=P(D=1|Z=1)-P(D=1|Z=0)=0.5$
+- suppose the difference in outcomes $E(Y|Z=1)-E(Y|Z=0)$ is 10
+- so the fact that **50% moved gives us an average difference in outcomes of 10**
+
+\vfill
+\brf{If 0.5 movers gives us 10 then what would 1 mover give us}?
+
+- The answer is $\widehat{\beta}^{IV}=\frac{10}{0.5}=20$
+
+
+
+
+## Moving to Opportunity
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "mto2.png"))
+```
+Wald estimator: TOT; denominator: CM
+
+
+
+
+
+## Classic IV Example: \citet{angrist_1998}
+\brf{\citet{angrist_1998}} study the effect of \brf{children on female labor supply}
+\vfill
+Their \brf{most basic regression} is
+\begin{equation*}
+hours_i = \alpha + \beta kids_i + u_i
+\end{equation*}
+\vfill
+The **number of children** is almost certainly **endogenous**:
+ 
+- fertility is a choice, and so is labor supply
+- richer families can afford more children and lower labor supply
+- couples differ in their preferences over fertility and labor supply
+
+
+
+
+
+## Classic IV Example: \citet{angrist_1998}
+\brf{Ideal experiment:}  **randomly assign children to families**
+\vfill
+\brf{IV} in \citet{angrist_1998}: \brf{sex of the first two children}
+ 
+- the sex of a child is as good as random
+- couples tend to have a preferences for mixed-sex offspring
+- couples with two boys or two girls are more likely to have a third child
+
+\vfill
+Analysis is purely based on families with two or more children
+
+
+
+
+## Classic IV Example: \citet{angrist_1998}
+The \brf{components of the IV estimator}
+\vfill
+\brf{First stage:} effect of same-sex children on the likelihood of having a third child
+\begin{equation*}
+kids_i=\delta_0 + \delta_1 samesex_i  + e_i
+\end{equation*}
+\vfill
+\brf{Reduced form}: 
+\begin{equation*}
+hours_i=\lambda_0 + \lambda_1  samesex_i  + \eta_i
+\end{equation*}
+\vfill
+\pause
+\brf{Exclusion restriction}: same-sex children unrelated with personal characteristics 
+$\Rightarrow cov(samesex_i, u_i)=0$
+
+
+
+
+## Classic IV Example: \citet{angrist_1998}
+The following analysis is based on a small sub-sample of \citet{angrist_1998}
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angristevans1.png"))
+```
+\brf{Descriptive statistics} indicate that in **50\% of all families** the **first two children had the same sex**
+\vfill
+This is **what we would expect**. Any different result would be a red flag
+
+
+
+
+## Classic IV Example: \citet{angrist_1998}
+Now let's look at the \brf{simple OLS regression}
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angristevans2.png"))
+```
+Each additional child (above two) decreases weekly work hours on average by 2.66
+
+
+
+## Classic IV Example: \citet{angrist_1998}
+\brf{The first stage}: is the \brf{instrument relevant to explain the number of kids?}
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angristevans3.png"))
+```
+\vfill
+\brf{Important things to discuss} in an IV paper
+
+- Does the first-stage coefficient make sense (sign, magnitude)?
+- Is the first-stage correlation strong enough (is the F-Statistic of the instrument >10)
+
+
+
+
+## Classic IV Example: \citet{angrist_1998}
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angristevans3.png"))
+```
+\vfill
+\brf{In this case}...
+
+- families with same-sex children have more children
+- the coefficient is small: out of 14 families with same-sex children, one has an additional child
+- the t-statistic of the instrument is strong enough (implied F-Statistic: $F=40.96$)
+
+
+
+
+
+
+## Classic IV Example: \citet{angrist_1998}
+\brf{2SLS estimate}
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angristevans4.png"))
+```
+\vfill
+This table reports the \brf{second-stage estimates}
+
+- the regressor is the \brf{number of children predicted by the same-sex instrument}
+- the effect is stronger than the OLS estimate (-2.66)
+- it is statistically significant at the 10\%-level
+
+
+
+
+## Classic IV Example: \citet{angrist_1998}
+To \brf{develop a better intuition of how IV works}, it is useful to look at the reduced form and first stage
+\vfill
+The IV estimator is the **reduced-form divided by the first stage**
+\begin{equation*}
+\widehat{\beta^{IV}}=\frac{\widehat{\lambda_1}}{\widehat{\delta_1}}
+\end{equation*}
+\vfill
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angristevans5.png"))
+```
+
+
+
+## Intuition behind the IV
+
+\brf{What we want to know}: the \brf{impact of having one more child}
+
+\vfill
+Consider the \brf{first stage} and \brf{reduced form}:
+
+- having same-sex children increases the number of children by 0.07
+- having same-sex children decreases weekly work hours by 0.39
+
+\vfill
+So, 0.07 additional children lead to 0.39 fewer work hours
+
+\vfill
+What reduction in work hours would we expect from \brf{one additional child}?
+
+- answer: $\frac{\widehat{\lambda_1}}{\widehat{\delta_1}}=\frac{0.39}{0.07}=5.57$ hours
+
+
+
+
+
+## Classic IV Example: \citet{angrist_1998}
+So we have that $\widehat{\beta^{IV}}<\widehat{\beta^{OLS}}$. Does this make sense? 
+\vfill
+\brf{Explanation 1}: OLS estimator is upward biased (i.e. closer to zero)
+
+- there could be an omitted variable (for example family wealth)
+- both the correlation with kids and the direct effect on hours need to have the same sign
+- e.g. $cov(wealth, kids)>0$ and $cov(wealth, hours|kids)>0$ or both negative
+
+\vfill
+\brf{Explanation 2}: IV effect measures the \brf{effect for a specific population}
+
+- only 1 in 14 families ``respond'' to the instrument
+- families who respond may not be the average family...
+
+
+
+
+
+## Local Average Treatment Effects (LATE)
+So far, we implicitly assumed that the \brf{potential outcomes are constant across units}. But what if potential outcomes are heterogeneous?
+\vfill
+Consider a case with a binary instrument $Z_i\in \{0,1\}$ the the treatment statuses
+
+- $D_{1i}=$ i's treatment status when $Z_i=1$
+- $D_{0i}=$ i's treatment status when $Z_i=0$
+
+\vfill
+The \brf{observed treatment status} is
+\begin{equation*}
+D_i=D_{0i}+(D_{1i}-D_{0i})Z_i=\delta_0 + \delta_{1i}Z_i  + \eta_i 
+\end{equation*}
+\vfill
+Note that the effect of the IV on treatment may differ between individuals
+
+
+
+## Local Average Treatment Effects (LATE)
+We \brf{divide the population into four groups} depending on their reaction to the instrument
+\vfill
+
+1. \brf{Compliers}: people who react to the instrument as expected, $D_{1i}=1$ and $D_{0i}=0$
+2. \brf{Always-takers}: people  who always take the treatment regardles of Z, $D_{1i}=D_{0i}=1$ 
+3. \brf{Never-takers}: people who never take the treatment regardless of Z, $D_{1i}=D_{0i}=0$ 
+4. \brf{Defiers}: people who react to the instrument in the wrong direction, $D_{1i}=0$ and $D_{0i}=1$
+\vfill
+From any dataset, it is impossible to see who belongs to what group
+
+
+
+
+## The Angrist-Imbens-Rubin Causal Model
+\citet{angrist_1996} define the \brf{minimum set of assumptions} for the \brf{identification of a causal effect} for the relevant subgroup of the population
+\vfill
+As an example, consider \citet{angrist_1990}: the impact of **being a Vietnam veteran on earnings**
+
+
+
+
+## The Vietnam Draft Lottery \citep{angrist_1990}
+\brf{Context:} 
+
+- In the 1960s and 70s young men in the US were at **risk of being drafted for military service** in Vietnam.
+- Fairness concerns led to the institution of a **draft lottery** in 1970 that was used to determine **priority for conscription**
+
+\vfill
+In each year from 1970 to 1972, \brf{random sequence numbers were randomly assigned} to each birth
+date in cohorts of 19-year-olds.
+
+- Men with lottery numbers below a cutoff were eligible for the draft.
+- Men with lottery numbers above the cutoff were not.
+
+\vfill
+\pause
+But \brf{compliance was not perfect}
+
+- Many eligible men were exempted from service for health or other reasons.
+- Others, who were not eligible, nevertheless volunteered for service.
+
+
+
+
+
+
+## The Vietnam Draft Lottery \citep{angrist_1990}
+\brf{Idea:} use \brf{lottery outcome as an instrument} for veteran status
+\vfill
+\brf{Is there a first stage?} the lottery did not completely determine veteran status, but it certainly mattered
+\pause
+\vfill
+\brf{What about the exclusion restriction?}
+
+-  the lottery was random
+- it seems reasonable to assume that its only effect was on
+veteran status
+
+
+
+
+
+## The Vietnam Draft Lottery \citep{angrist_1990}
+The \brf{instrument is thus defined} as follows:
+
+- \(Z_{i} = 1\) if lottery implied individual \(i\) would be draft eligible,
+- \(Z_{i} = 0\) if lottery implied individual \(i\) would not be draft eligible.
+
+\vfill 
+   The instrument affects \brf{treatment}, which in this application amounts to \brf{entering military service}.
+   \vfill
+The econometrician observes \brf{treatment status} as follows:
+
+- \(D_{i} = 1\) if individual \(i\) served in the Vietnam war (veteran),
+- \(D_{i} = 0\) if individual \(i\) did not serve in the Vietnam war (not veteran).
+
+
+
+
+
+## The Angrist-Imbens-Rubin Causal Model
+In \citet{angrist_1990}, the \brf{main research question} is whether veteran
+status has a causal effect on earnings
+\vfill
+The \brf{causal effect of veteran status}, conditional on draft eligibility status, is
+defined as
+\begin{equation*}
+Y_{i}(1,Z_{i}) - Y_{i} (0, Z_{i})
+\end{equation*}
+\vfill
+We are \brf{unable to identify individual treatment effects}, because we \brf{do not observe all potential
+outcomes}
+
+
+
+
+## The Angrist-Imbens-Rubin Causal Model: Assumptions
+\brf{Assumption 1: Random Assignment} (ignorability)
+\vfill
+
+All units have the **same probability of assignment to treatment**%
+\begin{equation*}
+Pr(Z_{i}=1)=Pr(Z_{j}=1).
+\end{equation*}
+\vfill
+\pause
+Given random assignment we can \textbf{identify and estimate the two intention to
+treat} causal effects:
+\begin{equation*}
+E(D_{i}|Z_{i}=1)-E(D_{i}|Z_{i}=0)=\frac{cov(D_{i}, Z_{i})}{var(Z_{i})}
+\end{equation*}%
+\begin{equation*}
+E(Y_{i}|Z_{i}=1)-E(Y_{i}|Z_{i}=0)=\frac{cov(Y_{i}, Z_{i})}{var(Z_{i})}.
+\end{equation*}
+
+
+
+
+## The Angrist-Imbens-Rubin Causal Model: Assumptions
+\brf{Assumption 2: Non-zero average causal effect of Z on D}
+\vfill
+The \brf{probability of treatment must be different} in the two assignment groups:%
+\begin{equation*}
+Pr(D_{i1}=1) \neq Pr(D_{i0}=1)
+\end{equation*}
+\vfill
+
+This is the equivalent of the \brf{first stage in
+the conventional I}V approach.
+
+
+
+
+## The Angrist-Imbens-Rubin Causal Model: Assumptions
+\brf{Assumption 3: Exclusion Restriction}
+\vfill
+The **instrument** affects the **outcome \underline{only}** through the treatment
+\begin{equation*}
+Y_{i}(D_{i},0)=Y_{i}(D_{i},1)=Y_{i}(D_{i})
+\end{equation*}
+\pause
+\vfill
+**Given treatment, assignment does not affect the outcome**. So we
+can define the causal effect of $D_{i}$ on $Y_{i}$ as%
+\begin{equation*}
+Y_{i1}-Y_{i0}.%
+\end{equation*}
+
+\vfill
+This difference is not observed in the data. We **need to assume that assumption 3 holds** and bring good arguments in favour of it. 
+
+
+
+
+## The Angrist-Imbens-Rubin Causal Model: Assumptions
+\brf{Assumption 4: Monotonicity}
+
+- The instrument affects the **treatment status of all units** in the **same direction**
+- Binary case: **no one does the opposite** of his/her assignment
+- I.e. there are **no defiers**
+
+\begin{equation*}
+D_{i1}\geq D_{i0}~\forall i
+\end{equation*}
+\vfill
+\pause
+**Assumptions 2 and 4** together give \brf{Strong Monotonicity} and ensure that:
+
+- there is **no defier** and
+- there exists **at least one complier**
+
+
+
+
+## Compliance types
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{\(D_{i0}\)}\\ \cline{3-4}
+\multicolumn{2}{|c|}{} &  0 & 1\\ \hline
+& 0 & never-taker & defier \\ \cline{3-4}
+\(D_{i1}\) & 1 & complier & always-taker \\ \hline
+\end{tabular}
+\end{center}
+
+\pause
+\vfill
+
+\begin{center}
+Compliance types by treatment status and instrument
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{\(Z_{i}\)}\\ \cline{3-4}
+\multicolumn{2}{|c|}{} &  0 & 1\\ \hline
+& 0 & complier OR never-taker & never-taker OR defier \\ \cline{3-4}
+\(D_{i}\) & 1 & always-taker or defier & complier OR always-taker \\ \hline
+\end{tabular}
+\end{center}
+
+
+
+
+## Compliance types
+\begin{center}
+Compliance types by treatment status and instrument given monotonicity
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{\(Z_{i}\)}\\\cline{3-4}
+\multicolumn{2}{|c|}{} &  0 & 1\\\hline
+& 0 & complier OR never-taker & never-taker \\\cline{3-4}
+\(D_{i}\) & 1 & always-taker & complier OR always-taker \\\hline
+
+\end{tabular}
+\end{center}
+
+
+
+
+## Back to the example \citep{angrist_1990}
+A1: instrument is as good as \brf{randomly assigned}
+
+- draft eligibility was assigned by a lottery...
+
+\vfill
+\pause
+A2: can have \brf{no direct effect on the outcome} variable (earnings)
+
+- this is debatable. Angrist argues that it holds
+
+\vfill
+\pause
+A3: \brf{instrument affects the treatment}
+
+- this can be checked
+
+\vfill
+\pause
+A4: \brf{monotonicity}: a man who serves if not draft eligible, would also serve if draft eligible
+
+- this seems plausible
+
+
+
+
+## Local Average Treatment Effect \citep{angrist_1990}
+Under the assumptions A1-A4, the IV approach in \citet{angrist_1990} identifies a \brf{local average treatment effect (LATE)}
+\vfill
+The \brf{effect is ``local''} because
+
+- it identifies the **effect on the compliers**
+- ... the **causal effect of the draft on earnings** for men whose treatment status is changed by the instrument
+- i.e. on men who are **drafted if eligible** but who **wouldn't volunteer if not eligible**
+
+\vfill
+\pause
+The \brf{LATE is different from the ATE} because it excludes men who 
+
+- would be exempt from the draft regardless of their eligibility (never-takers)
+- would volunteer regardless of their eligibility (always-takers)
+
+
+
+
+
+
+
+## The LATE theorem
+
+Given assumptions 1-4,
+\begin{align*}
+\frac{E(Y_{i}|Z_{i}=1)-E(Y_{i}|Z_{i}=0)}{E(D_{i}|Z_{i}=1)-E(D_{i}|Z_{i}=0)}  &
+=E(Y_{i1}-Y_{i0}|D_{i1}>D_{i0})\\
+& =E(Y_{i1}-Y_{i0}|\text{complier}).
+\end{align*}
+
+It shows that the \brf{Wald estimator} equals the \brf{average treatment effect for compliers}
+
+
+
+## LATE: Summary
+
+The IV approach identifies a \brf{local average treatment effect (LATE)}
+
+- the IV needs to be **as good as randomly assigned** and satisfy the exclusion restriction
+- the LATE is the **average treatment effect on the compliers**
+
+\vfill
+
+Is \brf{LATE an interesting parameter?}
+
+- It depends on the question and who the compliers are
+- Problem: we **cannot easily pinpoint the compliers**
+- Newer methods allow us to **extrapolate from LATE** to other populations, e.g. \citet{mogstad_2018a}
+
+
+
+## Weak Instruments
+
+Identification of the LATE requires the \brf{existence of a first stage}
+
+\vfill
+Otherwise, the **numerator of the Wald estimator is zero**, and the estimator not defined
+
+
+\begin{align*}
+\frac{E(Y_{i}|Z_{i}=1)-E(Y_{i}|Z_{i}=0)}{E(D_{i}|Z_{i}=1)-E(D_{i}|Z_{i}=0)} 
+\end{align*}
+
+\vfill
+\brf{Problem}: existence of a **first stage is not enough**. It needs to be \brf{sufficiently strong}
+
+
+## Weak IV Example: \citet{angrist1991}
+
+\brf{Research question:} what is the effect of \brf{compulsory schooling} on \brf{earnings}?
+
+\vfill
+It is \brf{difficult to randomise}
+
+- whether someone is affected compulsory schooling laws
+- or how long someone stays in school
+
+\vfill
+\brf{Trick of \citet{angrist1991}}: when in the year you are born affects when you have to leave school
+
+
+## Compulsory Schooling and School Leaving Age
+
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angrist_qob1.png"))
+```
+
+
+Quirk in the U.S. education system: \brf{assignment to a cohort} is determined by \brf{birth date}
+
+- Children **born up until December 31** were assigned to **first grade**
+- Children **born from January 1** were assigned to **kindergarten**
+
+
+## Compulsory Schooling and School Leaving Age
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angrist_qob1.png"))
+```
+
+
+- Schooling \brf{was compulsory until age 16}
+- Children born in December had (exogenously) more education than children born in January
+
+
+## First Stage: Quarter of Birth and Years of Education
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angrist_qob2.jpeg"))
+```
+
+
+## Reduced Form: Quarter of Birth and Earnings
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angrist_qob3.jpeg"))
+```
+
+## IV Relevance
+
+Visual inspection suggests that a \brf{first stage exists}
+
+- Children born in Q4 have more schooling than children born in Q1
+- This is on top of a general trend in more schooling
+
+\vfill
+
+A \brf{reduced form appears to exist} as well
+
+- Children born in Q4 seemingly have slightly higher earnings than children born in Q1
+- Again, this is on top of an overall trend in earnings
+
+
+## IV validity
+
+\brf{Conditional independence}: is quarter of birth as good as randomly assigned?
+
+- Yes, because children can't pick their birth date
+- But: recent evidence suggest that parents characteristics differ by season of conception/birth \citep{buckles2013, rietveld2016, fan2017}.
+
+\vfill
+
+\brf{Exclusion restriction}: does quarter of birth affect earnings only through education?
+
+- presumably yes
+- but it is possible that people enter the labour market in different seasons...
+
+
+
+## First Stage: Quarter of Birth and Years of Education
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angrist_qob4.png"))
+```
+
+
+## First Stage: Quarter of Birth and Years of Education
+
+Previous slide: first stage regression results
+
+\begin{align*}
+S_i=X\pi_{10}+Z_1\pi_{11}+Z_2\pi_{12}+Z_3\pi_{13}+\eta_1
+\end{align*}
+
+\vfill
+$Z_1, Z_2, Z_3$ are **quarter of birth dummies**
+
+\vfill
+There ^brf{appears to be a first stage}: 
+
+- children born in Q4 have more schooling than children born in Q1 
+- the IV does not affect college graduation (which it shouldn't)
+
+
+## \citet{angrist1991}: 2SLS Results
+
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "angrist_qob5.png"))
+```
+
+
+$\widehat{\beta^{OLS}}>\widehat{\beta^{2SLS}}$ as one would expect (?)
+
+\vfill
+Note the much larger standard error of $\widehat{\beta^{2SLS}}$
+
+
+## \citet{angrist1991}: Many Many IVs
+
+In their analysis, \citet{angrist1991} use specifications with 
+
+- 30 (quarter-of-birth $\times$ year) dummies to **account for cohort effects**
+- 150 (quarter-of-birth $\times$ state) dummies to **account for differences across states**
+
+\vfill
+This means that they use up to 150 instruments for education
+
+- By controlling for state differences, they **reduce bias**
+- But they also **reduce the amount of variation in education** that is used for identification
+
+\vfill
+\brf{Low degree of identifying variation} $\Rightarrow$ \brf{weak IV} problem
+
+
+## \citet{bound1995}: The Weak Instrument Problem
+
+\brf{Causal model}: $y = \beta s + \varepsilon$
+
+\vfill
+
+\brf{First stage}: $s = \pi z + \eta$
+
+\vfill
+Suppose $\varepsilon$ and $\eta$ are correlated. Estimating $\beta$ using OLS will be biased:
+
+\begin{align*}
+E\big[\widehat{\beta}_{OLS}-\beta\big] =
+   \dfrac{C(\varepsilon, s)}{V(s)}
+\end{align*}
+
+
+## \citet{bound1995}: The Weak Instrument Problem
+
+\citet{bound1995} show that weak instruments bias the 2SLS estimator towards the OLS estimator
+
+\vfill
+One way of expressing the \brf|weak instrument bias} is 
+
+\begin{align*}
+E\big[\widehat{\beta}_{2SLS}-\beta\big] \approx \dfrac{\sigma_{\varepsilon \eta}}{\sigma_\eta^2} \dfrac{1}{F+1}
+\end{align*}
+
+where $F$ is the \brf{first stage F-statistic} of the instruments in the first stage
+
+- Strong instruments: $F \rightarrow \infty$, bias $\rightarrow 0$
+- Weak instruments: $F \rightarrow 0$, bias $\rightarrow \dfrac{\sigma_{\varepsilon \eta}}{\sigma_\eta^2}$
+
+
+## Weak IVs in \citet{angrist1991}
+
+
+```{r, echo=FALSE, out.width="75%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "bound_weakiv2.png"))
+```
+
+With \brf{more IVs added} the first stage of the IV gets weaker
+
+
+
+## Weak IVs in \citet{angrist1991}
+
+```{r, echo=FALSE, out.width="65%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "bound_weakiv3.png"))
+```
+
+When 180 IVs are included, the first stage is very weak; the IV bias gets close to the OLS bis
+
+
+
+
+## Variance of the 2SLS estimator
+It can be shown that the asymptotic variance of the 2SLS estimator is
+\begin{equation*}
+\widehat{Avar}\left(\hat{\beta}^{2SLS}\right)=\hat{\sigma}^{2} \frac{1}{N \rho_{x z}^{2} \sigma_{x}^{2}},
+\end{equation*}
+where $\rho_{x z}=\operatorname{cov}\left(z_{ i}, x_ {i}\right) /\left(\sigma_{z} \sigma_{x}\right)$.
+\vfill
+This equation offers \brf{several important insights}:
+
+- An increase in the sample size decreases the standard errors
+- The standard error is higher the higher the variance of the residuals $\hat{\sigma}^{2}$ and the lower the variation in $x_i$
+- The standard error decreases with the strength of the first stage
+- Also: $\widehat{Avar}\left(\hat{\beta}^{2SLS}\right)>\widehat{Avar}\left(\hat{\beta}^{OLS}\right)$ because $\rho_{x x}=1$
+
+\vfill
+Note: we assumed here **homoskedasticity of the error terms**
+
+
+
+## Simulation: Strong vs. Weak IVs
+
+We can illustrate the issues with weak IVs in a simulation
+
+
+\begin{align*}
+y &= x+ \varepsilon \\
+x &= \gamma_1 z + \nu \\
+\rho_{x,\varepsilon}&=0.4
+\end{align*}
+
+\vfill
+
+- Strong IVs: $\rho_{x,z}=0.5$
+- Weak IVs: $\rho_{x,z}=0.15$
+
+\vfill
+\brf{Simulation:} different sample sizes; 10,000 replications
+
+
+
+
+
+## Simulation of Strong IV
+
+```{r, echo=FALSE, out.width="49%", fig.show='hold', fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "ivsim1.png"))
+knitr::include_graphics(paste0(graphdir, "ivsim2.png"))
+```
+
+
+## Simulation of Weak IV
+
+```{r, echo=FALSE, out.width="49%", fig.show='hold', fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "ivsim3.png"))
+knitr::include_graphics(paste0(graphdir, "ivsim4.png"))
+```
+
+
+## Simulation Results
+
+2SLS generally has a \brf{wider sampling distribution} than OLS
+\vfill
+
+If we want to \brf{distinguish $\widehat{\beta}_{2SLS}$ from $\widehat{\beta}_{OLS}$}, we need
+
+- large samples
+- and a strong first stage
+
+\vfill
+Otherwise we **cannot really distinguish between both estimates**; (biased) OLS estimator may be preferable
+
+
+
+## Weak Instruments - What to Do?
+Show the \brf{F-Statistic of the first stage}
+
+- \citet{stock_2002a} suggest that an F-Statistic > 10 indicates that the instruments are sufficiently strong
+- But this is a rule of thumb, nothing more; nowadays, people say 10 is too small
+
+\vfill
+\brf{Best solution}: find a \brf{better instrument}
+
+\vfill
+\brf{Alternatives}: 
+
+- use \brf{LIML} (Limited Information Maximum Likelihood) instead of 2SLS
+- report Anderson-Rubin confidence intervals that account for weak IVs
+
+
+
+
+
+## Where Do Good IVs Come from?
+
+\brf{Theory combined with clever datas collection}. Examples
+\begin{itemize}
+\item Distance from job training centers
+\item College openings
+\end{itemize}
+\vfill
+\brf{Variation in policies}. This requires a \brf{deep institutional knowledge}. Examples
+\begin{itemize}
+\item assignment to judges with different severity
+\item differences in budgets across job training centers
+\item ...
+\end{itemize}
+\vfill
+\pause
+\brf{Nature}. Examples
+\begin{itemize}
+\item different levels of pollution in different places
+\item sex of the first two children
+\item ...
+\end{itemize}
+
+
+## IV: Cookbook
+\brf{1) Explain your identification strategy very clearly}
+\begin{itemize}
+\item start with the \textbf{ideal experiment}; why is your setting different? Why is your \textbf{regressor endogenous}?
+\item Explain theoretically \textbf{why there should be a first stage} and what coefficient we should expect
+\item Explain why the instrument is \textbf{as good as randomly assigned}
+\item Explain theoretically \textbf{why the exclusion restriction holds} in your setting
+\end{itemize}
+\vfill
+\brf{2) Show and discuss the first stage}
+\begin{itemize}
+\item Best to start with a \textbf{raw correlation}
+\item Do the \textbf{sign and magnitude make sense}?
+\item Assess the \textbf{strength of the instrument} using state-of-the-art techniques
+\end{itemize}
+
+
+## IV: Cookbook 
+\brf{3) Bring supportive evidence for instrument validity}
+\begin{itemize}
+\item Show that the \textbf{instrument does not predict pre-treatment characteristics}
+\item Can you provide evidence in support of the exclusion restriction?
+\item Use auxiliary tests, for example \citet{kitagawa_2015} and \citet{huber_2015}
+\item Consider using the \textit{plausibly exogenous} bounding procedure by \citet{conley_2012}
+\end{itemize}
+\vfill
+\brf{4) Discuss the results in detail}
+\begin{itemize}
+\item Show the \textbf{OLS and 2SLS results}, both with \textbf{varying sets of controls}
+\item Comment on the differences between both (bias, LATE, etc)
+\item Show the \textbf{reduced form}
+\item If the reduced form isn't there, the effect isn't there (MHE)
+\end{itemize}
+
+
+## Instrumental Variables: Conclusion
+
+
+IV is a \brf{powerful approach to deal with endogeneity}
+
+\vfill
+
+The \brf{bar for finding a credible instrument is high}
+
+- Exclusion restriction cannot be tested
+- Defending an IV requires deep knowledge of institutions and context
+
+\vfill
+For \brf{canonical IV designs}, see the Mixtape, Section 7.8.
+
+## APPENDIX
+
+
+
+## How to do IV using R
+
+Classic example: \brf{\citet{card_1995}'s study on returns to higher education}
+
+- Uses distance |birthplace - nearest college| as an IV
+- This is obviously questionable, but serves as a good example
+
+\vfill
+There are \brf{two main packages for IV in R}
+
+- `AER` (Applied Econometrics with R) and the `ivreg` command
+- `fixest` and the `feols` command; this is very useful for IV estimation with FE
+
+
+## How to do IV using R
+
+Loading in packages and data; `haven` is for reading datasets in non-R format
+
+```{r card1, echo=TRUE, eval=TRUE}
+library(AER)
+library(haven)
+library(tidyverse)
+library(modelsummary)
+
+read_data <- function(df)
+{
+  full_path <- paste("https://github.com/scunning1975/mixtape/raw/master/", 
+                     df, sep = "")
+  df <- read_dta(full_path)
+  return(df)
+}
+
+card <- read_data("card.dta")
+```
+
+
+## How to do IV using R
+
+Prep data and run OLS
+\footnotesize
+```{r card2, echo=TRUE, eval=TRUE, include=TRUE}
+attach(card)
+
+Y1 <- lwage
+Y2 <- educ
+X1 <- cbind(exper, black, south, married, smsa)
+X2 <- nearc4
+
+#OLS
+ols_reg <- lm(Y1 ~ Y2 + X1)
+```
+
+
+## How to do IV using R
+\footnotesize
+```{r card3, echo=FALSE, eval=TRUE, include=TRUE}
+msummary(ols_reg)
+```
+
+## How to do IV using R
+OLS would yield a return to education of 7%. Let's see what IV gives us
+\footnotesize
+```{r card4, echo=TRUE, eval=TRUE, include=TRUE}
+#2SLS
+# Notice how we need to include all exogenous variables behind the "|"
+iv_reg <- ivreg(Y1 ~ Y2 + X1 | X1 + X2)
+```
+
+
+## How to do IV using R: First Stage
+\scriptsize
+```{r card5, echo=TRUE, eval=TRUE, include=TRUE}
+#2SLS
+# Check the first stage
+firststage <-  lm(Y2 ~ X1 + X2)
+models <- list(ols_reg, firststage, iv_reg)
+names(models) <- c("OLS", "First", "2SLS")
+```
+
+
+
+## How to do IV using R: 2SLS estimates
+\scriptsize
+```{r card6, echo=FALSE, eval=TRUE, include=TRUE}
+msummary(models, gof_omit = 'AIC|BIC|F|Log|RMSE|Adj', stars=TRUE)
+```
+
+
+
+
+## .
+\tiny
+\bibliographystyle{authordate1}
+\bibliography{../../../causalinf_phd/bibliography_causalinf}
+
+
+
+
+
+
+
+## .
+
+
+```{r child = '../Templates/socialmedia.Rmd'}
+```
+
+
+## Contact
+
+```{r child = '../Templates/contactpage.Rmd'}
+```
+
