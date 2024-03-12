@@ -12,7 +12,7 @@ editor: visual
 
 This assignment teaches you how to apply the methods of Lectures 1-4 of the course (DAGs, regression, potential outcomes, matching). It will also teach you how to run Monte Carlo simulations, a critical skill for anyone working with data.
 
-- The assignment is due on **Monday, 25th March 2024, 23:59**.
+-   The assignment is due on **Monday, 25th March 2024, 23:59**.
 -   You can work on this assignments in groups of up to 4. I will not get involved in the group formation process. If you prefer to work on your own, you can do so.
 -   Please submit one assignment per group on Brightspace under *Assessment \> Assignments*. Make sure that all the names of the group members are on the assignment.
 -   The assignment should be submitted as one pdf file. It should contain a write-up with your answers to the questions (including tables and figures) and the R code you used to generate the results. Do not use code chunks; instead, provide the entire code at the end of the document.
@@ -71,45 +71,41 @@ d)  Using a logit model, estimate the propensity score for each unit. Plot the d
 
 a)  Run the following regressions and report the results in a regression table:
 
-```{=html}
 <!-- -->
-```
+
 1.  A simple regression of health on the treatment variable `D`.
 2.  A regression of health on the treatment variable `D` and the covariate `family_income`.
 3.  A regression of health on the treatment variable `D` and the covariate `parent_education`.
 4.  A regression of health on the treatment variable `D`, the covariate `family_income` and the covariate `parent_education`.
 5.  A regression of health on the treatment variable `D`, the covariate `family_income`, the covariate `parent_education` and the interaction term between `family_income` and `parent_education`.
 
-```{=html}
 <!-- -->
-```
+
 b)  Consider the difference in the coefficient of the treatment between regressions 1 and 2. Using the omitted variable bias formula, explain why the coefficients differ.
 
 c)  Across all specifications, the coefficient of the treatment variable is closest to the assumed coefficient $\beta=5$ regression 5. Explain why this is the case.
 
 d)  Perform propensity score matching (nearest neighbour) and obtain a matched dataset. Perform balancing tests for the covariates `family_income` and `parent_education` and comment on the results. I recommend the `MatchIt` package in R for this task.
 
-e)  Inspect the covariate balance visually. To do this, create density plots for each covariate that show the distribution of the covariate among treated and untreated units in the matched sample. Compare these to the distributions from 1.3 c).
+e)  Inspect the covariate balance visually. To do this, create density plots for each covariate that show the distribution of the covariate among treated and untreated units in the matched sample. Compare these to the distributions from 1.2 c).
 
-f)  Inspect the propensity score balance visually. To do this, create a density plot of the propensity scores for the treated and untreated units in the matched sample. Compare these to the distributions from 1.3 d).
+f)  Inspect the propensity score balance visually. To do this, create a density plot of the propensity scores for the treated and untreated units in the matched sample. Compare these to the distributions from 1.2 d).
 
 g)  Using the matched dataset, estimate the ATT and compare your result to the results from the regressions.
 
 h)  Perform tasks d)-g) again, but this time with coarsened exact matching (CEM). You can use the default procedure in `MatchIt` or similar packages; no need to manually specify any cutoffs. Compare the CEM results to the results from the propensity score matching.
 
-i) Neither the PSM nor the CEM method give you the true ATT of $\beta=5$. Why not?
+i)  Neither the PSM nor the CEM method give you the true ATT of $\beta=5$. Why not?
 
 ## Regression and Matching: Monte Carlo Simulation
 
 Monte Carlo Simulations are often used to study the properties of estimators. With real data, we cannot easily assess the bias of an estimator because we don't know what the true value. Or we cannot look at the sampling distribution of an estimator, because we cannot draw repeated samples from the population. With Monte Carlo simulations, we can generate data with known properties, draw many samples, and analyse the properties of estimators. In the appendix (under `Hints`) you find more information on how Monte Carlo Simulations work and how to do them in R. One tip to give here is to first just simulate one data set and run the analysis. If that works, you can move to the simulation of many data sets.
 
-a) Simulate 500 data sets. Each data set should contain the following variables. The data set should have the same structure as the data set you generated in 1.2 a), except that it has only 100 observations. In each replication, generate a matched data set based on Mahalanobis distance matching of the nearest neighbour. Then estimate the ATT using the matched data set. 
+a)  Simulate 500 data sets. Each data set should contain the following variables. The data set should have the same structure as the data set you generated in 1.2 a), except that it has only 100 observations. In each replication, generate a matched data set based on Mahalanobis distance matching of the nearest neighbour. Then estimate the ATT using the matched data set.
 
-b) Do the same as in a), but this time use Mahalanobis distance matching of the 10 nearest neighbours. 
+b)  Do the same as in a), but this time use Mahalanobis distance matching of the 10 nearest neighbours.
 
-c) Produce a density plot of your estimates from a) and b) and explain why the two distributions look different. 
-
-
+c)  Produce a density plot of your estimates from a) and b) and explain why the two distributions look different.
 
 \newpage
 

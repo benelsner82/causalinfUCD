@@ -1,0 +1,1157 @@
+---
+title: "ECON42720 Causal Inference and Policy Evaluation"
+subtitle: "6 Regression Discontinuity Designs"
+author: "Ben Elsner (UCD)"
+output:
+  beamer_presentation:
+    includes:
+      in_header: "../Templates/template_metrics.tex"
+classoption: "aspectratio=169, handout" 
+
+
+--- 
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(causaldata)
+library(stargazer)
+library(rdrobust)
+library(rddensity)
+
+graphdir <- "../../../causalinf_phd/Graphs/"
+```
+
+
+
+
+
+
+## Resources 
+
+
+\brf{Textbook chapters}
+
+- [Cunningham, Causal Inference: The Mixtape, Ch. 6](https://mixtape.scunning.com/06-regression_discontinuity)
+
+- [Huntington-Klein, The Effect: Ch. 20](https://theeffectbook.net/ch-RegressionDiscontinuity.html)
+
+- Huber, Causal Analysis
+Impact Evaluation and Causal Machine Learning with Applications in R, Ch.9
+
+\vfill
+\brf{Review Articles}
+
+- Cattaneo, Idrobo, Titiunik; [A Practical Introduction to Regression
+Discontinuity Designs: Foundations](https://mdcattaneo.github.io/books/Cattaneo-Idrobo-Titiunik_2020_CUP.pdf) ; In: Cambridge Elements: Quantitative and Computational Methods for Social Science. 
+
+
+- Cattaneo, Idrobo, Titiunik; [A Practical Introduction to Regression
+Discontinuity Designs: Extensions](https://mdcattaneo.github.io/books/Cattaneo-Idrobo-Titiunik_2023_CUP.pdf) ; In: Cambridge Elements: Quantitative and Computational Methods for Social Science. 
+
+
+## Regression Discontinuity: Starting Point
+We want to \brf{estimate a treatment effect}, but there is likely \brf{selection bias}. 
+\vfill
+The required assumption
+\begin{equation*}
+E[Y_{0i}|D_i=1]-E[Y_{0i}|D_i=0]=0
+\end{equation*}
+does not hold.
+\vfill
+\pause
+\brf{RD exploits settings} where this assumption often holds
+
+- arbitrary thresholds that determine treatment assignment
+- typically regulatory thresholds
+- Probability of treatment ``jumps'' at the discontinuity 
+
+
+
+
+
+## Regression Discontinuity
+\brf{Examples for discontinuities}
+
+- Income thresholds for social benefits
+- Cutoff rules for class sizes
+- GPA thresholds for getting into college
+- Special treatment for babies with <1500g birth weight
+- ...
+
+\vfill
+\pause
+\brf{Basic idea}
+
+- At the threshold, the **probability of treatment changes** sharply
+- But **nothing else changes**
+- Being **above or below** the threshold is **as good as random**
+
+
+
+
+
+## RD lingo
+\brf{The forcing variable $X$} 
+
+- The **variable that determines treatment assignment**
+- Also called assignment or running variable
+
+\vfill
+\brf{The discontinuity $X_0$} 
+
+- threshold value of the running variable at which treatment assignment jumps
+
+
+
+
+## Example of a linear RD
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "rdd_linear.PNG"))
+```
+\vfill
+The aim is to estimate the \brf{treatment effect} (here $\tau$) \brf{at the discontinuity}
+
+
+
+## RDD in a DAG
+
+```{r, echo=FALSE, out.width="75%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "rdd_dag1.png"))
+```
+
+The \brf{running variable $X$ determines the treatment $D$}
+\vfill
+\brf{Left:} $X$ may also affect the outcome through $U$
+\vfill
+\brf{Right:} Being above or below the threshold $c_0$ is as good as random
+
+## Sharp and Fuzzy Regression Discontinuity
+\brf{Sharp RDD}: treatment probability jumps at $X_0$ from 0 to 1
+\vfill
+\brf{Fuzzy RDD}: treatment probability jumps at $X_0$ 
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "rdd_basic.PNG"))
+```
+
+
+
+
+
+## Example of a Sharp RDD: \citet{carpenter_2009}
+Observation: there is a \brf{spike in deaths around the 21st birthday}
+```{r, echo=FALSE, out.width="55%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "carpenter1.PNG"))
+```
+...but no difference around the 20th or 22nd birthday
+
+
+
+
+## Example of a Sharp RDD: Carpenter & Dobkin (2009)
+Carpenter & Dobkin (2009) investigate if this spike is \brf{due to the legal drinking age} (21 in US)
+\vfill
+Idea: at 21, nothing changes except that people can drink legally
+\vfill
+Sharp RD: age is the running variable
+\begin{equation*}
+ D_a=\begin{cases}
+    1, & \text{if } a\geq21.\\
+    0, & \text{if } a<21.
+  \end{cases}
+\end{equation*}
+\vfill
+\brf{Treatment status} is a \brf{deterministic function of the running variable}
+
+- if we know $a$, we know $D_a$
+
+
+
+
+
+## Example of a Sharp RDD: Carpenter & Dobkin (2009)
+\brf{Simple RD analysis in a regression framework}
+\begin{equation*}
+\mbox{death rate}_a=\alpha + \rho D_a + \gamma a + e_a
+\end{equation*}
+```{r, echo=FALSE, out.width="55%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "carpenter2.PNG"))
+```
+
+
+
+
+## Example of a Sharp RDD: Carpenter & Dobkin (2009)
+Does the \brf{jump in the death rate} $\rho$ \brf{represent a causal effect}?
+\vfill
+\brf{Yes if $D_a$ is solely determined by $a$}
+
+- This is plausible in the given setting
+- in this case there is no omitted variable bias
+- no need to control for anything
+
+\vfill
+\pause
+\brf{Advantage of RDs}: they are credible and transparent
+\vfill
+\brf{Downside of RDs}: they estimate local effects; difficult to extrapolate
+
+
+
+## Example of a Fuzzey RDD: \citet{hoekstra_2009}
+
+\brf{Question}: what is the impact of attending a State flagship university on earnings?
+
+\vfill
+\brf{Background:} many U.S. states have flagship universities 
+
+- Examples: University of Virginia, University of Florida, University of Michigan
+- Is **going to University of Florida better** than going to **University of Southern Florida?**
+
+\vfill
+\brf{Challenge:} it is not random who goes to a particular university
+
+
+## Example of a Fuzzey RDD: \citet{hoekstra_2009}
+
+\brf{Identification strategy:} Hoekstra exploits admission cutoffs in a fuzzy RD design
+
+- Applicants need a certain SAT score to be admitted
+- The design is fuzzy because not everyone with a high SAT score applies and enrols
+
+\vfill
+
+\brf{Identification assumption:} students cannot manipulate whether they are above or below the cutoff
+
+## Data used in \citet{hoekstra_2009}
+
+**Administrative records** from a large **flagship university** (not disclosed which one)
+
+- Includes data on all applicants, including their SAT scores
+
+\vfill
+
+**Social Security Administration (SSA) data** on earnings
+
+
+
+
+
+## First stage: SAT vs enrolment
+
+Binscatter of SAT scores and enrolment rates
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "rdd_hoekstra1.jpg"))
+```
+
+
+
+
+## Reduced form: SAT vs log earnings
+
+Binscatter of SAT scores and enrolment rates
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "rdd_hoekstra2.jpg"))
+```
+
+
+## Lessons from \citet{hoekstra_2009}
+
+Being \brf{above the cutoff increases}
+
+- the probability of enrolling by close to 40 percentage points
+- earnings by around 10 percent
+
+\vfill
+
+We can **calculate the LATE**: $\frac{0.1}{0.4}\times 100 \% =25\%$
+
+
+
+## Sharp RD: Formal Derivation \citet[][ch. 6]{angrist_2009}
+**Treatment status** ${D}_{i}$ is a deterministic function of $x_i$ with a **discontinuity** at $x_{0}$
+
+\begin{equation*}
+\mathrm{D}_{i}=\left\{\begin{array}{ll}
+{1} & {\text { if } x_{i} \geq x_{0}} \\
+{0} & {\text { if } x_{i}<x_{0}}
+\end{array}\right.
+\end{equation*}
+\vfill
+Assume a \brf{constant effects model}
+
+\begin{equation*}
+\begin{aligned}
+E\left[\mathrm{Y}_{0 i} | x_{i}\right] &=\alpha+\beta x_{i} \\
+\mathrm{Y}_{1 i} &=\mathrm{Y}_{0 i}+\rho
+\end{aligned}
+\end{equation*}
+
+
+
+
+
+## Sharp RD: Formal Derivation (Angrist & Pischke 2009, Ch.6)
+The **corresponding regression** is
+\begin{equation*}
+\mathrm{Y}_{i}=\alpha+\beta x_{i}+\rho \mathrm{D}_{i}+\eta_{i}
+\end{equation*}
+\vfill
+Of if the trend relation $E[Y_{0i}|x_i]$ is **non-linear**:
+\begin{equation*}
+\mathrm{Y}_{i}=\alpha+f(x_{i})+\rho \mathrm{D}_{i}+\eta_{i}
+\end{equation*}
+\vfill
+$f(x_i)$ modeled as a **p-th order polynomial**
+\begin{equation*}
+\mathrm{Y}_{i}=\alpha+\beta_{1} x_{i}+\beta_{2} x_{i}^{2}+\ldots+\beta_{p} x_{i}^{p}+\rho \mathrm{D}_{i}+\eta_{i}
+\end{equation*}
+
+
+
+
+
+## Sharp RD: Formal Derivation (Angrist & Pischke 2009, Ch.6)
+
+Or allowing for **separate trend functions** for treated and untreated observations
+\begin{equation*}
+\begin{aligned}
+E\left[\mathrm{Y}_{0 i} | x_{i}\right] &=f_{0}\left(x_{i}\right)=\alpha+\beta_{01} \tilde{x}_{i}+\beta_{02} \tilde{x}_{i}^{2}+\ldots+\beta_{0 p} \tilde{x}_{i}^{p} \\
+E\left[\mathrm{Y}_{1 i} | x_{i}\right] &=f_{1}\left(x_{i}\right)=\alpha+\rho+\beta_{11} \tilde{x}_{i}+\beta_{12} \tilde{x}_{i}^{2}+\ldots+\beta_{1 p} \tilde{x}_{i}^{p}
+\end{aligned}
+\end{equation*}
+with $\tilde{x}_{i} \equiv x_i-x_0$
+\vfill
+Use the fact that $D_i$ is a deterministic function of $x_i$
+\begin{equation*}
+E\left[\mathrm{Y}_{i} | x_{i}\right]=E\left[\mathrm{Y}_{0 i} | x_{i}\right]+E\left[\mathrm{Y}_{1 i}-\mathrm{Y}_{0 i} | x_{i}\right] \mathrm{D}_{i}
+\end{equation*}
+
+
+
+
+## Sharp RD: Formal Derivation (Angrist & Pischke 2009, Ch.6)
+
+Substituting polynomials for conditional expectations yields the regression
+\begin{equation*}
+\begin{aligned}
+\mathrm{Y}_{i}=& \alpha+\beta_{01} \tilde{x}_{i}+\beta_{02} \tilde{x}_{i}^{2}+\ldots+\beta_{0 p} \tilde{x}_{i}^{p} \\
+&+\br{\rho \mathrm{D}_{i}}+\beta_{1}^{*} \mathrm{D}_{i} \tilde{x}_{i}+\beta_{2}^{*} \mathrm{D}_{i} \tilde{x}_{i}^{2}+\ldots+\beta_{p}^{*} \mathrm{D}_{i} \tilde{x}_{i}^{p}+\eta_{i}
+\end{aligned}
+\end{equation*}
+\vfill
+If we want to restrict the sample to a \brf{bandwidth $\delta$}
+\begin{equation*}
+\begin{array}{l}
+{E\left[\mathrm{Y}_{i} | x_{0}-\delta<x_{i}<x_{0}\right] \simeq E\left[\mathrm{Y}_{0 i} | x_{i}=x_{0}\right]} \\
+{E\left[\mathrm{Y}_{i} | x_{0}<x_{i}<x_{0}+\delta\right] \simeq E\left[\mathrm{Y}_{1 i} | x_{i}=x_{0}\right]}
+\end{array}
+\end{equation*}
+...the \brf{estimand becomes}
+\begin{equation*}
+\lim _{\delta \rightarrow 0} E\left[\mathrm{Y}_{i} | x_{0}<x_{i}<x_{0}+\delta\right]-E\left[\mathrm{Y}_{i} | x_{0}-\delta<x_{i}<x_{0}\right]=E\left[\mathrm{Y}_{1 i}-\mathrm{Y}_{0 i} | x_{i}=x_{0}\right]
+\end{equation*}
+
+
+
+## Extrapolation in a Sharp RD
+
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "rdd_simul_ex.jpg"))
+```
+
+The RDD does not have common support
+
+- Units above the cutoff are treated $D_i=1$
+- Units below the cutoff are untreated $D_i=0$
+
+
+## The Continuity Assumption
+
+The \brf{continuity assumption} is the key identifying assumption in the RD design
+
+- It states that the potential outcomes are continuous functions of the running variable $X$
+- $E[Y^0_i\mid X=x_0]=E[Y^1_i\mid X=x_0]$
+
+\vfill
+\brf{What does continuity mean?}
+
+- potential outcomes don't jump at the cutoff
+- there are no competing interventions
+- people don't select into being above or below the cutoff
+
+
+## RD: Importance of Functional Form
+\brf{RDs don't guarantee} the estimation of a \brf{causal effect}
+\vfill
+Problem: what looks like a discontinuous jump may actually be an \brf{increase in a non-linear function}
+\vfill
+It is important to 
+
+- **distinguish** between a **true causal effect** and an increase in a **non-linear trend** 
+- assess (and model) the **functional form** between the running variable and the outcome
+
+
+
+
+## RD: Importance of Functional Form
+Linear vs. quadratic function
+```{r, echo=FALSE, out.width="50%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "rdd_linear1.PNG"))
+```
+
+
+
+
+## RD: Importance of Functional Form
+Example of a spurious jump
+```{r, echo=FALSE, out.width="65%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "rdd_spurious.png"))
+```
+\vfill
+In an RD paper, it is important to show the \brf{robustness of the results} to the choice of \brf{functional form}
+
+
+
+
+## RD: Importance of Functional Form
+We can capture the curvature by including a quadratic in age
+\begin{equation*}
+\mbox{death rate}_a=\alpha + \rho D_a + \gamma_1 a + \gamma_2 a^2 + e_a
+\end{equation*}
+\vfill
+Problem: often the \brf{slope or curvature differs above and below the cutoff}
+\vfill
+For example, below 21-year-olds are subject to minimum drinking age laws
+
+
+
+
+## RD: Importance of Functional Form
+Two measures solve this problem
+
+- center the running variable around the cutoff (i.e. use $a-a_0$)
+- add an interaction term $(a-a_0)D_a$
+
+
+\begin{equation*}
+\mbox{death rate}_a=\alpha + \rho D_a + \gamma (a-a_0) + \delta [(a-a_0)D_a]+ e_a
+\end{equation*}
+\vfill
+This equation still identifies the effect at the cutoff ($a=a_0$)
+
+
+
+## RD: Importance of Functional Form
+It is also possible to fit a \brf{polynomial on either side of the cut-off}
+\begin{eqnarray*}
+\mbox{death rate}_a &=& \alpha + \rho D_a + \gamma_1 (a-a_0) + \gamma_2 (a-a_0)^2  \\
+&+& \delta_1 [(a-a_0)D_a]+ \delta_2 [(a-a_0)^2 D_a] + e_a
+\end{eqnarray*}
+
+
+
+## RD: Importance of Functional Form
+Linear vs quadratic functional form in Carpenter & Dobkin (2009)
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "carpenter3.png"))
+```
+\vfill
+Treatment effect is larger with quadratic controls
+
+
+
+## RD: Importance of Functional Form
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "RDDpoly.png"))
+```
+
+\tiny
+Source: Huntington-Klein, The Effect
+
+
+## Overfitting? Crimes against Data?
+
+\brf{\citet{gelman_2019}}: polynomials can lead to \brf{overfitting}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "gelman_rd.png"))
+```
+
+
+
+
+
+## Overfitting? Crimes against Data?
+\brf{Overfitting}
+
+- There is often **no scientific reason** to have high-order **polynomials**
+- Overfitting: parameter estimates rely on **too few data points**
+- **Large weights** are given to observations **far away from the discontinuity**
+- Genuine **uncertainty** from model dependence is **not reflected in standard errors**
+
+\vfill
+More on overfitting in RDs: \citet{green_2009}, Gelman \& Imbens (2019)
+
+
+
+
+
+
+## Bandwidth Selection
+One method to reduce the likelihood of spurious effects is to \brf{narrow the bandwidth}
+\vfill
+The bandwidth is the \brf{``window'' below and above the cutoff}
+\vfill
+\brf{Idea:} 
+
+- The closer we ``zoom in'' on the cutoff
+- ...the lower is the chance of picking up a trend
+
+
+
+
+
+
+## Bandwidth Selection
+\brf{Trade-off in bandwidth selection}
+
+- smaller bandwidth $\Rightarrow$ \brf{smaller bias}
+- smaller bandwidth $\Rightarrow$ \brf{less precision}
+
+\vfill
+\pause
+The graph on the following page illustrates \brf{two common methods}
+
+- (non-parametric) kernel density estimation
+- local linear regressions
+
+\vfill
+\brf{Optimal bandwidth selection} is a very active area of research in econometrics. See, for example, \citet{imbens_2012}. 
+
+
+
+## Bandwidth Selection
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "rdd_nonpara.png"))
+```
+
+## Bandwidth Selection: Practical Advice
+
+In a typical RDD paper you will see a \brf{variety of bandwidths}
+
+\vfill
+
+The preferred bandwidth in many studies is the \brf{optimal bandwidth from \citet{calonico_2014}}
+
+- It trades off bias and variance
+- the `rdrobust` package in R implements this method
+
+
+## Local Regression
+
+Simplest form: \brf{compare means above and below} within bandwidth
+
+- Problem: differential trends in $Y$ above and below can lead to bias
+
+\vfill
+
+\brf{Alternatives:} 
+
+- Local linear regression
+- Kernel regression
+
+
+## Local Linear Regression
+Simple \brf{local linear regression restricts the sample to $a_0 - b \leq a \leq a_0 + b$}
+\vfill
+And estimates a linear regression in this window:
+\begin{equation*}
+\mbox{death rate}_a=\alpha + \rho D_a + \gamma a + e_a
+\end{equation*}
+\vfill
+\pause
+Or, more commonly, we can \brf{allow for different slopes above and below the cut-off}
+
+
+## Kernel Regression
+
+\brf{Assign weights} that 
+
+- are maximized at the cutoff
+- are zero outside the bandwidth
+
+\vfill
+
+Example for \brf{triangular kernel}
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "kernelRD.png"))
+```
+
+\tiny
+Source: Huntington-Klein, The Effect
+
+
+<!--
+
+## Inference in RDD
+
+We can \brf{estimate standard errors} and construct confidence intervals
+
+- through **parametric assumptions** in a regression framework
+- through **bootstraps** when using non-parametric estimation
+
+
+\vfill
+Problem: the \brf{CIs may not have appropriate coverage} (Kolesar \& Rothe, 2018; Armstrong \& Kolesar, 2020, 2021) 
+
+- Only very little actual variation around the cutoff is used
+- The model can be misspecified
+
+
+\vfill
+Solution: Kolesár's `RDHonest` package constructs "honest" confidence intervals with correct coverage
+
+-->
+
+
+
+
+## Fuzzy RDD
+In a fuzzy RDD, the \brf{probability of treatment jumps at the cutoff}
+\vfill
+
+\begin{equation*}
+P[D_i=1|x_i]=\begin{cases}
+    g_1(x_i), & \text{if } x_i \geq x_0.\\
+      g_0(x_i), & \text{if } x_i < x_0.
+  \end{cases}
+\end{equation*}
+where $g_1(x_0)\neq g_0(x_i)$
+\vfill
+This set-up is \brf{equivalent to an IV estimator}
+
+- The discontinuity is the instrument for the treatment
+- If we control for the forcing variable, the assignment of the IV is as good as random
+
+ 
+
+
+
+## Fuzzy RDD
+\brf{Simplest case:} let $T_i$ be the discontinuity and $D_i$ be the treatment
+\vfill
+The (hypothetical) \brf{first stage} is
+\begin{equation*}
+D_i=\gamma_0+\gamma_1 X_i + \gamma_2  T_i + e_i
+\end{equation*}
+ \vfill
+\pause
+But because we often don't observe the treatment, we \brf{estimate the reduced form}
+\begin{equation*}
+y_i=\alpha+\beta  T_i + \delta X_i +  u_i
+\end{equation*}
+
+
+
+
+
+
+## Fuzzy RDD
+\brf{Wald Estimator} with a bandwidth of $\delta$
+\begin{equation*}
+\lim _{\delta \rightarrow 0} \frac{E\left[\mathrm{Y}_{i} | x_{0}<x_{i}<x_{0}+\delta\right]-E\left[\mathrm{Y}_{i} | x_{0}-\delta<x_{i}<x_{0}\right]}{E\left[\mathrm{D}_{i} | x_{0}<x_{i}<x_{0}+\delta\right]-E\left[\mathrm{D}_{i} | x_{0}-\delta<x_{i}<x_{0}\right]}=\rho
+\end{equation*}
+
+
+
+
+
+## Fuzzy RDD
+Fuzzy RD becomes \brf{more tricky with interactions} (treatment with forcing variable)
+\vfill
+$\Rightarrow$ need a \brf{separate IV and first stage} for each term including $D_i$
+\vfill
+This means that one has as \brf{many instruments} as there are terms including $D_i$
+\vfill
+Rather than deriving this, we will look at an example: \citet{angrist_1999}
+
+
+
+
+## Fuzzy RD: Angrist \& Lavy (1999)
+\brf{Angrist \& Lavy (1999)} study the \brf{impact of class sizes on student achievement}
+\vfill
+They exploit that \brf{class sizes in Israeli schools follow Maimonides' rule}
+
+- Class size is capped at 40
+- If enrollment reaches 41, two classes are formed
+- Three classes are formed if the enrollment reaches 80, etc
+
+
+
+
+
+
+
+## Fuzzy RD: Angrist \& Lavy (1999)
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "Angrist_Lavy_99_F1.pdf"))
+```
+
+
+
+## Fuzzy RD: Angrist \& Lavy (1999)
+Angrist \& Lavy (1999) use the \brf{predicted class size as instrument for the actual class size}
+\vfill
+Prediction is based on a mathematical formula (namely Maimonides' rule)
+\vfill
+Not all \brf{schools fully comply, but most do}
+\vfill
+This is a \brf{classic example of a fuzzy RD}
+
+
+
+## Fuzzy RD: Angrist \& Lavy (1999)
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "Angrist_Lavy_99_F2.pdf"))
+```
+
+
+## Fuzzy RD: Angrist \& Lavy (1999)
+```{r, echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "Angrist_Lavy_99_TII.pdf"))
+```
+
+
+
+## Fuzzy RD: Angrist \& Lavy (1999)
+```{r, echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "Angrist_Lavy_99_TIV.pdf"))
+```
+
+
+
+## Fuzzy RD: Angrist \& Lavy (1999)
+
+
+- Table II shows \brf{OLS\ estimates}: There is a positive
+correlation between class size and test scores in the raw data. \ This
+correlation vanishes when the fraction of disadvantaged students is controlled
+for. \
+
+- Table IV shows the \brf{IV\ results}, exploiting the regression
+discontinuities created by Maimonides' rule. The table displays various specifications with no, linear, quadratic,
+and piecewise linear controls for enrollment, as well as estimates in
+subsamples around the discontinuity points. \
+
+
+
+
+
+## Fuzzy RD: Angrist \& Lavy (1999)
+
+
+- \brf{Controlling for enrollment is important}, particularly for the math test
+scores. \ The form of the control matters less. \
+
+- On the other hand, the \brf{discontinuity samples give larger effects} (in
+absolute values)\ than the full sample, which is less comforting.
+
+- Overall, they find that the IV estimates are larger than the OLS estimates.
+
+- The \brf{downward bias of OLS} is plausible as it may be the case that poorer
+performing students are placed in smaller classes.
+
+
+
+
+
+
+## Regression Discontinuity: Comments
+\brf{Regression Discontinuity} has become one of \brf{the most popular methods of causal inference}
+\vfill
+Some reasons:
+
+- It's easy to explain to non-economists
+- The researcher is forced to show patterns in the data
+- Identification assumptions can be inspected graphically
+- It is often clear what drives the variation in the treatment
+
+
+\vfill
+For useful practitioners' guides, see Matias Cattaneo (Michigan) and David Lee (Princeton)
+
+
+
+
+## Challenge to Identification
+As with any method of causal inference, RD rests on an \brf{untestable identification assumption}
+
+- being **above or below the cutoff is as good as random**
+
+\vfill
+This may not be true if there is \brf{manipulation}
+
+- people may be able to choose whether they are above or below the cutoff
+- teachers may grade people up, etc
+
+
+
+
+
+## Example for Manipulation
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "marathon.png"))
+```
+
+
+
+
+## What Can/Should You Do?
+There are \brf{non-parametric tests} for heaping/bunching
+
+- McCrary density test \citep{mccrary_2008} 
+
+\vfill
+\brf{Run placebo tests} based on pre-treatment characteristics
+
+- there should be no jump at the discontinuity
+- if there is, that's a problem
+
+\vfill
+\brf{One solution}: a donut hole estimator (leave out points close to the discontinuity)
+
+
+
+
+## RD: The Cookbook
+\brf{3 General Rules: plot, plot, plot!}
+\vfill
+\brf{1) Explain the Identification Strategy}
+
+- why is there a discontinuity?
+- and what is the treatment that changes?
+- what is the scope for manipulation?
+
+\vfill
+\pause
+\brf{2) Produce and discuss the main graph}
+
+- Outcome plotted against the running variable
+- Best to use binned scatters
+- Important to find the right functional form
+- Use practitioners' guides, for example \citet{lee_2010b}
+
+
+
+
+## RD: The Cookbook
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "lee1.png"))
+```
+\tiny{Source: Lee \& Lemieux (2010)}
+
+
+
+
+## RD: The Cookbook
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "lee2.png"))
+```
+\tiny{Source: Lee \& Lemieux (2010)}
+
+
+
+
+## RD: The Cookbook
+\brf{3) Report estimates based on different methods}
+
+- careful when using polynomials
+- local linear regression
+- kernel methods
+
+\vfill
+\pause
+\brf{4) Density and placebo tests}
+
+- Inspect if there is heaping at the discontinuity
+- Run a McCrary density test
+- Plot pre-treatment characteristics against the running variable
+- Check out the latest literature. If you don't run the latest tests, your referees will ask you to (If you're lucky)...
+
+
+
+
+
+
+## RD: The Cookbook
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics(paste0(graphdir, "lee3.png"))
+```
+\tiny{Source: Lee \& Lemieux (2010)}
+
+
+<!--
+## New Developments in RDD
+\brf{Extrapolation} away from the discontinuity
+
+- Cattaneo et al (2020): extrapolation based on multiple cut-offs
+
+\vfill
+\brf{Disentangling multiple treatments} at the discontinuity (Gilraine, 2020)
+\vfill
+
+-->
+
+## Appendix
+
+## RDD in R
+
+The following slides show how an RDD can be implemented with R. Most of this code is from Cunningham's Mixtape and Huntington-Klein's Effect.
+
+You need the following packages: `tidyverse`, `stargazer`, `causaldata`, and `rdrobust` and `rddensity`.
+
+We first simulate a dataset and then show how we run regressions. 
+
+
+## RDD in R -- Simulated Dataset 
+
+```{r sim1, eval=TRUE, echo=TRUE, include=TRUE}
+# simulate the data
+dat <- tibble(
+  x = rnorm(1000, 50, 25)
+) %>%
+  mutate(
+    x = if_else(x < 0, 0, x)
+  ) %>%
+  filter(x < 100)
+
+# cutoff at x = 50
+dat <- dat %>% 
+  mutate(
+    D  = if_else(x > 50, 1, 0),
+    y1 = 25 + 0 * D + 1.5 * x + rnorm(n(), 0, 20)
+  )
+```
+
+## RDD in R -- RDD plot with gpplot
+
+```{r plot1, eval=FALSE, echo=TRUE, include=TRUE}
+# Simulate data with discontinuity
+dat <- dat %>%
+  mutate(
+    y2 = 25 + 40 * D + 1.5 * x + rnorm(n(), 0, 20)
+  )
+
+# Plot
+ggplot(aes(x, y2, colour = factor(D)), data = dat) +
+  geom_point(alpha = 0.5) +
+  geom_vline(xintercept = 50, colour = "grey", linetype = 2) +
+  stat_smooth(method = "lm", se = F) +
+  theme_minimal() +
+  theme(text = element_text(size = 20), legend.position = "none") +
+  labs(x = "Test score (X)", y = "Potential Outcome (Y)")
+
+```
+
+---
+
+The code from the previous slide gives this 
+
+```{r eval=TRUE, echo=FALSE, out.width="70%"}
+<<plot1>>
+```
+
+
+
+## RDD Regressions in R 
+
+The regressions are based on the package `causaldata`, which has data on a government transfer that was administered based on an income cutoff. The original study was done by Manacorda et al (2011). 
+
+## RDD Regressions in R 
+
+Data preparation next slide
+
+- binned data for bin scatter
+- add kernel weights
+
+## RDD Regressions in R 
+
+\scriptsize
+```{r, eval=TRUE, echo=TRUE}
+gt <- causaldata::gov_transfers
+
+# Use cut() to create bins, using breaks to make sure it breaks at 0
+# (-15:15)*.02/15 gives 15 breaks from -.02 to .02
+binned <- gt %>%
+    mutate(Inc_Bins = cut(Income_Centered,
+           breaks = (-15:15)*(.02/15))) %>%
+    group_by(Inc_Bins) %>%
+    summarize(Support = mean(Support),
+    Income = mean(Income_Centered))
+
+# Add a triangular kernel weight
+kweight <- function(x) {
+    # To start at a weight of 0 at x = 0, and impose a bandwidth of .01, 
+    # we need a "slope" of -1/.01 = 100, 
+    # and to go in either direction use the absolute value
+    w <- 1 - 100*abs(x)
+    # if further away than .01, the weight is 0, not negative
+    w <- ifelse(w < 0, 0, w)
+    return(w)
+}
+
+gt <- gt |> mutate(kweight=kweight(Income_Centered))
+```
+
+
+## RDD Regressions in R 
+
+Binned scatter
+```{r binscatter1, eval=FALSE, echo=TRUE}
+# Taking the mean of Income lets us plot 
+# data roughly at the bin midpoints
+
+ggplot(binned, aes(x = Income, y = Support)) + 
+    geom_point(size=5) + 
+    theme_minimal() +
+    theme(text = element_text(size = 20)) +
+    # Add a cutoff line
+    geom_vline(aes(xintercept = 0), linetype = 'dashed')
+```
+
+---
+
+```{r, eval=TRUE, echo=FALSE, out.width="70%"}
+<<binscatter1>>
+```
+
+
+
+## RDD Regressions in R 
+
+```{r reg1, eval=FALSE, echo=TRUE}
+# Reg 1: linear term
+  m1 <- lm(Support ~ Income_Centered*Participation, data = gt)
+
+# Reg 2: model with square
+  m2 <- lm(Support ~ Income_Centered*Participation +
+       I(Income_Centered^2)*Participation, data = gt)
+
+# Reg 3: model with Kernel weights    
+ m3 <- lm(Support ~ Income_Centered*Participation, data = gt,
+         weights = kweight)
+  
+# Regression results: 
+  
+stargazer(m1, m2, m3, header=FALSE, type='latex', font.size="tiny",
+          single.row=TRUE)   
+```
+
+
+---
+
+```{r, eval=TRUE, echo=FALSE, results='asis'}
+<<reg1>>
+```
+
+
+## RDD Regressions in R 
+
+On the previous slide we can see that
+
+- The estimated \br{treatment effect is large} when we fit linear or quadratic \br{regressions} (9.3pp, statistically significant)
+- But it is \br{small} when we fit a \br{triangular Kernel regression}
+
+\vfill
+
+Note: the Kernel regression uses a lot fewer observations (bias-variance trade-off...)
+
+
+## Using `rdrobust`
+
+`rdrobust` is a very useful package because it has many useful in-built functions
+
+- generates **RD plots**
+- allows for **optimal bandwidth selection**
+- allows for **fuzzy RDD**
+
+
+## Using `rdrobust`
+
+```{r rdrobust1, eval=FALSE, echo=TRUE}
+# Estimate regression discontinuity and plot it
+m <- rdrobust(gt$Support, gt$Income_Centered, c = 0, p=1)
+summary(m)
+```
+
+```{r rdrobust2, eval=FALSE, echo=TRUE}
+# Note, by default, rdrobust and rdplot use different numbers
+# of polynomial terms. You can set the p option to standardize them.
+rdplot(gt$Support, gt$Income_Centered, masspoints="off", p=1) 
+```
+
+Nice feature: can change the order of polynomial through the `p` option
+
+Not so nice feature: hard to change the layout of the plot
+
+
+
+
+
+---
+
+```{r rdrobust4, eval=TRUE, echo=FALSE, warning=FALSE}
+<<rdrobust2>>
+```
+
+
+## Density test with `rddensity`
+
+```{r density1, eval=FALSE, echo=TRUE}
+gt <- causaldata::gov_transfers_density  %>%
+   filter(abs(Income_Centered) < .02)
+
+# Estimate the discontinuity
+gt %>%
+    pull(Income_Centered) %>%
+    rddensity(c = 0) %>%
+    summary()
+```
+
+
+
+
+
+
+## .
+\tiny
+\bibliographystyle{authordate1}
+\bibliography{../../../causalinf_phd/bibliography_causalinf}
+
+
+
+
+
+
+
+## .
+
+
+```{r child = '../Templates/socialmedia.Rmd'}
+```
+
+
+## Contact
+
+```{r child = '../Templates/contactpage.Rmd'}
+```
+
