@@ -65,7 +65,8 @@ The following five videos cover instrumental variables and applications:
 
 ## 6 Regression Discontinuity
 
-#### Slides
+#### [Slides](/slides/6 RD/slides_6_rd.pdf)
+
 
 #### Videos
 
