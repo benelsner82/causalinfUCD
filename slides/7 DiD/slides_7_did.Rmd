@@ -1,0 +1,251 @@
+---
+title: "ECON42720 Causal Inference and Policy Evaluation"
+subtitle: "7 Difference-in-Differences"
+author: "Ben Elsner (UCD)"
+output:
+  beamer_presentation:
+    includes:
+      in_header: "../Templates/template_metrics.tex"
+classoption: "aspectratio=169, handout" 
+
+
+--- 
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(causaldata)
+library(stargazer)
+library(knitr)
+
+graphdir <- "../../../causalinf_phd/Graphs/"
+```
+
+
+## Resources 
+
+
+\brf{Textbook chapters}
+
+- [Cunningham, Causal Inference: The Mixtape, Ch. 9](https://mixtape.scunning.com/09-difference_in_differences)
+
+- [Huntington-Klein, The Effect: Ch. 18](https://theeffectbook.net/ch-DifferenceinDifference.html)
+
+
+\brf{YouTube Videos}
+
+- [Videos 17-21 of my Causal Inference Playlist](https://www.youtube.com/playlist?list=PLyvUJLHD8IsJCB7ALqwjRG1BjL5JxE__H)
+
+
+
+## DiD is a Quasi-Experimental Design
+
+\brf{Some units get treated, some don't}... we've heard that before
+
+\vfill
+\brf{What's different about difference-in-differences?}
+
+- **Treatment assignment** does **NOT** need to be as good as **random**
+- The **TREND in outcomes** of the control group is a good **counterfactual** for the trend of the treated group
+
+\vfill
+DiD is arguably one of the \brf{most popular designs in empirical economics}
+
+
+
+
+## Historical DiD Example: The Cholera Hypothesis
+
+\begin{columns}
+\begin{column}{0.65\textwidth}
+19th century: Cholera was a major disease in Europe
+
+\vspace{1cm}
+
+\brf{Dominant hypothesis}: Cholera is **transmitted through the air**
+
+\vspace{1cm}
+
+\brf{John Snow in 1854}: Cholera is **transmitted through water**
+
+\vspace{1cm}
+
+Research design: \brf{Difference-in-differences}
+
+\end{column}
+\begin{column}{0.35\textwidth}
+\includegraphics[width = 0.7\textwidth]{../../../causalinf_phd/Graphs/John_Snow.jpg}
+
+John Snow (1813-1858)
+\vfill
+
+\tiny
+(Source: Wikipedia)
+\end{column}
+\end{columns}
+
+## Broad Street Pump in London (Soho)
+
+```{r, echo = FALSE, out.width = "35%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "johnsnowpub.jpeg"))
+```
+
+\tiny
+(Source: Wikipedia)
+
+## The Cholera Hypothesis
+
+Snow's theory: \brf{Cholera is transmitted through water}
+
+- People drink contaminated water that contains the cholera bacterium
+- The bacterium enters the digestive system and causes cholera
+- Through vomiting and diarrhea, the bacterium is excreted and contaminates the water supply further
+
+\vfill
+**Some observations**:
+
+- Sailors got sick when they went on land but not when staying docked
+- Cholera was more prevalent in poor areas with bad hygiene
+- Some apartment blocks were affected, other neighbouring ones not
+
+
+## The Cholera Hypothesis
+
+\brf{How could Snow test his theory?}
+
+- Mind you: experiments were only established in 1935 by Fisher as a means to prove causality
+- And you couldn't run an experiment (drink from the Thames if heads, from another source if tails)
+
+\vfill
+
+\brf{Snow's research design}
+
+- Some areas in London had their water supply from the Thames
+- Others had their water supply from other sources
+- Problem: areas were different in many ways
+
+
+## Snow's Research Design
+
+\brf{Different boroughs in London} had different \brf{water supplies, all from the Thames}
+
+\vfill
+
+\brf{But: in 1849 the Lambeth Water Company switched to a new water source upstream}
+
+- This turned out to be cleaner and not contaminated cholera
+- The Southwark and Vauxhall Water Company did not switch
+
+\vfill
+\brf{Did cholera cases decline in Lambeth after the switch relative to Southwark and Vauxhall?}
+
+
+
+## Lambeth vs. Southwark and Vauxhall Water Supply
+
+```{r, echo = FALSE, out.width = "60%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "snow_map2.jpg"))
+```
+
+\tiny
+(Source: inferentialthinking.com)
+
+
+## John Snow's Data
+
+Much of the data on water suppliers was hand-collected (!) by Snow
+
+\vfill
+\brf{Cholera deaths per 10,000 households} in the mid-1850s
+\begin{tabular}{lcc}
+\hline
+\textbf{Company Name} & \textbf{1849} & \textbf{1854} \\
+& Before Switch & After Switch \\
+\hline
+Southwark and Vauxhall & 135 & 147 \\
+Lambeth & 85 & 19 \\
+\hline
+\end{tabular}
+
+\vfill
+\brf{Things to note}
+
+- There were **more deaths in both years in Southwark and Vauxhall**
+- **Death rates in Lambeth dropped dramatically** after the switch
+- Death rates in Southwark and Vauxhall stayed roughly the same
+
+
+## John Snow Discovered Difference-in-Differences
+
+
+```{r, echo = FALSE, out.width = "45%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "choleragraph.jpeg"))
+```
+
+Source: \citet{caniglia2020}
+
+
+## John Snow Discovered Difference-in-Differences
+
+\brf{Difference 1}: Lambeth vs. Southwark and Vauxhall
+
+- Solid blue vs red line: differences in cholera deaths between the two areas
+
+
+\vfill
+
+\brf{Difference 2}: Before vs. after the switch
+
+- Dotted blue line: projects the trend in Lambeth if the switch had not happened
+- This is just the trend of Southwark and Vauxhall
+
+\vfill
+\brf{Difference-in-differences}: The difference between the solid and dotted blue line
+
+- relative to the counterfactual, the switch reduced cholera deaths by 78 per 10,000 households
+
+
+
+## John Snow Discovered Difference-in-Differences
+
+\begin{tabular}{lcc|c}
+\hline
+\textbf{Company Name} & \textbf{1849} & \textbf{1854} & \textbf{Difference 2} \\
+& Before Switch & After Switch \\
+\hline
+Southwark and Vauxhall & 135 & 147 & \textcolor{darkgreen}{+12}\\
+Lambeth & 85 & 19 & \textcolor{red}{-66} \\
+\hline
+\textbf{Difference 1} & \textcolor{red}{-50} & \textcolor{red}{-128} & \textcolor{red}{-78}\\
+\hline
+\end{tabular}
+
+\vfill
+
+The difference-in-differences is 78 cholera deaths per 10,000 households
+
+
+## .
+\tiny
+\bibliographystyle{authordate1}
+\bibliography{../../../causalinf_phd/bibliography_causalinf}
+
+
+
+
+
+
+
+## .
+
+
+```{r child = '../Templates/socialmedia.Rmd'}
+```
+
+
+## Contact
+
+```{r child = '../Templates/contactpage.Rmd'}
+```
+
