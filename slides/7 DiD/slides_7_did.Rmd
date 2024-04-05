@@ -1,6 +1,6 @@
 ---
 title: "ECON42720 Causal Inference and Policy Evaluation"
-subtitle: "7 Difference-in-Differences"
+subtitle: "7 Fixed Effects and Difference-in-Differences"
 author: "Ben Elsner (UCD)"
 output:
   beamer_presentation:
@@ -23,7 +23,18 @@ graphdir <- "../../../causalinf_phd/Graphs/"
 ```
 
 
-## Resources 
+## Resources for Fixed Effects
+
+\brf{Textbook chapter}
+
+- [Huntington-Klein, The Effect: Ch. 16](https://theeffectbook.net/ch-FixedEffects.html)
+
+
+
+
+
+
+## Resources for Difference-in-Differences
 
 
 \brf{Textbook chapters}
@@ -33,13 +44,62 @@ graphdir <- "../../../causalinf_phd/Graphs/"
 - [Huntington-Klein, The Effect: Ch. 18](https://theeffectbook.net/ch-DifferenceinDifference.html)
 
 
+\vfill
+
 \brf{YouTube Videos}
 
 - [Videos 17-21 of my Causal Inference Playlist](https://www.youtube.com/playlist?list=PLyvUJLHD8IsJCB7ALqwjRG1BjL5JxE__H)
 
 
 
-## DiD is a Quasi-Experimental Design
+## Fixed Effects
+
+Start with a regression:
+
+$$ Y_{i} = \beta_0 + \beta_1 X_{i} + u_{i} $$
+\vfill
+If there are unobserved confounders, we have the problem that $E[u_i|X_i] \neq 0$
+
+\vfill
+If we could \brf{observe these confounders}, we could include them in the regression
+
+$$ Y_{i} = \beta_0 + \beta_1 X_{i} +  \boldsymbol{S_{i}'\delta} + u_{i} $$
+If $S_{i}$ includes all confounders, $E[u_i|X_i, \boldsymbol{S_i}]=0$ holds and we have an unbiased and consistent estimator for $\beta_1$.
+
+
+## Fixed Effects: Controlling for Unobservables
+
+\brf{Problem}: We usually can't observe all confounders
+
+\vfill 
+\brf{Fixed effects} allow us to \brf{control for (some) unobserved and observed confounders}
+
+\vfill
+\brf{What we need:}
+
+- **Panel data**: multiple observations per unit
+- or **Grouped data**: multiple units in each group
+
+
+
+## Fixed Effects with Panel Data
+
+\brf{Panel data} is data with multiple observations per unit $i$
+
+$$ Y_{it} = \beta_0 + \beta_1 X_{it} + u_{it} $$
+\vfill
+
+Now add unit fixed effects:
+
+$$ Y_{it} = \beta_0 + \beta_1 X_{it} + \alpha_i + u_{it} $$
+
+The fixed effects $$
+
+
+
+
+
+## Difference-in-Differences: a Quasi-Experimental Design
 
 \brf{Some units get treated, some don't}... we've heard that before
 
@@ -63,11 +123,11 @@ DiD is arguably one of the \brf{most popular designs in empirical economics}
 
 \vspace{1cm}
 
-\brf{Dominant hypothesis}: Cholera is **transmitted through the air**
+\brf{Dominant hypothesis}: Cholera is \textbf{transmitted through the air}
 
 \vspace{1cm}
 
-\brf{John Snow in 1854}: Cholera is **transmitted through water**
+\brf{John Snow in 1854}: Cholera is \textbf{transmitted through water}
 
 \vspace{1cm}
 

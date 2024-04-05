@@ -200,7 +200,7 @@ Does the \brf{jump in the death rate} $\rho$ \brf{represent a causal effect}?
 
 
 
-## Example of a Fuzzey RDD: \citet{hoekstra_2009}
+## Example of a Fuzzy RDD: \citet{hoekstra_2009}
 
 \brf{Question}: what is the impact of attending a State flagship university on earnings?
 
@@ -214,7 +214,7 @@ Does the \brf{jump in the death rate} $\rho$ \brf{represent a causal effect}?
 \brf{Challenge:} it is not random who goes to a particular university
 
 
-## Example of a Fuzzey RDD: \citet{hoekstra_2009}
+## Example of a Fuzzy RDD: \citet{hoekstra_2009}
 
 \brf{Identification strategy:} Hoekstra exploits admission cutoffs in a fuzzy RD design
 
