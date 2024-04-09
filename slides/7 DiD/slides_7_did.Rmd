@@ -149,6 +149,255 @@ Detroit & 2009 & 43.8 &  31  \\
 \end{tabular}
 
 
+## The Cross-sectional Relationship is Positive...
+
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "fe_graph1.png"))
+```
+
+
+## Fixed Effect Regressions
+
+\brf{Logic of Fixed Effect Regressions}: exploit \textbf{variation within subjects over time}
+\vfill
+
+In our case: how does the \textbf{murder rate in a city change} when \underline{in the same city} the police presence increases by 1 unit?
+\vfill
+\textbf{Advantage:}
+\begin{itemize}
+  \item \textbf{fixed city characteristics} are \textbf{held constant}
+  \item And as such many determinants why Baltimore has a higher crime rate \textit{and} police presence than San Francisco
+  \item We circumvent an important \textit{selection problem} $\Rightarrow$ eliminates (or reduces) \textbf{omitted variable bias}
+\end{itemize}
+
+
+
+## Now Suppose You Have Panel Data
+
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{City} & \textbf{Year} & \textbf{Murder rate} & \textbf{Police presence} \\
+\hline
+Baltimore  & 2009 & 55.4 & 42  \\
+Baltimore  & 2012 & 47.4 & 49  \\
+\hline
+Albuquerque & 2009 & 7.7 & 28 \\
+Albuquerque & 2012 & 14.2 & 23 \\
+\hline
+New York & 2009 & 4.1 & 30 \\
+New York & 2012 & 3.8 & 36 \\
+\hline
+Pittsburgh & 2009 &  18.6 & 33 \\
+Pittsburgh & 2012 &  12.6 & 38 \\
+\hline
+San Francisco & 2009 & 6.1 & 20 \\
+San Francisco & 2012 & 7.4 & 28 \\
+\hline
+Detroit & 2009 & 43.8 &  31  \\
+Detroit & 2012 & 47.6 &  28  \\
+\hline
+\end{tabular}
+
+\scriptsize{Note: data are fictitious}
+
+
+## Cross-sectional Relationship in Panel Data: Still Positive
+
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "fe_graph2.png"))
+```
+
+
+## In each year we have a positive association
+
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "fe_graph3.png"))
+```
+
+## Now look at within-city changes
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "fe_graph4.png"))
+```
+
+
+## Fixed Effect Regressions
+
+
+A \textbf{Fixed Effect Regressions} only relies on the \textbf{within-variation}
+
+
+\begin{equation*}
+    y_{it} = \beta x_{it} + \alpha_i + \varepsilon_{it}
+\end{equation*}    
+\vfill
+The \textbf{between-variation} will be netted out
+\vfill
+At the core of the FE regression lies a \textbf{within-transformation}
+\begin{equation*}
+    y_{it}-\overline{y}_i = \beta(x_{it}-\overline{x}_i) + \varepsilon_{it} - \varepsilon_{i}
+\end{equation*}
+\vfill
+Takes from each variable the \textbf{deviation from the mean}
+
+
+
+## Within-transformation of $Y$
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "fe_graph5.png"))
+```
+
+## Within-transformation of $X$
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "fe_graph6.png"))
+```
+
+
+## Within-transformation of $X$ and $Y$
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "fe_graph7.png"))
+```
+
+## The within-effects in each city
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "fe_graph8.png"))
+```
+
+
+## Average within-effect: NEGATIVE!
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "fe_graph9.png"))
+```
+
+
+## Summary of the example
+
+The \textbf{cross-sectional relationship} between police presence and crime rates is \textbf{positive}
+
+- This is \textbf{between-city variation}
+- It is driven by \textbf{differences in city characteristics}
+- More crime-prone cities choose to hire more police officers...
+
+\vfill
+
+We can learn a lot from \textbf{within-city variation}
+
+- The city fixed effects \textbf{eliminate all time-invariant differences between cities}
+- They isolate the \textbf{within-city variation} in \textbf{all variables}
+- The \textbf{within-effect} of police presence on crime rates is \textbf{negative}
+
+\vfill
+\brf{Interpretation:} if within a city the police presence goes up by 1 unit, the crime rate goes down by $\beta$ units
+
+## Another way to look at fixed effects
+
+The fixed effects \brf{split the data into many units} -- here a unit is a city
+
+\vfill
+A \brf{fixed effect regression performs two tasks} at the same time:
+
+1. it estimates the effect of X on Y within each unit
+2. it averages these effects across all units
+
+
+## Multiple units and time periods
+
+It is common to have \brf{panel data with many units and many time periods}
+
+- Example: 50 US states over 20 years
+
+\vfill
+We often use \brf{two-way fixed effects}:
+
+- Unit fixed effects ($\delta_i$) absorb all time-invariant differences between units
+- Time fixed effects ($\delta_t$) absorb all time trends that are common to all units
+
+\vfill
+The \brf{regression equation is then}
+
+$$ Y_{it} = \beta X_{it} + \delta_i + \delta_t + u_{it} $$
+
+
+## Fixed Effects with Grouped Data
+
+\brf{Grouped data} is data with multiple units $i=1,\dots,N$ which belong to distinct groups $g=1,\dots,G$.
+
+\vfill
+\brf{Example:} students in schools, workers in firms, patients in hospitals
+
+\vfill 
+\brf{Classic case}: stratified experiments in within schools
+
+- It is not random who goes to which school
+- But within schools, treatment assignment is random
+
+\vfill
+To estimate the treatment effect, we can use \brf{fixed effects for groups}
+
+\begin{equation*}
+    Y_{ig} = \beta X_{ig} + \alpha_g + u_{ig}
+\end{equation*}
+
+
+
+## Implementation of Fixed Effects Regressions in R
+
+First of all, you need to \brf{have panel data in "long form"}
+
+- Each \textbf{row} is an observation for a unit at a certain time
+
+\small
+
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{City} & \textbf{Year} & \textbf{Murder rate} & \textbf{Police presence} \\
+\hline
+Baltimore  & 2009 & 55.4 & 42  \\
+Baltimore  & 2012 & 47.4 & 49  \\
+\hline
+Albuquerque & 2009 & 7.7 & 28 \\
+Albuquerque & 2012 & 14.2 & 23 \\
+\hline
+New York & 2009 & 4.1 & 30 \\
+New York & 2012 & 3.8 & 36 \\
+\hline
+Pittsburgh & 2009 &  18.6 & 33 \\
+Pittsburgh & 2012 &  12.6 & 38 \\
+\hline
+San Francisco & 2009 & 6.1 & 20 \\
+San Francisco & 2012 & 7.4 & 28 \\
+\hline
+Detroit & 2009 & 43.8 &  31  \\
+Detroit & 2012 & 47.6 &  28  \\
+\hline
+\end{tabular}
+
+
+## Data must not be in wide format!
+
+\footnotesize
+\begin{tabular}{|l|r|r|r|r|r|r|}
+\hline
+\textbf{City} & \textbf{Murder Rate 2009} & \textbf{Police 2009} & \textbf{Murder Rate 2012} & \textbf{Police 2012} \\
+\hline
+Baltimore      & 55.4 & 42 & 47.4 & 49 \\
+Albuquerque    & 7.7  & 28 & 14.2 & 23 \\
+New York       & 4.1  & 30 & 3.8  & 36 \\
+Pittsburgh     & 18.6 & 33 & 12.6 & 38 \\
+San Francisco  & 6.1  & 20 & 7.4  & 28 \\
+Detroit        & 43.8 & 31 & 47.6 & 28 \\
+\hline
+\end{tabular}
+
+Can't work with that! If you have such data, use the `pivot` commands from `dplyr` to bring your panel data into long form.
 
 
 ## Difference-in-Differences: a Quasi-Experimental Design
