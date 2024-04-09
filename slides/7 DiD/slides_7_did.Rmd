@@ -89,12 +89,64 @@ If $S_{i}$ includes all confounders, $E[u_i|X_i, \boldsymbol{S_i}]=0$ holds and 
 $$ Y_{it} = \beta_0 + \beta_1 X_{it} + u_{it} $$
 \vfill
 
-Now add unit fixed effects:
+Now \brf{add unit fixed effects}:
 
 $$ Y_{it} = \beta_0 + \beta_1 X_{it} + \alpha_i + u_{it} $$
 
-The fixed effects $$
+The fixed effects $\alpha_i$ can be viewed as \brf{separate dummies for each unit $i$}
 
+## What Fixed Effects Do
+
+$$ Y_{it} = \beta_0 + \beta_1 X_{it} + \alpha_i + u_{it} $$
+
+The fixed effects $\alpha_i$ isolate the \brf{within-unit variation in $Y_{it}$ and $X_{it}$}
+
+\vfill
+
+Suppose $i$ are countries and $t$ are years. \brf{Interpretation of $\beta_1$}:
+
+- If $X_{it}$ goes up in a given country, how does $Y_{it}$ change within the same country?
+- So $\beta_1$ measures the \brf{average within-country effect} of $X_{it}$ on $Y_{it}$
+
+\vfill
+
+The fixed effects $\alpha_i$ \brf{control for all time-invariant observables AND unobservables}
+
+
+## Fixed Effects: Example
+
+We will now go through a simple example: \brf{crime rates and police presence in cities}
+\begin{itemize}
+\item Here, a \textit{group} is a city
+\item There is \textit{within-city variation} in crime rates and police presence \textit{over time}
+\item This is the classic use of \textit{fixed effects with panel data}
+\end{itemize}
+
+\vfill
+Data are (to some extent) made up for illustration purposes
+
+
+## Fixed Effects: Example
+
+\brf{Causal relationship of interest}
+\begin{equation*}
+    \mbox{crime}_{i}=\alpha + \beta \mbox{ police presence}_{i} + u_i
+\end{equation*}
+
+\vfill
+
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{City} & \textbf{Year} & \textbf{Murder rate} & \textbf{Police presence} \\
+\hline
+Baltimore  & 2009 & 55.4 & 42  \\
+Albuquerque & 2009 & 7.7 & 28 \\
+New York & 2009 & 4.1 & 30 \\
+Pittsburgh & 2009 &  18.6 & 33 \\
+San Francisco & 2009 & 6.1 & 20 \\
+Detroit & 2009 & 43.8 &  31  \\
+\hline
+\end{tabular}
 
 
 
