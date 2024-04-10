@@ -78,7 +78,7 @@ The following five videos cover instrumental variables and applications:
 
 ## 7 Difference-in-Differences
 
-#### Slides
+#### [Slides](/slides/7 DiD/slides_7_did.pdf)
 
 #### Videos
 

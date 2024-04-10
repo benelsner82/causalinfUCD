@@ -231,14 +231,14 @@ A \textbf{Fixed Effect Regressions} only relies on the \textbf{within-variation}
 
 
 \begin{equation*}
-    y_{it} = \beta x_{it} + \alpha_i + \varepsilon_{it}
+    Y_{it} = \beta X_{it} + \alpha_i + \varepsilon_{it}
 \end{equation*}    
 \vfill
 The \textbf{between-variation} will be netted out
 \vfill
 At the core of the FE regression lies a \textbf{within-transformation}
 \begin{equation*}
-    y_{it}-\overline{y}_i = \beta(x_{it}-\overline{x}_i) + \varepsilon_{it} - \varepsilon_{i}
+    Y_{it}-\overline{Y}_i = \beta(X_{it}-\overline{X}_i) + \varepsilon_{it} - \varepsilon_{i}
 \end{equation*}
 \vfill
 Takes from each variable the \textbf{deviation from the mean}
@@ -308,6 +308,26 @@ A \brf{fixed effect regression performs two tasks} at the same time:
 2. it averages these effects across all units
 
 
+
+## Fixed Effects and Causality
+
+Fixed effects can \brf{eliminate time-invariant confounders}
+
+$$ Y_{it} = \beta X_{it} + \alpha_i + \varepsilon_{it} $$
+
+\vfill
+
+Causal identification is through \brf{selection on observables}
+
+\vfill
+\brf{Conditional independence assumption}
+
+$$ E[\varepsilon_{it}|X_{it}, \alpha_i] = 0 $$
+
+- Conditional on fixed effects, the error term is uncorrelated with $X_{it}$
+- In plain English: **within each unit, $X_{it}$ has to be as good as randomly assigned**
+
+
 ## Multiple units and time periods
 
 It is common to have \brf{panel data with many units and many time periods}
@@ -345,6 +365,26 @@ To estimate the treatment effect, we can use \brf{fixed effects for groups}
 \begin{equation*}
     Y_{ig} = \beta X_{ig} + \alpha_g + u_{ig}
 \end{equation*}
+
+
+
+## Example for Identification with Group Fixed Effects: Project STAR
+
+Remember the STAR experiment? Within schools, students were randomly assigned to small classes
+
+- It is not random who goes to which school
+- But it is random who gets assigned to small classes within a given school
+
+\vfill
+
+The \brf{basic regression} run by \citet{krueger_1999} was
+
+$$ \text{Test score}_{ig} = \beta \; \mathbb{1}[\text{Small class}]_{ig} + \alpha_g + \varepsilon_{ig} $$
+\vfill
+$\beta$ is \brf{causally identified because of the random assignment} within schools
+
+
+
 
 
 
@@ -397,7 +437,142 @@ Detroit        & 43.8 & 31 & 47.6 & 28 \\
 \hline
 \end{tabular}
 
+\vfill
+
 Can't work with that! If you have such data, use the `pivot` commands from `dplyr` to bring your panel data into long form.
+
+
+
+## Fixed Effects in R: Preparation
+
+You can use different **R packages to run fixed effect regressions**: 
+
+- Use the standard `lm()` and include dummies for units or groups
+- Use the `plm` package (`plm()` with the `within` option)
+- Use the `fixest` package, which is very efficient, especially when you have many fixed effects
+
+
+\vfill
+For `plm` and `fixest` and other advanced packages, we need `modelsummary` to display the results
+
+\vfill
+We will showcase these methods with the `gapminder` data
+
+```{r eval=TRUE, echo=TRUE}
+library(gapminder)
+library(tidyverse)
+library(plm)
+library(fixest)
+library(modelsummary)
+```
+
+
+## The Gapminder Data: 142 countries, 12 years
+
+```{r eval=TRUE, echo=TRUE}
+data("gapminder")
+head(gapminder)
+```
+
+
+## OLS Regressions with Dummies
+
+Suppose we want to regress life expectancy on GDP per capita
+
+- We want to include 141 country dummies and 11 year dummies
+- We can do this easily with `factor()`
+
+```{r eval=TRUE, echo=TRUE}
+# Generate log gdp per capita
+gapminder$loggdp <- log(gapminder$gdpPercap)
+
+# Plain OLS without dummies
+fereg.ols <- lm(lifeExp ~ loggdp, data = gapminder)
+
+# Estimate OLS with country and year dummies
+fereg.olsdummies <- lm(lifeExp ~ loggdp + factor(country) + factor(year)
+                       , data = gapminder)
+```
+
+## OLS vs Fixed Effects (dummies)
+
+\footnotesize
+```{r eval=TRUE, echo=TRUE, results='asis'}
+stargazer(fereg.ols, fereg.olsdummies, 
+          column.labels = c("OLS", "OLS dummies"),
+          type = "latex", header = FALSE, digits = 2,
+          keep= "loggdp",
+          keep.stat = c("n", "adj.rsq"))
+```
+
+## `plm` and `fixest`
+
+```{r eval=TRUE, echo=TRUE}
+# Convert your data frame to a pdata.frame for plm
+pdata <- pdata.frame(gapminder, index = c("country", "year"))
+pdata$loggdp <- log(pdata$gdpPercap)
+
+# FE estimation with PLM (note: the effect argument is important here)
+fereg.plm <- plm(lifeExp ~ loggdp, data = pdata, 
+                 model = "within", effect="twoways")
+
+# FE estimation with fixest (LOOK HOW SIMPLE!)
+fereg.fixest <- feols(lifeExp ~ loggdp | 
+                        country + year, data = gapminder)
+
+```
+
+
+## Regression results
+
+\footnotesize
+```{r eval=TRUE, echo=TRUE, results='asis'}
+model_list <- list("OLS"=fereg.ols, 
+                   "OLS dummies"=fereg.olsdummies, 
+                   "PLM"=fereg.plm, 
+                   "FIXEST"=fereg.fixest)
+
+# Use modelsummary to create the table
+msummary(model_list, output = "latex", 
+         keep = "loggdp",
+         gof_omit = "^(?!.*Num.Obs|.*R2.Adj)")
+```
+## Regression results
+
+All regressions that account for fixed effects yield the **same point estimates**
+
+\vfill
+The **standard errors differ**: 
+
+- OLS and `plm` do not adjust the standard errors unless we tell them to do so
+- `fixest` adjusts the standard errors, in this case for two-way clustering at the country and year level
+- Neither is 100% correct! Consensus is to cluster by unit but not time
+
+\vfill
+Why do we \brf{need to adjust the standard errors?}
+
+- Observations within the same unit are likely to be correlated
+- Life expectancy today is a function of life expectancy yesterday, and so on
+
+
+
+## (One reason) Why we need Differences-in-Differences
+
+\brf{Consider the fixed effect regression} with states $i$ and time periods $t$
+
+$$ Y_{it} = \beta X_{it} + \alpha_i + \varepsilon_{it} $$
+\vfill
+\brf{Suppose $X_{it}$ is a policy variable}: in some period $t$, a new policy is introduced in some  states 
+
+- $X_{it}$ could be a dummy that equals one in each period after the policy has been introduced
+
+
+\vfill
+We can't really argue that the \brf{policy change was as good as random}
+
+- There are probably **good reasons why a policy was introduced** in state $i$ and why at time $t$
+
+
 
 
 ## Difference-in-Differences: a Quasi-Experimental Design
@@ -585,6 +760,281 @@ Lambeth & 85 & 19 & \textcolor{red}{-66} \\
 \vfill
 
 The difference-in-differences is 78 cholera deaths per 10,000 households
+
+- Because of the switch, cholera deaths dropped by 78 per 10,000 households in Lambeth
+
+
+## The simple $2 \times 2$ DiD 
+
+The simple $2 \times 2$ DiD is the \brf{canonical difference-in-differences design}
+
+- We have the difference between a **treatment group $k$ and an untreated group $U$**
+- ...and the difference before and after $k$ received the treatment ($pre(k)$, $post(k)$)
+
+
+$$\widehat{\delta}^{2\times 2}_{kU} = \underbrace{\bigg ( \overline{y}_k^{\post(k)} - \overline{y}_k^{\pre(k)} \bigg )}_{\text{Pre-post difference, treated}} - \underbrace{\bigg ( \overline{y}_U^{\post(k)} - \overline{y}_U^{\pre(k)} \bigg )}_{\text{Pre-post difference, untreated}}$$
+
+\vfill
+$\widehat{\delta}^{2\times 2}_{kU}$ is the estimated ATT for group $k$
+
+
+## What does the simple $2 \times 2$ DiD identify?
+
+Start with \brf{conditional expectations}
+
+$$\widehat{\delta}^{2\times 2}_{kU} = \bigg(E\big[Y_k  \Mid \Post\big] - E\big[Y_k  \Mid\Pre\big]\bigg)- \bigg(E\big[Y_U  \Mid \Post\big] - E\big[Y_U  \Mid \Pre\big]\bigg)$$
+
+\vfill
+
+Let's use \brf{potential outcomes} and add and \brf{subtract a counterfactual}
+
+\begin{align*}
+&\widehat{\delta}^{2\times 2}_{kU} = \bigg ( \underbrace{E\big[Y^1_k  \Mid \Post\big] - E\big[Y^0_k  \Mid \Pre\big] \bigg ) - \bigg(E\big[Y^0_U  \Mid \Post\big] - E\big[ Y^0_U  \Mid\Pre\big]}_{\text{Switching equation}} \bigg) \\
+&+ \underbrace{E\big[Y_k^0  \Mid\Post\big] - E\big[Y^0_k  \Mid \Post\big]}_{\text{Adding and subtracting the counterfactual}} 
+\end{align*}
+
+
+## What does the simple $2 \times 2$ DiD identify?
+
+Re-arrange the terms from the previous slide: 
+
+\begin{align*}
+&\widehat{\delta}^{2\times 2}_{kU} = \underbrace{E\big[Y^1_k \Mid\Post\big] - E\big[Y^0_k \Mid \Post\big]}_{\text{ATT}} \\
+&+\Big[\underbrace{E\big[Y^0_k \Mid \Post\big] - E\big[Y^0_k \Mid\Pre\big] \Big] - \Big[E\big[Y^0_U \Mid\Post\big] - E\big[Y_U^0 \Mid\Pre\big] }_{\text{Non-parallel trends bias in $2\times 2$ case}} \Big]
+\end{align*}
+
+\vfill
+
+The simple $2 \times 2$ DiD identifies the \brf{average treatment effect on the treated (ATT)}
+
+- but only if the second term is zero...
+- that is, only if the \brf{parallel trends assumption} holds
+
+
+
+## The parallel trends assumption
+
+Notice here: $Y^0$ appears everywhere $\Rightarrow$ \brf{counterfactual!}
+
+
+$$\Big[\underbrace{E\big[Y^0_k \Mid \Post\big] - E\big[Y^0_k \Mid\Pre\big] \Big] - \Big[E\big[Y^0_U \Mid\Post\big] - E\big[Y_U^0 \Mid\Pre\big] }_{\text{Non-parallel trends bias in $2\times 2$ case}} \Big]$$
+
+\vfill
+
+In plain English: \brf{in the absence of the treatment}, the outcomes of the treated and untreated groups would have \brf{evolved in the same way}
+
+
+
+## Classic Study: \citet{card_1994} on the Effects of Minimum Wages
+
+Economic theory: \brf{higher minimum wages}...
+
+- **reduce employment** in **competitive labour markets**
+- but it may **increase employment in monopsonistic labour markets**
+
+
+\vfill
+Which model is correct in practice? That's an empirical question
+
+\vfill
+In a controversial study, \citet{card_1994} use the minimum wage increase in New Jersey in 1992 to answer this question
+
+- They use data on workers in fast food restaurants
+- They use Pennsylvania as a control state, which did not change its minimum wage
+
+
+## Classic Study: \citet{card_1994} on the Effects of Minimum Wages
+
+In 1992, New Jersey increased the minimum wage, while Pennsylvania did not
+
+```{r, echo = FALSE, out.width = "95%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "card1.pdf"))
+```
+
+## The minimum wage change did bite
+
+
+```{r, echo = FALSE, out.width = "55%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "cardkrueger1.jpg"))
+```
+
+## The $2 \times 2$ DiD in \citet{card_1994}
+
+\brf{ATT} of interest:
+\begin{align*}
+&\widehat{\delta}^{2\times 2}_{NJ,PA} = \underbrace{E\big[Y^1_{NJ} \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Post}}\big] - E\big[Y^0_{NJ} \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Post}}\big]}_{\text{ATT}} \\
+&+ \Big[\underbrace{E\big[Y^0_{NJ} \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Post}}\big] - E\big[Y^0_{NJ} \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Pre}}\big] \Big]-\Big[E\big[Y^0_{PA} \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Post}}\big] - E\big[Y_{PA}^0 \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Pre}}\big] }_{\text{Non-parallel trends bias}} \Big]
+\end{align*}
+\vfill
+With \textbf{constant state and time effects}, this \textbf{maps into the regression}
+\begin{equation*}
+Y_{its} = \alpha + \gamma NJ_s + \lambda D_t + \delta (NJ \times D)_{st} + \varepsilon_{its}
+\end{equation*}
+
+
+## The $2 \times 2$ DiD in \citet{card_1994}
+
+
+```{r, echo = FALSE, out.width = "60%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "card3.png"))
+```
+
+Does $\widehat{\delta}^{2\times 2}_{NJ,PA}=2.76$ mean that the minimum wage raised employment? 
+
+
+## The $2 \times 2$ DiD in \citet{card_1994}
+
+\begin{equation*}
+Y_{its} = \alpha + \gamma NJ_s + \lambda D_t + \delta (NJ \times D)_{st} + \varepsilon_{its}
+\end{equation*}
+
+\vfill
+
+1. PA pre: $\alpha$
+2. PA post: $\alpha + \lambda$
+3. NJ pre: $\alpha + \gamma$
+4. NJ post: $\alpha + \gamma + \lambda + \delta$
+
+\vfill
+
+$\delta$ is the \brf{difference-in-differences} estimator!
+
+## The ATT in \citet{card_1994}
+
+\begin{equation*}
+Y_{its} = \alpha + \gamma NJ_s + \lambda D_t + \delta (NJ \times D)_{st} + \varepsilon_{its}
+\end{equation*}
+
+```{r, echo = FALSE, out.width = "50%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "fig-dd-diagram-1.png"))
+```
+
+
+## Providing Evidence for Parallel Trends
+
+We want to \brf{estimate the ATT} but there might be a \brf{non-parallel trends bias}
+
+$$\Big[\underbrace{E\big[Y^0_k \Mid \Post\big] - E\big[Y^0_k \Mid\Pre\big] \Big] - \Big[E\big[Y^0_U \Mid\Post\big] - E\big[Y_U^0 \Mid\Pre\big] }_{\text{Non-parallel trends bias in $2\times 2$ case}} \Big]$$
+
+
+\vfill
+\brf{The Parallel Trends Assumption} is an \brf{identification assumption}
+
+- Identification assumptions **cannot be tested!** 
+- We need to **bring good arguments in favour** of it (difficult)
+- And provide **empirical evidence in support** of it (easy?)
+
+
+## Providing Evidence for Parallel Trends: Pre-trends
+
+A common \brf{diagnostics test} is to look at the \brf{pre-trends}
+
+- Suppose treated and control **moved in parallel before** the treatment was given
+- ...it is then likely they **would have moved in parallel after**, had the **treatment not been given**
+
+\vfill
+
+\brf{Pre-trends} are commonly presented in \brf{event-study graphs}
+
+
+## Event Study Example: \citet{miller_2021}
+
+\citet{miller_2021} study the impact of the expansion of Medicaid in the U.S. on population mortality
+
+\vfill
+\brf{Expansion of Medicaid under the Affordable Care Act (ACA)} in 2014
+
+- Health insurance for low-income individuals
+- Post-2014: covers everyone with incomes up to 138\% of the federal poverty line
+- Initially, the ACA was supposed to apply to all states
+- But the Supreme Court ruled in 2012 that states could opt out
+- 29 states plus DC expanded Medicaid in 2014, 7 later, 14 did not
+
+
+\vfill
+Data: \brf{Vital statistics data} on deaths linked with individual survey data
+
+## Event Study Example: \citet{miller_2021}
+
+\brf{Difference-in-differences}: 
+
+- Expansion states vs. non-expansion states
+- After vs. before the expansion
+- But: "staggered adoption" because there were states that expanded Medicaid later
+
+\vfill
+\brf{Event studies} consider leads (pre-treatment) and lags (post-treatment) of the treatment date
+
+- The treatment date is the date of the Medicaid expansion
+- It is normalised to $t=0$
+- Leads are $\tau=-1, -2, -3, -4, -5, ...$
+- Lags are $\tau=1, 2, 3, 4, 5,...$
+
+## Event Study Example: \citet{miller_2021}
+
+\brf{Event study model} with $q$ leads and $m$ lags 
+
+$$Y_{its} = \gamma_s + \lambda_t + \sum_{\tau=-q}^{-1}\gamma_{\tau}D_{s\tau} + \sum_{\tau=0}^m\delta_{\tau}D_{s\tau}+x_{ist}+ \varepsilon_{ist}$$
+
+- Individuals $i$, states $s$, years $t$
+- $\gamma_s$ state fixed effects, $\lambda_t$ year fixed effects
+- $x_{ist}$ are time-varying controls
+
+## Event Study Example: \citet{miller_2021}
+
+"Zero Stage": Medicaid expansion increased eligibility 
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "Miller_Medicaid1.png"))
+```
+
+
+
+## Event Study Example: \citet{miller_2021}
+
+"First Stage I": Medicaid expansion increased coverage 
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "Miller_Medicaid2.png"))
+```
+
+
+## Event Study Example: \citet{miller_2021}
+
+"First Stage II": Medicaid expansion reduced the number of uninsured persons
+
+```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "Miller_Medicaid3.png"))
+```
+
+
+## Event Study Example: \citet{miller_2021}
+
+"Reduced Form": Medicaid expansion reduced mortality by about 9%
+
+```{r, echo = FALSE, out.width = "75%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "Miller_Medicaid4.png"))
+```
+
+## Lessons from \citet{miller_2021}
+
+\brf{Do parallel trends hold} in the Medicaid expansion case?
+
+- We don't know!
+
+\vfill
+
+But the **authors provide very compelling evidence**
+
+- The coefficients of the leads are close to zero and statistically insignificant
+- The coefficients of the lags are large and statistically significant
+- This jump is consistent with the Medicaid expansion and inconsistent with other events
+
+\vfill
+\brf{Coefficients of lags are placebo tests}
+
+- The coefficients are zero when they should be zero
+
 
 
 ## .
