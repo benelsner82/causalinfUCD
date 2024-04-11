@@ -379,7 +379,7 @@ Remember the STAR experiment? Within schools, students were randomly assigned to
 
 The \brf{basic regression} run by \citet{krueger_1999} was
 
-$$ \text{Test score}_{ig} = \beta \; \mathbb{1}[\text{Small class}]_{ig} + \alpha_g + \varepsilon_{ig} $$
+$$ \text{Test score}_{ig} = \beta \; 1[\text{Small class}]_{ig} + \alpha_g + \varepsilon_{ig} $$
 \vfill
 $\beta$ is \brf{causally identified because of the random assignment} within schools
 
@@ -1031,9 +1031,263 @@ But the **authors provide very compelling evidence**
 - This jump is consistent with the Medicaid expansion and inconsistent with other events
 
 \vfill
-\brf{Coefficients of lags are placebo tests}
+\brf{Coefficients of leads are placebo tests}
 
 - The coefficients are zero when they should be zero
+
+
+## DiD Example: \citet{marie2017}
+
+Research question: Does (legal) \brf{access to cannabis affect academic performance?}
+
+\vfill
+
+\brf{Difficult to answer because of endogeneity}
+
+- **People who use cannabis** might be **different from those who don't**
+
+\vfill
+
+\citet{marie2017} exploit a \brf{policy change in Maastricht (NL) in 2011}
+
+
+## Situtation in the Netherlands
+
+\brf{Cannabis is legal in the Netherlands}, sold in "coffee shops"
+
+\vfill
+
+Maastricht is a border town with Belgium and Germany
+
+\vfill 
+
+Over the years, Maastricht became a destination for "cannabis tourism" from abroad
+
+
+
+## Policy change in 2011
+
+
+\begin{columns}
+\begin{column}{0.7\textwidth}
+In 2011, the Maastricht Association of Cannabis Shop Owners introduced a \brf{new policy}
+
+\vfill
+\begin{itemize}
+\item Only \textbf{certain nationalities were allowed to buy cannabis} in coffee shops
+\item Only \textbf{Dutch, German, and Belgian} nationals were allowed to buy cannabis
+\item Other nationalities were not allowed to buy cannabis legally
+\item The policy was revoked 7 months later
+\end{itemize}
+\end{column}
+
+\begin{column}{0.3\textwidth}
+\includegraphics[width = \textwidth]{../../../causalinf_phd/Graphs/maastrichtpolicy.jpeg}
+\end{column}
+
+
+\end{columns}
+
+
+## Difference-in-Differences in \citet{marie2017}
+
+Treated: \brf{non-Dutch/German/Belgian students} in Maastricht
+Untreated: \brf{Dutch/German/Belgian students} in Maastricht
+
+\vfill
+
+\brf{Outcome}: \brf{academic performance} measured by \brf{grades}
+
+- Business and economics undergraduate students
+- The authors have access to individual grades
+
+
+## First Stage: Did the Policy Change Affect Cannabis Purchases?
+
+
+```{r, echo = FALSE, out.width = "55%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "mariezoelitz2.png"))
+```
+
+## Eyeballing Difference-in-Differences: Raw Data
+
+```{r, echo = FALSE, out.width = "70%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "mariezoelitz1.jpeg"))
+```
+
+
+## Difference-in-Differences in \citet{marie2017}
+
+$$ Y_{it} = \alpha + \gamma \; \text{policy}_{t} + \lambda \; \text{treated}_{i} + \delta \; (\text{policy}_t \times \text{treated}_i) + \varepsilon_{it}$$
+\vfill
+
+The \brf{DiD estimator is $\delta$}: 
+
+- the impact of legal cannabis access on academic performance among non-Dutch/German/Belgian students in Maastricht
+
+
+
+## Difference-in-Differences in \citet{marie2017}
+
+```{r, echo = FALSE, out.width = "70%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "mariezoelitz3.png"))
+```
+
+Columns (2)-(5): controls for additional confounders
+
+## Additional Outcomes
+
+```{r, echo = FALSE, out.width = "70%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "mariezoelitz4.png"))
+```
+
+
+## Male vs Female Students
+
+```{r, echo = FALSE, out.width = "70%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "mariezoelitz5.png"))
+```
+
+## Older vs. younger students
+
+```{r, echo = FALSE, out.width = "70%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "mariezoelitz6.png"))
+```
+
+## Placebo tests
+
+```{r, echo = FALSE, out.width = "70%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "mariezoelitz7.png"))
+```
+
+## Mechanisms: Results from Student Evaluations
+
+```{r, echo = FALSE, out.width = "70%", fig.align = "center"}
+knitr::include_graphics(paste0(graphdir, "mariezoelitz8.png"))
+```
+
+
+## What makes this study great?
+
+Interesting research question
+
+\vfill
+
+Clever identification strategy
+
+\vfill
+
+Good data
+
+\vfill
+
+You can see the DiD in the raw data $\rightarrow$ very convincing!
+
+
+## Summary: Difference-in-Differences
+
+
+\brf{Difference-in-differences} is a \brf{quasi-experimental design}
+
+- It is **very popular for policy evaluation**
+- It is **not necessary for the treatment** assignment to be **as good as random**
+- All we need are **parallel trends**
+
+\vfill
+
+This \brf{lecture is an introduction to DiD}
+
+- For more advanced topics, see the Mixtape and my YouTube videos
+
+
+
+## DiD in R
+
+First example is for a simple DiD from "The Effect"
+
+- In 2011, California changed organ donations from "opt in" to "opt out"
+- Let's estimate a DiD with California after 2012 being treated
+
+\vfill
+We will use the `fixest` package for this simple application. For more complex DiD models, the `did` package by some of the best in the field -- Brantly Callaway and Pedro Sant'Anna -- is more useful.
+
+
+
+## DiD in R with `fixest`
+
+```{r did1, echo=TRUE, eval=TRUE, include=TRUE}
+library(tidyverse); library(modelsummary); library(fixest)
+od <- causaldata::organ_donations
+
+# Treatment variable
+od <- od %>%
+     mutate(Treated = State == 'California' & 
+            Quarter %in% c('Q32011','Q42011','Q12012'))
+
+# feols clusters by the first fixed effect by default, 
+# no adjustment necessary
+clfe <- feols(Rate ~ Treated | State + Quarter,
+           data = od)
+```
+
+## DiD in R with `fixest`
+\footnotesize
+```{r did2, echo=TRUE, eval=TRUE, include=TRUE}
+msummary(clfe, stars = c('*' = .1, '**' = .05, '***' = .01))
+```
+
+## DiD in R with the `did` Package
+
+Example: minimum wages and teen employment; using state-level changes in minimum wages
+
+```{r did3, echo=TRUE, eval=TRUE, include=TRUE}
+  library(did)
+  data(mpdta)
+```
+
+\begin{tabular}{ll}
+lemp & outcome: log of county-level teen employment \\
+first.treat & period when a state first increased the minimum wage \\
+year & time variable \\
+countyreal & unit variable
+\end{tabular}
+
+## DiD in R with the `did` Package
+
+
+```{r did4, echo=TRUE, eval=TRUE, include=TRUE}
+out <- att_gt(yname = "lemp",
+              gname = "first.treat",
+              idname = "countyreal",
+              tname = "year",
+              xformla = ~1,
+              data = mpdta,
+              est_method = "reg"
+              )
+```
+
+## DiD in R with the `did` Package
+\scriptsize
+```{r did5, echo=TRUE, eval=TRUE, include=TRUE}
+msummary(out)
+```
+
+## Event study in R with the `did` Package
+\scriptsize
+```{r did6, echo=TRUE, eval=TRUE, include=TRUE}
+es <- aggte(out, type = "dynamic")
+msummary(es)
+```
+
+
+## Event study in R with the `did` Package
+\scriptsize
+```{r did7, echo=TRUE, eval=TRUE, include=TRUE, out.width="65%"}
+ggdid(es)
+```
+
+
+
 
 
 
