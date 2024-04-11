@@ -92,7 +92,7 @@ The following five videos cover instrumental variables and applications:
 ## 8 Synthetic Control
 
 
-#### Slides
+#### [Slides](/slides/8 SC/slides_8_sc.pdf)
 
 #### Videos
 
