@@ -1190,8 +1190,8 @@ Questions:
 
 \begin{align*}
 E(Y^1\mid D=1) &- E(Y^0\mid D=0) \\ 
-&= E(Y^1\mid D=1)-E(Y^1\mid D=0) + E(Y^1\mid D=0)-E(Y^0\mid D=0)\\
-&= \underbrace{E(Y^1\mid D=1)-E(Y^1\mid D=0)}_{\text{ATT}} + \underbrace{E(Y^1\mid D=0)-E(Y^0\mid D=0)}_{\text{Selection Bias}}\\ 
+&= E(Y^1\mid D=1)-E(Y^0\mid D=1) + E(Y^0\mid D=1)-E(Y^0\mid D=0)\\
+&= \underbrace{E(Y^1\mid D=1)-E(Y^0\mid D=1)}_{\text{ATT}} + \underbrace{E(Y^0\mid D=1)-E(Y^0\mid D=0)}_{\text{Selection Bias}}\\ 
 \end{align*}
 
 ## Derivation of SDO Decomposition
@@ -1218,7 +1218,7 @@ We can plug this into the SDO decomposition and get
 \begin{align*}
 E(Y^1\mid D=1) &- E(Y^0\mid D=0) \\ 
 &= ATE \\
-&+ \underbrace{E(Y^1\mid D=0)-E(Y^0\mid D=0)}_{\text{Selection Bias}}\\ 
+&+ \underbrace{E(Y^0\mid D=1)-E(Y^0\mid D=0)}_{\text{Selection Bias}}\\ 
 &+ \underbrace{(1-\pi)[ATT-ATU]}_{\text{HTE Bias}}\\
 \end{align*}
 
