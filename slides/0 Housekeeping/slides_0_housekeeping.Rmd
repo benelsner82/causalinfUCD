@@ -154,18 +154,18 @@ That's it really! More important: curiosity and willingness to learn new things
 
 ## Sessions
 
-We meet every Thursday, 9-11am, G70-NEWST
+We meet every Wednesday, 9-11am, D201 Newman
 
 \vfill
 
-Sessions will be a mix of 
+The sessions will be a mix of 
 
 - theory lectures
-- "lab" sessions (with laptops)
+- applications
+- advice on how to do stuff in R
 
 \vfill
-
-I will tell you before when to bring laptops
+We don't have enough course time for lab sessions. We will make up for that in the assignments.
 
 
 
