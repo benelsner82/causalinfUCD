@@ -7,9 +7,7 @@ output:
     includes:
       in_header: "../Templates/template_metrics.tex"
 classoption: "aspectratio=169, handout" 
-
-
---- 
+---
 
 ```{r setup, include=FALSE}
 rm(list=ls())
@@ -22,72 +20,57 @@ library(knitr)
 graphdir <- "../../../causalinf_phd/Graphs/"
 ```
 
-
 ## Resources for Fixed Effects
 
 \brf{Textbook chapter}
 
-- [Huntington-Klein, The Effect: Ch. 16](https://theeffectbook.net/ch-FixedEffects.html)
-
-
-
-
-
+-   [Huntington-Klein, The Effect: Ch. 16](https://theeffectbook.net/ch-FixedEffects.html)
 
 ## Resources for Difference-in-Differences
 
-
 \brf{Textbook chapters}
 
-- [Cunningham, Causal Inference: The Mixtape, Ch. 9](https://mixtape.scunning.com/09-difference_in_differences)
+-   [Cunningham, Causal Inference: The Mixtape, Ch. 9](https://mixtape.scunning.com/09-difference_in_differences)
 
-- [Huntington-Klein, The Effect: Ch. 18](https://theeffectbook.net/ch-DifferenceinDifference.html)
-
+-   [Huntington-Klein, The Effect: Ch. 18](https://theeffectbook.net/ch-DifferenceinDifference.html)
 
 \vfill
 
 \brf{YouTube Videos}
 
-- [Videos 17-21 of my Causal Inference Playlist](https://www.youtube.com/playlist?list=PLyvUJLHD8IsJCB7ALqwjRG1BjL5JxE__H)
-
-
+-   [Videos 17-21 of my Causal Inference Playlist](https://www.youtube.com/playlist?list=PLyvUJLHD8IsJCB7ALqwjRG1BjL5JxE__H)
 
 ## Fixed Effects
 
 Start with a regression:
 
-$$ Y_{i} = \beta_0 + \beta_1 X_{i} + u_{i} $$
-\vfill
-If there are unobserved confounders, we have the problem that $E[u_i|X_i] \neq 0$
+$$ Y_{i} = \beta_0 + \beta_1 X_{i} + u_{i} $$ \vfill If there are unobserved confounders, we have the problem that $E[u_i|X_i] \neq 0$
 
 \vfill
+
 If we could \brf{observe these confounders}, we could include them in the regression
 
-$$ Y_{i} = \beta_0 + \beta_1 X_{i} +  \boldsymbol{S_{i}'\delta} + u_{i} $$
-If $S_{i}$ includes all confounders, $E[u_i|X_i, \boldsymbol{S_i}]=0$ holds and we have an unbiased and consistent estimator for $\beta_1$.
-
+$$ Y_{i} = \beta_0 + \beta_1 X_{i} +  \boldsymbol{S_{i}'\delta} + u_{i} $$ If $S_{i}$ includes all confounders, $E[u_i|X_i, \boldsymbol{S_i}]=0$ holds and we have an unbiased and consistent estimator for $\beta_1$.
 
 ## Fixed Effects: Controlling for Unobservables
 
 \brf{Problem}: We usually can't observe all confounders
 
-\vfill 
+\vfill
+
 \brf{Fixed effects} allow us to \brf{control for (some) unobserved and observed confounders}
 
 \vfill
 \brf{What we need:}
 
-- **Panel data**: multiple observations per unit
-- or **Grouped data**: multiple units in each group
-
-
+-   **Panel data**: multiple observations per unit
+-   or **Grouped data**: multiple units in each group
 
 ## Fixed Effects with Panel Data
 
 \brf{Panel data} is data with multiple observations per unit $i$
 
-$$ Y_{it} = \beta_0 + \beta_1 X_{it} + u_{it} $$
-\vfill
+$$ Y_{it} = \beta_0 + \beta_1 X_{it} + u_{it} $$ \vfill
 
 Now \brf{add unit fixed effects}:
 
@@ -105,17 +88,17 @@ The fixed effects $\alpha_i$ isolate the \brf{within-unit variation in $Y_{it}$ 
 
 Suppose $i$ are countries and $t$ are years. \brf{Interpretation of $\beta_1$}:
 
-- If $X_{it}$ goes up in a given country, how does $Y_{it}$ change within the same country?
-- So $\beta_1$ measures the \brf{average within-country effect} of $X_{it}$ on $Y_{it}$
+-   If $X_{it}$ goes up in a given country, how does $Y_{it}$ change within the same country?
+-   So $\beta_1$ measures the \brf{average within-country effect} of $X_{it}$ on $Y_{it}$
 
 \vfill
 
 The fixed effects $\alpha_i$ \brf{control for all time-invariant observables AND unobservables}
 
-
 ## Fixed Effects: Example
 
 We will now go through a simple example: \brf{crime rates and police presence in cities}
+
 \begin{itemize}
 \item Here, a \textit{group} is a city
 \item There is \textit{within-city variation} in crime rates and police presence \textit{over time}
@@ -123,12 +106,13 @@ We will now go through a simple example: \brf{crime rates and police presence in
 \end{itemize}
 
 \vfill
-Data are (to some extent) made up for illustration purposes
 
+Data are (to some extent) made up for illustration purposes
 
 ## Fixed Effects: Example
 
 \brf{Causal relationship of interest}
+
 \begin{equation*}
     \mbox{crime}_{i}=\alpha + \beta \mbox{ police presence}_{i} + u_i
 \end{equation*}
@@ -148,30 +132,23 @@ Detroit & 2009 & 43.8 &  31  \\
 \hline
 \end{tabular}
 
-
 ## The Cross-sectional Relationship is Positive...
-
 
 ```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "fe_graph1.png"))
 ```
 
-
 ## Fixed Effect Regressions
 
-\brf{Logic of Fixed Effect Regressions}: exploit \textbf{variation within subjects over time}
-\vfill
+\brf{Logic of Fixed Effect Regressions}: exploit \textbf{variation within subjects over time} \vfill
 
-In our case: how does the \textbf{murder rate in a city change} when \underline{in the same city} the police presence increases by 1 unit?
-\vfill
-\textbf{Advantage:}
+In our case: how does the \textbf{murder rate in a city change} when \underline{in the same city} the police presence increases by 1 unit? \vfill \textbf{Advantage:}
+
 \begin{itemize}
   \item \textbf{fixed city characteristics} are \textbf{held constant}
   \item And as such many determinants why Baltimore has a higher crime rate \textit{and} police presence than San Francisco
   \item We circumvent an important \textit{selection problem} $\Rightarrow$ eliminates (or reduces) \textbf{omitted variable bias}
 \end{itemize}
-
-
 
 ## Now Suppose You Have Panel Data
 
@@ -201,17 +178,13 @@ Detroit & 2012 & 47.6 &  28  \\
 
 \scriptsize{Note: data are fictitious}
 
-
 ## Cross-sectional Relationship in Panel Data: Still Positive
-
 
 ```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "fe_graph2.png"))
 ```
 
-
 ## In each year we have a positive association
-
 
 ```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "fe_graph3.png"))
@@ -223,27 +196,16 @@ knitr::include_graphics(paste0(graphdir, "fe_graph3.png"))
 knitr::include_graphics(paste0(graphdir, "fe_graph4.png"))
 ```
 
-
 ## Fixed Effect Regressions
-
 
 A \textbf{Fixed Effect Regressions} only relies on the \textbf{within-variation}
 
-
 \begin{equation*}
     Y_{it} = \beta X_{it} + \alpha_i + \varepsilon_{it}
-\end{equation*}    
-\vfill
-The \textbf{between-variation} will be netted out
-\vfill
-At the core of the FE regression lies a \textbf{within-transformation}
-\begin{equation*}
+\end{equation*}\
+\vfill The \textbf{between-variation} will be netted out \vfill At the core of the FE regression lies a \textbf{within-transformation} \begin{equation*}
     Y_{it}-\overline{Y}_i = \beta(X_{it}-\overline{X}_i) + \varepsilon_{it} - \varepsilon_{i}
-\end{equation*}
-\vfill
-Takes from each variable the \textbf{deviation from the mean}
-
-
+\end{equation*} \vfill Takes from each variable the \textbf{deviation from the mean}
 
 ## Within-transformation of $Y$
 
@@ -257,7 +219,6 @@ knitr::include_graphics(paste0(graphdir, "fe_graph5.png"))
 knitr::include_graphics(paste0(graphdir, "fe_graph6.png"))
 ```
 
-
 ## Within-transformation of $X$ and $Y$
 
 ```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
@@ -270,31 +231,30 @@ knitr::include_graphics(paste0(graphdir, "fe_graph7.png"))
 knitr::include_graphics(paste0(graphdir, "fe_graph8.png"))
 ```
 
-
 ## Average within-effect: NEGATIVE!
 
 ```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "fe_graph9.png"))
 ```
 
-
 ## Summary of the example
 
 The \textbf{cross-sectional relationship} between police presence and crime rates is \textbf{positive}
 
-- This is \textbf{between-city variation}
-- It is driven by \textbf{differences in city characteristics}
-- More crime-prone cities choose to hire more police officers...
+-   This is \textbf{between-city variation}
+-   It is driven by \textbf{differences in city characteristics}
+-   More crime-prone cities choose to hire more police officers...
 
 \vfill
 
 We can learn a lot from \textbf{within-city variation}
 
-- The city fixed effects \textbf{eliminate all time-invariant differences between cities}
-- They isolate the \textbf{within-city variation} in \textbf{all variables}
-- The \textbf{within-effect} of police presence on crime rates is \textbf{negative}
+-   The city fixed effects \textbf{eliminate all time-invariant differences between cities}
+-   They isolate the \textbf{within-city variation} in \textbf{all variables}
+-   The \textbf{within-effect} of police presence on crime rates is \textbf{negative}
 
 \vfill
+
 \brf{Interpretation:} if within a city the police presence goes up by 1 unit, the crime rate goes down by $\beta$ units
 
 ## Another way to look at fixed effects
@@ -302,12 +262,11 @@ We can learn a lot from \textbf{within-city variation}
 The fixed effects \brf{split the data into many units} -- here a unit is a city
 
 \vfill
+
 A \brf{fixed effect regression performs two tasks} at the same time:
 
-1. it estimates the effect of X on Y within each unit
-2. it averages these effects across all units
-
-
+1.  it estimates the effect of X on Y within each unit
+2.  it averages these effects across all units
 
 ## Fixed Effects and Causality
 
@@ -324,75 +283,69 @@ Causal identification is through \brf{selection on observables}
 
 $$ E[\varepsilon_{it}|X_{it}, \alpha_i] = 0 $$
 
-- Conditional on fixed effects, the error term is uncorrelated with $X_{it}$
-- In plain English: **within each unit, $X_{it}$ has to be as good as randomly assigned**
-
+-   Conditional on fixed effects, the error term is uncorrelated with $X_{it}$
+-   In plain English: **within each unit,** $X_{it}$ has to be as good as randomly assigned
 
 ## Multiple units and time periods
 
 It is common to have \brf{panel data with many units and many time periods}
 
-- Example: 50 US states over 20 years
+-   Example: 50 US states over 20 years
 
 \vfill
+
 We often use \brf{two-way fixed effects}:
 
-- Unit fixed effects ($\delta_i$) absorb all time-invariant differences between units
-- Time fixed effects ($\delta_t$) absorb all time trends that are common to all units
+-   Unit fixed effects ($\delta_i$) absorb all time-invariant differences between units
+-   Time fixed effects ($\delta_t$) absorb all time trends that are common to all units
 
 \vfill
+
 The \brf{regression equation is then}
 
 $$ Y_{it} = \beta X_{it} + \delta_i + \delta_t + u_{it} $$
-
 
 ## Fixed Effects with Grouped Data
 
 \brf{Grouped data} is data with multiple units $i=1,\dots,N$ which belong to distinct groups $g=1,\dots,G$.
 
 \vfill
+
 \brf{Example:} students in schools, workers in firms, patients in hospitals
 
-\vfill 
+\vfill
+
 \brf{Classic case}: stratified experiments in within schools
 
-- It is not random who goes to which school
-- But within schools, treatment assignment is random
+-   It is not random who goes to which school
+-   But within schools, treatment assignment is random
 
 \vfill
+
 To estimate the treatment effect, we can use \brf{fixed effects for groups}
 
 \begin{equation*}
     Y_{ig} = \beta X_{ig} + \alpha_g + u_{ig}
 \end{equation*}
 
-
-
 ## Example for Identification with Group Fixed Effects: Project STAR
 
 Remember the STAR experiment? Within schools, students were randomly assigned to small classes
 
-- It is not random who goes to which school
-- But it is random who gets assigned to small classes within a given school
+-   It is not random who goes to which school
+-   But it is random who gets assigned to small classes within a given school
 
 \vfill
 
 The \brf{basic regression} run by \citet{krueger_1999} was
 
-$$ \text{Test score}_{ig} = \beta \; 1[\text{Small class}]_{ig} + \alpha_g + \varepsilon_{ig} $$
-\vfill
-$\beta$ is \brf{causally identified because of the random assignment} within schools
-
-
-
-
-
+$$ \text{Test score}_{ig} = \beta \; 1[\text{Small class}]_{ig} + \alpha_g + \varepsilon_{ig} $$ \vfill $\beta$ is \brf{causally identified because of the random assignment} within schools
 
 ## Implementation of Fixed Effects Regressions in R
 
 First of all, you need to \brf{have panel data in "long form"}
 
-- Each \textbf{row} is an observation for a unit at a certain time
+-   Each \textbf{row} is an observation for a unit at a certain time
 
 \small
 
@@ -420,7 +373,6 @@ Detroit & 2012 & 47.6 &  28  \\
 \hline
 \end{tabular}
 
-
 ## Data must not be in wide format!
 
 \footnotesize
@@ -441,21 +393,20 @@ Detroit        & 43.8 & 31 & 47.6 & 28 \\
 
 Can't work with that! If you have such data, use the `pivot` commands from `dplyr` to bring your panel data into long form.
 
-
-
 ## Fixed Effects in R: Preparation
 
-You can use different **R packages to run fixed effect regressions**: 
+You can use different **R packages to run fixed effect regressions**:
 
-- Use the standard `lm()` and include dummies for units or groups
-- Use the `plm` package (`plm()` with the `within` option)
-- Use the `fixest` package, which is very efficient, especially when you have many fixed effects
-
+-   Use the standard `lm()` and include dummies for units or groups
+-   Use the `plm` package (`plm()` with the `within` option)
+-   Use the `fixest` package, which is very efficient, especially when you have many fixed effects
 
 \vfill
+
 For `plm` and `fixest` and other advanced packages, we need `modelsummary` to display the results
 
 \vfill
+
 We will showcase these methods with the `gapminder` data
 
 ```{r eval=TRUE, echo=TRUE}
@@ -466,7 +417,6 @@ library(fixest)
 library(modelsummary)
 ```
 
-
 ## The Gapminder Data: 142 countries, 12 years
 
 ```{r eval=TRUE, echo=TRUE}
@@ -474,13 +424,12 @@ data("gapminder")
 head(gapminder)
 ```
 
-
 ## OLS Regressions with Dummies
 
 Suppose we want to regress life expectancy on GDP per capita
 
-- We want to include 141 country dummies and 11 year dummies
-- We can do this easily with `factor()`
+-   We want to include 141 country dummies and 11 year dummies
+-   We can do this easily with `factor()`
 
 ```{r eval=TRUE, echo=TRUE}
 # Generate log gdp per capita
@@ -497,6 +446,7 @@ fereg.olsdummies <- lm(lifeExp ~ loggdp + factor(country) + factor(year)
 ## OLS vs Fixed Effects (dummies)
 
 \footnotesize
+
 ```{r eval=TRUE, echo=TRUE, results='asis'}
 stargazer(fereg.ols, fereg.olsdummies, 
           column.labels = c("OLS", "OLS dummies"),
@@ -522,10 +472,10 @@ fereg.fixest <- feols(lifeExp ~ loggdp |
 
 ```
 
-
 ## Regression results
 
 \footnotesize
+
 ```{r eval=TRUE, echo=TRUE, results='asis'}
 model_list <- list("OLS"=fereg.ols, 
                    "OLS dummies"=fereg.olsdummies, 
@@ -537,43 +487,39 @@ msummary(model_list, output = "latex",
          keep = "loggdp",
          gof_omit = "^(?!.*Num.Obs|.*R2.Adj)")
 ```
+
 ## Regression results
 
 All regressions that account for fixed effects yield the **same point estimates**
 
 \vfill
-The **standard errors differ**: 
 
-- OLS and `plm` do not adjust the standard errors unless we tell them to do so
-- `fixest` adjusts the standard errors, in this case for two-way clustering at the country and year level
-- Neither is 100% correct! Consensus is to cluster by unit but not time
+The **standard errors differ**:
+
+-   OLS and `plm` do not adjust the standard errors unless we tell them to do so
+-   `fixest` adjusts the standard errors, in this case for two-way clustering at the country and year level
+-   Neither is 100% correct! Consensus is to cluster by unit but not time
 
 \vfill
+
 Why do we \brf{need to adjust the standard errors?}
 
-- Observations within the same unit are likely to be correlated
-- Life expectancy today is a function of life expectancy yesterday, and so on
-
-
+-   Observations within the same unit are likely to be correlated
+-   Life expectancy today is a function of life expectancy yesterday, and so on
 
 ## (One reason) Why we need Differences-in-Differences
 
 \brf{Consider the fixed effect regression} with states $i$ and time periods $t$
 
-$$ Y_{it} = \beta X_{it} + \alpha_i + \varepsilon_{it} $$
-\vfill
-\brf{Suppose $X_{it}$ is a policy variable}: in some period $t$, a new policy is introduced in some  states 
+$$ Y_{it} = \beta X_{it} + \alpha_i + \varepsilon_{it} $$ \vfill \brf{Suppose $X_{it}$ is a policy variable}: in some period $t$, a new policy is introduced in some states
 
-- $X_{it}$ could be a dummy that equals one in each period after the policy has been introduced
-
+-   $X_{it}$ could be a dummy that equals one in each period after the policy has been introduced
 
 \vfill
+
 We can't really argue that the \brf{policy change was as good as random}
 
-- There are probably **good reasons why a policy was introduced** in state $i$ and why at time $t$
-
-
-
+-   There are probably **good reasons why a policy was introduced** in state $i$ and why at time $t$
 
 ## Difference-in-Differences: a Quasi-Experimental Design
 
@@ -582,14 +528,12 @@ We can't really argue that the \brf{policy change was as good as random}
 \vfill
 \brf{What's different about difference-in-differences?}
 
-- **Treatment assignment** does **NOT** need to be as good as **random**
-- The **TREND in outcomes** of the control group is a good **counterfactual** for the trend of the treated group
+-   **Treatment assignment** does **NOT** need to be as good as **random**
+-   The **TREND in outcomes** of the control group is a good **counterfactual** for the trend of the treated group
 
 \vfill
+
 DiD is arguably one of the \brf{most popular designs in empirical economics}
-
-
-
 
 ## Historical DiD Example: The Cholera Hypothesis
 
@@ -628,39 +572,39 @@ knitr::include_graphics(paste0(graphdir, "johnsnowpub.jpeg"))
 ```
 
 \tiny
+
 (Source: Wikipedia)
 
 ## The Cholera Hypothesis
 
 Snow's theory: \brf{Cholera is transmitted through water}
 
-- People drink contaminated water that contains the cholera bacterium
-- The bacterium enters the digestive system and causes cholera
-- Through vomiting and diarrhea, the bacterium is excreted and contaminates the water supply further
+-   People drink contaminated water that contains the cholera bacterium
+-   The bacterium enters the digestive system and causes cholera
+-   Through vomiting and diarrhea, the bacterium is excreted and contaminates the water supply further
 
 \vfill
+
 **Some observations**:
 
-- Sailors got sick when they went on land but not when staying docked
-- Cholera was more prevalent in poor areas with bad hygiene
-- Some apartment blocks were affected, other neighbouring ones not
-
+-   Sailors got sick when they went on land but not when staying docked
+-   Cholera was more prevalent in poor areas with bad hygiene
+-   Some apartment blocks were affected, other neighbouring ones not
 
 ## The Cholera Hypothesis
 
 \brf{How could Snow test his theory?}
 
-- Mind you: experiments were only established in 1935 by Fisher as a means to prove causality
-- And you couldn't run an experiment (drink from the Thames if heads, from another source if tails)
+-   Mind you: experiments were only established in 1935 by Fisher as a means to prove causality
+-   And you couldn't run an experiment (drink from the Thames if heads, from another source if tails)
 
 \vfill
 
 \brf{Snow's research design}
 
-- Some areas in London had their water supply from the Thames
-- Others had their water supply from other sources
-- Problem: areas were different in many ways
-
+-   Some areas in London had their water supply from the Thames
+-   Others had their water supply from other sources
+-   Problem: areas were different in many ways
 
 ## Snow's Research Design
 
@@ -670,13 +614,11 @@ Snow's theory: \brf{Cholera is transmitted through water}
 
 \brf{But: in 1849 the Lambeth Water Company switched to a new water source upstream}
 
-- This turned out to be cleaner and not contaminated cholera
-- The Southwark and Vauxhall Water Company did not switch
+-   This turned out to be cleaner and not contaminated cholera
+-   The Southwark and Vauxhall Water Company did not switch
 
 \vfill
 \brf{Did cholera cases decline in Lambeth after the switch relative to Southwark and Vauxhall?}
-
-
 
 ## Lambeth vs. Southwark and Vauxhall Water Supply
 
@@ -685,15 +627,17 @@ knitr::include_graphics(paste0(graphdir, "snow_map2.jpg"))
 ```
 
 \tiny
-(Source: inferentialthinking.com)
 
+(Source: inferentialthinking.com)
 
 ## John Snow's Data
 
 Much of the data on water suppliers was hand-collected (!) by Snow
 
 \vfill
+
 \brf{Cholera deaths per 10,000 households} in the mid-1850s
+
 \begin{tabular}{lcc}
 \hline
 \textbf{Company Name} & \textbf{1849} & \textbf{1854} \\
@@ -703,17 +647,14 @@ Southwark and Vauxhall & 135 & 147 \\
 Lambeth & 85 & 19 \\
 \hline
 \end{tabular}
-
 \vfill
 \brf{Things to note}
 
-- There were **more deaths in both years in Southwark and Vauxhall**
-- **Death rates in Lambeth dropped dramatically** after the switch
-- Death rates in Southwark and Vauxhall stayed roughly the same
-
+-   There were **more deaths in both years in Southwark and Vauxhall**
+-   **Death rates in Lambeth dropped dramatically** after the switch
+-   Death rates in Southwark and Vauxhall stayed roughly the same
 
 ## John Snow Discovered Difference-in-Differences
-
 
 ```{r, echo = FALSE, out.width = "45%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "choleragraph.jpeg"))
@@ -721,27 +662,24 @@ knitr::include_graphics(paste0(graphdir, "choleragraph.jpeg"))
 
 Source: \citet{caniglia2020}
 
-
 ## John Snow Discovered Difference-in-Differences
 
 \brf{Difference 1}: Lambeth vs. Southwark and Vauxhall
 
-- Solid blue vs red line: differences in cholera deaths between the two areas
-
+-   Solid blue vs red line: differences in cholera deaths between the two areas
 
 \vfill
 
 \brf{Difference 2}: Before vs. after the switch
 
-- Dotted blue line: projects the trend in Lambeth if the switch had not happened
-- This is just the trend of Southwark and Vauxhall
+-   Dotted blue line: projects the trend in Lambeth if the switch had not happened
+-   This is just the trend of Southwark and Vauxhall
 
 \vfill
+
 \brf{Difference-in-differences}: The difference between the solid and dotted blue line
 
-- relative to the counterfactual, the switch reduced cholera deaths by 78 per 10,000 households
-
-
+-   relative to the counterfactual, the switch reduced cholera deaths by 78 per 10,000 households
 
 ## John Snow Discovered Difference-in-Differences
 
@@ -761,22 +699,20 @@ Lambeth & 85 & 19 & \textcolor{red}{-66} \\
 
 The difference-in-differences is 78 cholera deaths per 10,000 households
 
-- Because of the switch, cholera deaths dropped by 78 per 10,000 households in Lambeth
+-   Because of the switch, cholera deaths dropped by 78 per 10,000 households in Lambeth
 
-
-## The simple $2 \times 2$ DiD 
+## The simple $2 \times 2$ DiD
 
 The simple $2 \times 2$ DiD is the \brf{canonical difference-in-differences design}
 
-- We have the difference between a **treatment group $k$ and an untreated group $U$**
-- ...and the difference before and after $k$ received the treatment ($pre(k)$, $post(k)$)
-
+-   We have the difference between a **treatment group** $k$ and an untreated group $U$
+-   ...and the difference before and after $k$ received the treatment ($pre(k)$, $post(k)$)
 
 $$\widehat{\delta}^{2\times 2}_{kU} = \underbrace{\bigg ( \overline{y}_k^{\post(k)} - \overline{y}_k^{\pre(k)} \bigg )}_{\text{Pre-post difference, treated}} - \underbrace{\bigg ( \overline{y}_U^{\post(k)} - \overline{y}_U^{\pre(k)} \bigg )}_{\text{Pre-post difference, untreated}}$$
 
 \vfill
-$\widehat{\delta}^{2\times 2}_{kU}$ is the estimated ATT for group $k$
 
+$\widehat{\delta}^{2\times 2}_{kU}$ is the estimated ATT for group $k$
 
 ## What does the simple $2 \times 2$ DiD identify?
 
@@ -793,10 +729,9 @@ Let's use \brf{potential outcomes} and add and \brf{subtract a counterfactual}
 &+ \underbrace{E\big[Y_k^0  \Mid\Post\big] - E\big[Y^0_k  \Mid \Post\big]}_{\text{Adding and subtracting the counterfactual}} 
 \end{align*}
 
-
 ## What does the simple $2 \times 2$ DiD identify?
 
-Re-arrange the terms from the previous slide: 
+Re-arrange the terms from the previous slide:
 
 \begin{align*}
 &\widehat{\delta}^{2\times 2}_{kU} = \underbrace{E\big[Y^1_k \Mid\Post\big] - E\big[Y^0_k \Mid \Post\big]}_{\text{ATT}} \\
@@ -807,15 +742,12 @@ Re-arrange the terms from the previous slide:
 
 The simple $2 \times 2$ DiD identifies the \brf{average treatment effect on the treated (ATT)}
 
-- but only if the second term is zero...
-- that is, only if the \brf{parallel trends assumption} holds
-
-
+-   but only if the second term is zero...
+-   that is, only if the \brf{parallel trends assumption} holds
 
 ## The parallel trends assumption
 
 Notice here: $Y^0$ appears everywhere $\Rightarrow$ \brf{counterfactual!}
-
 
 $$\Big[\underbrace{E\big[Y^0_k \Mid \Post\big] - E\big[Y^0_k \Mid\Pre\big] \Big] - \Big[E\big[Y^0_U \Mid\Post\big] - E\big[Y_U^0 \Mid\Pre\big] }_{\text{Non-parallel trends bias in $2\times 2$ case}} \Big]$$
 
@@ -823,25 +755,23 @@ $$\Big[\underbrace{E\big[Y^0_k \Mid \Post\big] - E\big[Y^0_k \Mid\Pre\big] \Big]
 
 In plain English: \brf{in the absence of the treatment}, the outcomes of the treated and untreated groups would have \brf{evolved in the same way}
 
-
-
 ## Classic Study: \citet{card_1994} on the Effects of Minimum Wages
 
 Economic theory: \brf{higher minimum wages}...
 
-- **reduce employment** in **competitive labour markets**
-- but it may **increase employment in monopsonistic labour markets**
-
+-   **reduce employment** in **competitive labour markets**
+-   but it may **increase employment in monopsonistic labour markets**
 
 \vfill
+
 Which model is correct in practice? That's an empirical question
 
 \vfill
+
 In a controversial study, \citet{card_1994} use the minimum wage increase in New Jersey in 1992 to answer this question
 
-- They use data on workers in fast food restaurants
-- They use Pennsylvania as a control state, which did not change its minimum wage
-
+-   They use data on workers in fast food restaurants
+-   They use Pennsylvania as a control state, which did not change its minimum wage
 
 ## Classic Study: \citet{card_1994} on the Effects of Minimum Wages
 
@@ -853,34 +783,26 @@ knitr::include_graphics(paste0(graphdir, "card1.pdf"))
 
 ## The minimum wage change did bite
 
-
 ```{r, echo = FALSE, out.width = "55%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "cardkrueger1.jpg"))
 ```
 
 ## The $2 \times 2$ DiD in \citet{card_1994}
 
-\brf{ATT} of interest:
-\begin{align*}
+\brf{ATT} of interest: \begin{align*}
 &\widehat{\delta}^{2\times 2}_{NJ,PA} = \underbrace{E\big[Y^1_{NJ} \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Post}}\big] - E\big[Y^0_{NJ} \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Post}}\big]}_{\text{ATT}} \\
 &+ \Big[\underbrace{E\big[Y^0_{NJ} \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Post}}\big] - E\big[Y^0_{NJ} \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Pre}}\big] \Big]-\Big[E\big[Y^0_{PA} \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Post}}\big] - E\big[Y_{PA}^0 \mathop{\mathrm{\,\vert\,}}\mathop{\mathrm{Pre}}\big] }_{\text{Non-parallel trends bias}} \Big]
-\end{align*}
-\vfill
-With \textbf{constant state and time effects}, this \textbf{maps into the regression}
-\begin{equation*}
+\end{align*} \vfill With \textbf{constant state and time effects}, this \textbf{maps into the regression} \begin{equation*}
 Y_{its} = \alpha + \gamma NJ_s + \lambda D_t + \delta (NJ \times D)_{st} + \varepsilon_{its}
 \end{equation*}
 
-
 ## The $2 \times 2$ DiD in \citet{card_1994}
-
 
 ```{r, echo = FALSE, out.width = "60%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "card3.png"))
 ```
 
-Does $\widehat{\delta}^{2\times 2}_{NJ,PA}=2.76$ mean that the minimum wage raised employment? 
-
+Does $\widehat{\delta}^{2\times 2}_{NJ,PA}=2.76$ mean that the minimum wage raised employment?
 
 ## The $2 \times 2$ DiD in \citet{card_1994}
 
@@ -890,10 +812,10 @@ Y_{its} = \alpha + \gamma NJ_s + \lambda D_t + \delta (NJ \times D)_{st} + \vare
 
 \vfill
 
-1. PA pre: $\alpha$
-2. PA post: $\alpha + \lambda$
-3. NJ pre: $\alpha + \gamma$
-4. NJ post: $\alpha + \gamma + \lambda + \delta$
+1.  PA pre: $\alpha$
+2.  PA post: $\alpha + \lambda$
+3.  NJ pre: $\alpha + \gamma$
+4.  NJ post: $\alpha + \gamma + \lambda + \delta$
 
 \vfill
 
@@ -909,95 +831,91 @@ Y_{its} = \alpha + \gamma NJ_s + \lambda D_t + \delta (NJ \times D)_{st} + \vare
 knitr::include_graphics(paste0(graphdir, "fig-dd-diagram-1.png"))
 ```
 
-
 ## Providing Evidence for Parallel Trends
 
 We want to \brf{estimate the ATT} but there might be a \brf{non-parallel trends bias}
 
 $$\Big[\underbrace{E\big[Y^0_k \Mid \Post\big] - E\big[Y^0_k \Mid\Pre\big] \Big] - \Big[E\big[Y^0_U \Mid\Post\big] - E\big[Y_U^0 \Mid\Pre\big] }_{\text{Non-parallel trends bias in $2\times 2$ case}} \Big]$$
 
-
 \vfill
+
 \brf{The Parallel Trends Assumption} is an \brf{identification assumption}
 
-- Identification assumptions **cannot be tested!** 
-- We need to **bring good arguments in favour** of it (difficult)
-- And provide **empirical evidence in support** of it (easy?)
-
+-   Identification assumptions **cannot be tested!**
+-   We need to **bring good arguments in favour** of it (difficult)
+-   And provide **empirical evidence in support** of it (easy?)
 
 ## Providing Evidence for Parallel Trends: Pre-trends
 
 A common \brf{diagnostics test} is to look at the \brf{pre-trends}
 
-- Suppose treated and control **moved in parallel before** the treatment was given
-- ...it is then likely they **would have moved in parallel after**, had the **treatment not been given**
+-   Suppose treated and control **moved in parallel before** the treatment was given
+-   ...it is then likely they **would have moved in parallel after**, had the **treatment not been given**
 
 \vfill
 
 \brf{Pre-trends} are commonly presented in \brf{event-study graphs}
-
 
 ## Event Study Example: \citet{miller_2021}
 
 \citet{miller_2021} study the impact of the expansion of Medicaid in the U.S. on population mortality
 
 \vfill
+
 \brf{Expansion of Medicaid under the Affordable Care Act (ACA)} in 2014
 
-- Health insurance for low-income individuals
-- Post-2014: covers everyone with incomes up to 138\% of the federal poverty line
-- Initially, the ACA was supposed to apply to all states
-- But the Supreme Court ruled in 2012 that states could opt out
-- 29 states plus DC expanded Medicaid in 2014, 7 later, 14 did not
-
+-   Health insurance for low-income individuals
+-   Post-2014: covers everyone with incomes up to 138% of the federal poverty line
+-   Initially, the ACA was supposed to apply to all states
+-   But the Supreme Court ruled in 2012 that states could opt out
+-   29 states plus DC expanded Medicaid in 2014, 7 later, 14 did not
 
 \vfill
+
 Data: \brf{Vital statistics data} on deaths linked with individual survey data
 
 ## Event Study Example: \citet{miller_2021}
 
-\brf{Difference-in-differences}: 
+\brf{Difference-in-differences}:
 
-- Expansion states vs. non-expansion states
-- After vs. before the expansion
-- But: "staggered adoption" because there were states that expanded Medicaid later
+-   Expansion states vs. non-expansion states
+-   After vs. before the expansion
+-   But: "staggered adoption" because there were states that expanded Medicaid later
 
 \vfill
+
 \brf{Event studies} consider leads (pre-treatment) and lags (post-treatment) of the treatment date
 
-- The treatment date is the date of the Medicaid expansion
-- It is normalised to $t=0$
-- Leads are $\tau=-1, -2, -3, -4, -5, ...$
-- Lags are $\tau=1, 2, 3, 4, 5,...$
+-   The treatment date is the date of the Medicaid expansion
+-   It is normalised to $t=0$
+-   Leads are $\tau=-1, -2, -3, -4, -5, ...$
+-   Lags are $\tau=1, 2, 3, 4, 5,...$
 
 ## Event Study Example: \citet{miller_2021}
 
-\brf{Event study model} with $q$ leads and $m$ lags 
+\brf{Event study model} with $q$ leads and $m$ lags
 
 $$Y_{its} = \gamma_s + \lambda_t + \sum_{\tau=-q}^{-1}\gamma_{\tau}D_{s\tau} + \sum_{\tau=0}^m\delta_{\tau}D_{s\tau}+x_{ist}+ \varepsilon_{ist}$$
 
-- Individuals $i$, states $s$, years $t$
-- $\gamma_s$ state fixed effects, $\lambda_t$ year fixed effects
-- $x_{ist}$ are time-varying controls
+-   Individuals $i$, states $s$, years $t$
+-   $\gamma_s$ state fixed effects, $\lambda_t$ year fixed effects
+-   $x_{ist}$ are time-varying controls
 
 ## Event Study Example: \citet{miller_2021}
 
-"Zero Stage": Medicaid expansion increased eligibility 
+"Zero Stage": Medicaid expansion increased eligibility
 
 ```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "Miller_Medicaid1.png"))
 ```
 
-
-
 ## Event Study Example: \citet{miller_2021}
 
-"First Stage I": Medicaid expansion increased coverage 
+"First Stage I": Medicaid expansion increased coverage
 
 ```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "Miller_Medicaid2.png"))
 ```
-
 
 ## Event Study Example: \citet{miller_2021}
 
@@ -1006,7 +924,6 @@ knitr::include_graphics(paste0(graphdir, "Miller_Medicaid2.png"))
 ```{r, echo = FALSE, out.width = "65%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "Miller_Medicaid3.png"))
 ```
-
 
 ## Event Study Example: \citet{miller_2021}
 
@@ -1020,21 +937,20 @@ knitr::include_graphics(paste0(graphdir, "Miller_Medicaid4.png"))
 
 \brf{Do parallel trends hold} in the Medicaid expansion case?
 
-- We don't know!
+-   We don't know!
 
 \vfill
 
 But the **authors provide very compelling evidence**
 
-- The coefficients of the leads are close to zero and statistically insignificant
-- The coefficients of the lags are large and statistically significant
-- This jump is consistent with the Medicaid expansion and inconsistent with other events
+-   The coefficients of the leads are close to zero and statistically insignificant
+-   The coefficients of the lags are large and statistically significant
+-   This jump is consistent with the Medicaid expansion and inconsistent with other events
 
 \vfill
 \brf{Coefficients of leads are placebo tests}
 
-- The coefficients are zero when they should be zero
-
+-   The coefficients are zero when they should be zero
 
 ## DiD Example: \citet{marie2017}
 
@@ -1044,12 +960,11 @@ Research question: Does (legal) \brf{access to cannabis affect academic performa
 
 \brf{Difficult to answer because of endogeneity}
 
-- **People who use cannabis** might be **different from those who don't**
+-   **People who use cannabis** might be **different from those who don't**
 
 \vfill
 
 \citet{marie2017} exploit a \brf{policy change in Maastricht (NL) in 2011}
-
 
 ## Situtation in the Netherlands
 
@@ -1059,14 +974,11 @@ Research question: Does (legal) \brf{access to cannabis affect academic performa
 
 Maastricht is a border town with Belgium and Germany
 
-\vfill 
+\vfill
 
 Over the years, Maastricht became a destination for "cannabis tourism" from abroad
 
-
-
 ## Policy change in 2011
-
 
 \begin{columns}
 \begin{column}{0.7\textwidth}
@@ -1088,22 +1000,18 @@ In 2011, the Maastricht Association of Cannabis Shop Owners introduced a \brf{ne
 
 \end{columns}
 
-
 ## Difference-in-Differences in \citet{marie2017}
 
-Treated: \brf{non-Dutch/German/Belgian students} in Maastricht
-Untreated: \brf{Dutch/German/Belgian students} in Maastricht
+Treated: \brf{non-Dutch/German/Belgian students} in Maastricht Untreated: \brf{Dutch/German/Belgian students} in Maastricht
 
 \vfill
 
 \brf{Outcome}: \brf{academic performance} measured by \brf{grades}
 
-- Business and economics undergraduate students
-- The authors have access to individual grades
-
+-   Business and economics undergraduate students
+-   The authors have access to individual grades
 
 ## First Stage: Did the Policy Change Affect Cannabis Purchases?
-
 
 ```{r, echo = FALSE, out.width = "55%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "mariezoelitz2.png"))
@@ -1115,17 +1023,13 @@ knitr::include_graphics(paste0(graphdir, "mariezoelitz2.png"))
 knitr::include_graphics(paste0(graphdir, "mariezoelitz1.jpeg"))
 ```
 
-
 ## Difference-in-Differences in \citet{marie2017}
 
-$$ Y_{it} = \alpha + \gamma \; \text{policy}_{t} + \lambda \; \text{treated}_{i} + \delta \; (\text{policy}_t \times \text{treated}_i) + \varepsilon_{it}$$
-\vfill
+$$ Y_{it} = \alpha + \gamma \; \text{policy}_{t} + \lambda \; \text{treated}_{i} + \delta \; (\text{policy}_t \times \text{treated}_i) + \varepsilon_{it}$$ \vfill
 
-The \brf{DiD estimator is $\delta$}: 
+The \brf{DiD estimator is $\delta$}:
 
-- the impact of legal cannabis access on academic performance among non-Dutch/German/Belgian students in Maastricht
-
-
+-   the impact of legal cannabis access on academic performance among non-Dutch/German/Belgian students in Maastricht
 
 ## Difference-in-Differences in \citet{marie2017}
 
@@ -1140,7 +1044,6 @@ Columns (2)-(5): controls for additional confounders
 ```{r, echo = FALSE, out.width = "70%", fig.align = "center"}
 knitr::include_graphics(paste0(graphdir, "mariezoelitz4.png"))
 ```
-
 
 ## Male vs Female Students
 
@@ -1166,7 +1069,6 @@ knitr::include_graphics(paste0(graphdir, "mariezoelitz7.png"))
 knitr::include_graphics(paste0(graphdir, "mariezoelitz8.png"))
 ```
 
-
 ## What makes this study great?
 
 Interesting research question
@@ -1183,35 +1085,30 @@ Good data
 
 You can see the DiD in the raw data $\rightarrow$ very convincing!
 
-
 ## Summary: Difference-in-Differences
-
 
 \brf{Difference-in-differences} is a \brf{quasi-experimental design}
 
-- It is **very popular for policy evaluation**
-- It is **not necessary for the treatment** assignment to be **as good as random**
-- All we need are **parallel trends**
+-   It is **very popular for policy evaluation**
+-   It is **not necessary for the treatment** assignment to be **as good as random**
+-   All we need are **parallel trends**
 
 \vfill
 
 This \brf{lecture is an introduction to DiD}
 
-- For more advanced topics, see the Mixtape and my YouTube videos
-
-
+-   For more advanced topics, see the Mixtape and my YouTube videos
 
 ## DiD in R
 
 First example is for a simple DiD from "The Effect"
 
-- In 2011, California changed organ donations from "opt in" to "opt out"
-- Let's estimate a DiD with California after 2012 being treated
+-   In 2011, California changed organ donations from "opt in" to "opt out"
+-   Let's estimate a DiD with California after 2012 being treated
 
 \vfill
+
 We will use the `fixest` package for this simple application. For more complex DiD models, the `did` package by some of the best in the field -- Brantly Callaway and Pedro Sant'Anna -- is more useful.
-
-
 
 ## DiD in R with `fixest`
 
@@ -1231,7 +1128,9 @@ clfe <- feols(Rate ~ Treated | State + Quarter,
 ```
 
 ## DiD in R with `fixest`
+
 \footnotesize
+
 ```{r did2, echo=TRUE, eval=TRUE, include=TRUE}
 msummary(clfe, stars = c('*' = .1, '**' = .05, '***' = .01))
 ```
@@ -1254,7 +1153,6 @@ countyreal & unit variable
 
 ## DiD in R with the `did` Package
 
-
 ```{r did4, echo=TRUE, eval=TRUE, include=TRUE}
 out <- att_gt(yname = "lemp",
               gname = "first.treat",
@@ -1267,50 +1165,42 @@ out <- att_gt(yname = "lemp",
 ```
 
 ## DiD in R with the `did` Package
+
 \scriptsize
+
 ```{r did5, echo=TRUE, eval=TRUE, include=TRUE}
 msummary(out)
 ```
 
 ## Event study in R with the `did` Package
+
 \scriptsize
+
 ```{r did6, echo=TRUE, eval=TRUE, include=TRUE}
 es <- aggte(out, type = "dynamic")
 msummary(es)
 ```
 
-
 ## Event study in R with the `did` Package
+
 \scriptsize
+
 ```{r did7, echo=TRUE, eval=TRUE, include=TRUE, out.width="65%"}
 ggdid(es)
 ```
 
-
-
-
-
-
 ## .
+
 \tiny
 \bibliographystyle{authordate1}
 \bibliography{../../../causalinf_phd/bibliography_causalinf}
 
-
-
-
-
-
-
 ## .
-
 
 ```{r child = '../Templates/socialmedia.Rmd'}
 ```
-
 
 ## Contact
 
 ```{r child = '../Templates/contactpage.Rmd'}
 ```
-
