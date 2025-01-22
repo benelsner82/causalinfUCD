@@ -53,14 +53,13 @@ a)  Please generate the following dataset using random number generators in R an
 
 Based on these variables, generate an outcome variable `health` as
 
-```{=tex}
 \begin{align*}
 \text{health} &= 50 + 5 \cdot D \\
 &+ 0.01 \cdot \text{family\_income} \\ 
 &+ 0.5 \cdot \text{parent\_education}  \\
 &- 0.0005 \cdot \text{family\_income} \cdot \text{parent\_education} + \varepsilon
 \end{align*}
-```
+
 b)  Let's first inspect the data. Produce two plots: 1) a scatter plot of family income against health (y-axis), which separate regression lines and colours for treated and untreated observations, and 2) a scatter plot of parent education against health (y-axis), which separate regression lines and colours for treated and untreated observations. For each covariate, comment on common support.
 
 c)  Now produce separate density plots of each covariate, whereby each plot shows the distribution of the covariate for the treated and untreated group. Comment briefly on the difference between the distributions.
