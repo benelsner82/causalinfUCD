@@ -7,15 +7,12 @@ output:
     includes:
       in_header: "../Templates/template_metrics.tex"
 classoption: "aspectratio=169, handout" 
-
-
---- 
+---
 
 ```{r setup, include=FALSE}
 rm(list=ls())
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
-
 
 ## Causal questions are everywhere
 
@@ -37,7 +34,6 @@ Does raising interest rates reduce inflation?
 
 Does going to the gym make you healthier?
 
-
 ## Answering causal questions
 
 The "hard" sciences answer \br{causal questions by conducting experiments}
@@ -46,11 +42,10 @@ The "hard" sciences answer \br{causal questions by conducting experiments}
 
 But \br{experiments are not always possible}
 
-- Ethical concerns
-- Practical concerns
-- Financial constraints
-- etc
-
+-   Ethical concerns
+-   Practical concerns
+-   Financial constraints
+-   etc
 
 ## This module: causal inference without experiments
 
@@ -60,27 +55,25 @@ We will learn how to \br{answer causal questions} using \br{observational data}
 
 What we need for that:
 
-- knowledge of \br{statistics}
-- theory of \br{causal inference}
-- understanding of \br{best practices} in the social sciences
-- \br{programming skills} to implement methods
-
+-   knowledge of \br{statistics}
+-   theory of \br{causal inference}
+-   understanding of \br{best practices} in the social sciences
+-   \br{programming skills} to implement methods
 
 ## This module: causal inference without experiments
 
 \brf{What we will cover}
 
-- Introduction to causal inference
-- The most important causal research designs
-- Applications of causal inference methods
+-   Introduction to causal inference
+-   The most important causal research designs
+-   Applications of causal inference methods
 
 \vfill
 
 \brf{What we will NOT cover}
 
-- Causal machine learning (but: references available on request)
-- Causal discovery and other alchemy
-
+-   Causal machine learning (but: references available on request)
+-   Causal discovery and other alchemy
 
 ## Course Page & Brightspace
 
@@ -88,25 +81,21 @@ All materials and the syllabus are available on the [\brf{Course Page}](https://
 
 \vfill
 
-\brf{Brightspace} will be used for 
+\brf{Brightspace} will be used for
 
-- Announcements
-- Answering questions in the Forum
-
-
-
+-   Announcements
+-   Answering questions in the Forum
 
 ## Topics Covered in this Course
 
 1.  Foundations of Causality: DAGs
 2.  Econometrics Recap
-2.  Randomised experiments and potential outcomes
-4.  Matching and inverse probability weighting 
+3.  Randomised experiments and potential outcomes
+4.  Matching and inverse probability weighting
 5.  Instrumental variables
-6.  Regression Discontinuity 
-7.  Difference-in-differences 
+6.  Regression Discontinuity
+7.  Difference-in-differences
 8.  Synthetic control
-
 
 ## Two Main Textbooks
 
@@ -114,8 +103,7 @@ All materials and the syllabus are available on the [\brf{Course Page}](https://
 
 \vfill
 
-\brf{Huntington-Klein, N. (2021). The Effect: An Introduction to Research Design and Causality (1st ed.).} Chapman and Hall/CRC.  Free html version at  <https://theeffectbook.net/>.
-
+\brf{Huntington-Klein, N. (2021). The Effect: An Introduction to Research Design and Causality (1st ed.).} Chapman and Hall/CRC. Free html version at <https://theeffectbook.net/>.
 
 ## Other Textbooks
 
@@ -133,8 +121,6 @@ All materials and the syllabus are available on the [\brf{Course Page}](https://
 
 \brf{Intro to data analysis}: Békés, G. and G. Kézdi (2021). *Data Analysis for Business, Economics, and Policy*. Cambridge University Press.
 
-
-
 ## Prerequisites
 
 (Frequentist) \br{Statistics}: estimation and inference (undergrad level)
@@ -151,64 +137,59 @@ All materials and the syllabus are available on the [\brf{Course Page}](https://
 
 That's it really! More important: curiosity and willingness to learn new things
 
-
 ## Sessions
 
-We meet every Thursday, 9-11am, G70-NEWST
+We meet every Wednesday, 9-11am, D201 Newman
 
 \vfill
 
-Sessions will be a mix of 
+The sessions will be a mix of
 
-- theory lectures
-- "lab" sessions (with laptops)
+-   theory lectures
+-   applications
+-   advice on how to do stuff in R
 
 \vfill
 
-I will tell you before when to bring laptops
-
-
+We don't have enough course time for lab sessions. We will make up for that in the assignments.
 
 ## Software
 
 Please install the following \br{software on your computer}:
 
-- \br{Programming:} R and R Studio
-- \br{Word processing:} Quarto (optional)
-- \br{Version control:} Github desktop or alternative
-
+-   \br{Programming:} R and R Studio
+-   \br{Word processing:} Quarto (optional)
+-   \br{Version control:} Github desktop or alternative
 
 ## Asking Questions
 
 \brf{Questions that have no confidential content} can be asked in the \brf{Brightspace Forum}
 
-- This concerns 90\% of questions about material or logistics
-- I will answer questions in the forum
-- You can email me and I will post on the forum without mentioning your name
+-   This concerns 90% of questions about material or logistics
+-   I will answer questions in the forum
+-   You can email me and I will post on the forum without mentioning your name
 
 \vfill
 
 \brf{Questions with confidential content} should be asked via \brf{email}
 
-- These are questions that are specific to you
-- Examples: accommodation of disability, illness, personal circumstances
-
-
+-   These are questions that are specific to you
+-   Examples: accommodation of disability, illness, personal circumstances
 
 ## Assessment
 
-\br{Final exam}: 60\% of final grade
+\br{Final exam}: 60% of final grade
 
 \vfill
 
-\br{Assignments}: 40\% of final grade
+\br{Assignments}: 40% of final grade
 
-- First assignment given in week 4
-- Second assignment around week 9
+-   First assignment given in week 4
+-   Second assignment around week 9
 
 \vfill
+
 Details about assignments will be given closer to the time
-
 
 ## AI Policy
 
@@ -219,24 +200,19 @@ You can use \br{AI for the assignments}
 ChatGPT and Github Co-pilot work well for R. Github Co-pilot is free for students.
 
 \vfill
+
 But use it with caution
 
 \vfill
+
 If you use AI, add a statement that explains briefly how you used it
-
-
 
 ## .
 
-
 ```{r child = '../Templates/socialmedia.Rmd'}
 ```
-
 
 ## Contact
 
 ```{r child = '../Templates/contactpage.Rmd'}
 ```
-
-
-

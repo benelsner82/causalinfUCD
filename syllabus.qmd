@@ -2,11 +2,13 @@
 title: "Syllabus ECON42720"
 subtitle: "Causal Inference and Policy Evaluation"
 from: markdown+emoji
+output:
+  pdf: default
 ---
 
 ## :alarm_clock: Schedule
 
-This course is offered every spring trimester. Our weekly sessions are on *Thursdays from 9-11am* in D201 Newman. There is a two-week midterm break around St. Patrick's Day. The course has no scheduled lab sessions. Instead, several sessions will be run in flipped classroom mode, that is, students watch lecture videos at home and we discuss applications during the in-person sessions.
+This course is offered every spring trimester. In spring 2025, our weekly sessions are on *Wednesdays from 9-11am* in D201 Newman. There is a two-week midterm break around St. Patrick's Day. The course has no scheduled lab sessions. Instead, several sessions will be run in flipped classroom mode, that is, students watch lecture videos at home and we discuss applications during the in-person sessions.
 
 ## :man_teacher: Instructor
 
@@ -16,7 +18,7 @@ School of Economics Office\
 Newman G206\
 Email: [benjamin.elsner\@ucd.ie](mailto:benjamin.elsner@ucd.ie)
 
-I am available for questions before, during, and after the sessions on Thursday. Students can also book slots for my office hour (Thursdays 11am-12pm) via [Calendly](https://calendly.com/benjamin-elsner/office-hour).
+I am available for questions before, during, and after the sessions on Wednesday. I am also happy to chat to you 1:1; please email me.
 
 ## :hourglass_flowing_sand: Module Description and Learning Outcomes
 
@@ -41,7 +43,7 @@ This course introduces students to the most commonly used techniques in causal i
 
 ## :bulb: Prerequisites
 
-Students should have a firm understanding of basic statistical concepts (descriptive statistics, hypothesis testing), regression analysis, and programming with R. There are no strict prerequisites regarding courses: it is possible to take this course without having taken MSc-level econometrics before, as long as students have a good idea of the aforementioned concepts/techniques.
+Students should have a firm understanding of basic statistical concepts (descriptive statistics, hypothesis testing), regression analysis, and programming with R or a comparable statistical programming language. There are no strict prerequisites regarding courses: it is possible to take this course without having taken MSc-level econometrics before, as long as students have a good idea of the aforementioned concepts/techniques.
 
 ## :pencil2: Assessment
 
@@ -101,9 +103,11 @@ TL/DR; you will need:
 
 ### Statistical Software
 
-All assignments and labs will be done with R. Using R comes with lots of advantages: it is a very flexible object-oriented programming language with a huge comparative advantage in data analytics. It is free, which is great, and it has excellent AI support through ChatGPT and Github Copilot.
+In this course, we will use R. What this means is that all the examples are given in R. Using R comes with lots of advantages: it is a very flexible object-oriented programming language with a huge comparative advantage in data analytics. It is free, which is great, and it has excellent AI support through ChatGPT and Github Copilot.
 
 To work with R, you need to install R itself ([link here](https://cran.r-project.org/)) and a user interface. As a user interface, I recommend RStudio ([link here](https://posit.co/downloads/)), which is very user friendly and has been optimised for use with R. RStudio Desktop is free and is sufficient for all our applications. An alternative is Visual Studio Code ([link here](https://code.visualstudio.com/)), which is also great.
+
+Can you use other statistical software packages for the assignments? It depends. I strongly discourage the use of commercial software (STATA, EViews, SPSS). There is simply no need for that. I would approve Python and Julia, but no commercial software or more general languages such as Java or C++. If you use anything else than R, please seek approval before. Also, I cannot provide advice on languages other than R. 
 
 ### Word processing
 

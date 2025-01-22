@@ -323,7 +323,7 @@ E(Y|D=1)-E(Y|D=0)=\frac{E(Y|Z=1)-E(Y|Z=0)}{P(D=1|Z=1)-P(D=1|Z=0)}
 \brf{What we want to know:} the impact of moving: $\Delta D=P(D=1)-P(D=0)=1$
 
 \vfill
-\brf{What we do know{: 
+\brf{What we do know}: 
 
 - the impact of the instrument on moving: $\Delta D(Z)=P(D=1|Z=1)-P(D=1|Z=0)=0.5$
 - suppose the difference in outcomes $E(Y|Z=1)-E(Y|Z=0)$ is 10
@@ -956,7 +956,7 @@ S_i=X\pi_{10}+Z_1\pi_{11}+Z_2\pi_{12}+Z_3\pi_{13}+\eta_1
 $Z_1, Z_2, Z_3$ are **quarter of birth dummies**
 
 \vfill
-There ^brf{appears to be a first stage}: 
+There \brf{appears to be a first stage}: 
 
 - children born in Q4 have more schooling than children born in Q1 
 - the IV does not affect college graduation (which it shouldn't)
@@ -1015,7 +1015,7 @@ E\big[\widehat{\beta}_{OLS}-\beta\big] =
 \citet{bound1995} show that weak instruments bias the 2SLS estimator towards the OLS estimator
 
 \vfill
-One way of expressing the \brf|weak instrument bias} is 
+One way of expressing the \brf{weak instrument bias} is 
 
 \begin{align*}
 E\big[\widehat{\beta}_{2SLS}-\beta\big] \approx \dfrac{\sigma_{\varepsilon \eta}}{\sigma_\eta^2} \dfrac{1}{F+1}

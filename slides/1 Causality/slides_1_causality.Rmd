@@ -7,9 +7,7 @@ output:
     includes:
       in_header: "../Templates/template_metrics.tex"
 classoption: "aspectratio=169, handout" 
-
-
---- 
+---
 
 ```{r setup, include=FALSE}
 rm(list=ls())
@@ -27,132 +25,99 @@ graphdir <- "../../../causalinf_phd/Graphs/"
 
 ## About this Lecture
 
-In this lecture, we will learn about **causal inference** based on **causal diagrams** (also called **directed acyclical graphs**, or DAGs)
-\vfill
-We learn:
+In this lecture, we will learn about **causal inference** based on **causal diagrams** (also called **directed acyclical graphs**, or DAGs) \vfill We learn:
 
-- how to think about causal questions in **causal diagrams** (DAGs)
-- to develop **research designs based on DAGs**
-- to detect **common pitfalls in empirical analyses**
-
-
+-   how to think about causal questions in **causal diagrams** (DAGs)
+-   to develop **research designs based on DAGs**
+-   to detect **common pitfalls in empirical analyses**
 
 ## Resources
 
-
 \brf{This lecture is based on}
 
-- \citet{cunningham_2018}, Mixtape: Chapter 3
-- \citet{huntington2022}, The Effect: Chapters 6-8
+-   \citet{cunningham_2018}, Mixtape: Chapter 3
+-   \citet{huntington2022}, The Effect: Chapters 6-8
 
 \vfill
+
 *The Effect* is very accessible and goes step-by-step through all things DAGs. *The Mixtape* chapter is more concise. Both are excellent resources.
 
-\vfill 
+\vfill
+
 Part of the material of this lecture is also covered in the first two lectures of my \brf{YouTube playlist} on Causal Inference: [LINK](https://www.youtube.com/playlist?list=PLyvUJLHD8IsJCB7ALqwjRG1BjL5JxE__H)
 
 \vfill
+
 Find more about the course on the [\brf{course page}](https://benelsner82.github.io/causalinfUCD/)
 
+## Causality
 
+Oxford dictionary: \brf{the relationship between cause and effect} \vfill \pause \brf{Causality is a theoretical concept}. It \brf{cannot be} (directly) \brf{tested with data} \vfill $\Rightarrow$ to make a causal statement, one needs a \brf{clear theory} \vfill The \brf{methods of causal inference} are \`\`rhetorical devices''
 
+-   they allow us to establish causality \brf{under certain assumptions}
+-   since we want to \brf{identify a causal effect}, these are called \brf{identifying assumptions}
 
 ## Causality
-Oxford dictionary: \brf{the relationship between cause and effect}
-\vfill
-\pause
-\brf{Causality is a theoretical concept}. It \brf{cannot be} (directly) \brf{tested with data}
-\vfill
-$\Rightarrow$ to make a causal statement, one needs a \brf{clear theory}
-\vfill
-The \brf{methods of causal inference} are ``rhetorical devices''
 
-- they allow us to establish causality \brf{under certain assumptions} 
-- since we want to \brf{identify a causal effect}, these are called \brf{identifying assumptions}
-  
-
-
-
-## Causality
-Formally, in econometrics (and beyond), causality involves two random variables: a \brf{treatment $D$} and an \brf{outcome $Y$}
-\begin{equation*}
+Formally, in econometrics (and beyond), causality involves two random variables: a \brf{treatment $D$} and an \brf{outcome $Y$} \begin{equation*}
 D \rightarrow Y
-\end{equation*}
-\vfill
-The \brf{treatment} can either be \brf{binary, $D \in \{0,1\}$} or \brf{continuous $D \in \mathbb{R}$}
-\vfill
-We speak of a \brf{causal effect of D on Y} if a \brf{change in D triggers a change in Y}
-
-
+\end{equation*} \vfill The \brf{treatment} can either be \brf{binary, $D \in \{0,1\}$} or \brf{continuous $D \in \mathbb{R}$} \vfill We speak of a \brf{causal effect of D on Y} if a \brf{change in D triggers a change in Y}
 
 ## Causal Diagrams
-\brf{Causal diagrams} (also called ``\brf{directed acyclical graphs}'', or DAGs) are a powerful tool to understand:
 
-- how **causal effects** can be identified from **observational data**
-- which **variables** we should or should not **condition on**
+\brf{Causal diagrams} (also called \`\`\brf{directed acyclical graphs}'', or DAGs) are a powerful tool to understand:
+
+-   how **causal effects** can be identified from **observational data**
+-   which **variables** we should or should not **condition on**
 
 \vfill
 \pause
-DAGs are common in **computer science** and are slowly making their way into econometrics
-\vfill
-Here we will briefly introduce DAGs. 
-\vfill
-\brf{Book recommendation:} 
 
-- *The Book of Why* \citep{pearl_2018}
-- For a more profound treatise, see \citet{pearl_2009}
+DAGs are common in **computer science** and are slowly making their way into econometrics \vfill Here we will briefly introduce DAGs. \vfill \brf{Book recommendation:}
 
-
+-   *The Book of Why* \citep{pearl_2018}
+-   For a more profound treatise, see \citet{pearl_2009}
 
 ## Causal Diagrams
+
 \brf{Ingredients}
 
-- **nodes**: random variables
-- **arrows**: causal relationships 
-- missing arrows indicate the absence of a causal relationship
+-   **nodes**: random variables
+-   **arrows**: causal relationships
+-   missing arrows indicate the absence of a causal relationship
 
 \pause
 \vfill
-\brf{Direct causal effect} of the \brf{treatment} D on the \brf{outcome} Y
-\begin{equation*}
+
+\brf{Direct causal effect} of the \brf{treatment} D on the \brf{outcome} Y \begin{equation*}
 D \rightarrow Y
-\end{equation*} 
-\pause
-\vfill
-\brf{Indirect causal effect}: D affects Y through a \brf{mediator X} 
-\begin{equation*}
+\end{equation*} \pause \vfill \brf{Indirect causal effect}: D affects Y through a \brf{mediator X} \begin{equation*}
 D \rightarrow X \rightarrow  Y
-\end{equation*} 
-
-
-
+\end{equation*}
 
 ## How to Construct and Use a DAG
 
-
 \brf{Step 1: Construct a DAG}
 
-1. \brf{Identify the causal question} you want to answer
-2. \brf{Identify the variables} that are relevant for the causal question
-3. \brf{Draw a DAG} that represents the causal relationships between the variables
+1.  \brf{Identify the causal question} you want to answer
+2.  \brf{Identify the variables} that are relevant for the causal question
+3.  \brf{Draw a DAG} that represents the causal relationships between the variables
 
 \vfill
-\brf{Challenges:} 
+\brf{Challenges:}
 
-- Which DAG is the right one?
-- Every arrow and the absence of an arrow is an assumption
-- Is the DAG too simplistic or too complex?
+-   Which DAG is the right one?
+-   Every arrow and the absence of an arrow is an assumption
+-   Is the DAG too simplistic or too complex?
 
 ## How to Construct and Use a DAG
 
 \brf{Step 2: Causal Identification}: use a DAG to identify the causal effect of interest
 
-- Determine which causal forces you need to eliminate to answer the causal question
-- This gets done through \brf{closing back door paths} (more on that soon)
-- Once that's done we can use \brf{standard econometric methods} to estimate the causal effect of interest
-- But that's also what's really hard in practice
-
-
+-   Determine which causal forces you need to eliminate to answer the causal question
+-   This gets done through \brf{closing back door paths} (more on that soon)
+-   Once that's done we can use \brf{standard econometric methods} to estimate the causal effect of interest
+-   But that's also what's really hard in practice
 
 ## Example: Police Presence and Crime
 
@@ -163,8 +128,8 @@ knitr::include_graphics(paste0(graphdir, "policecrime.png"))
 ```
 
 \tiny
-Source: The Effect, Figure 6.5
 
+Source: The Effect, Figure 6.5
 
 ## Example: Police Presence and Crime
 
@@ -175,39 +140,37 @@ knitr::include_graphics(paste0(graphdir, "dag_crime.png"))
 ```
 
 \tiny
-Source: The Effect, Figure 6.6
 
+Source: The Effect, Figure 6.6
 
 ## Example: Police Presence and Crime
 
-\brf{Assumptions in the DAG}: 
+\brf{Assumptions in the DAG}:
 
-1. LaggedCrime doesn’t cause LawAndOrderPolitics
-2. PovertyRate isn’t a part of the data generating process
-3. LaggedPolicePerCapita doesn’t cause PolicePerCapita (or anything else for that matter)
-4. RecentPopularCrimeMovie doesn’t cause Crime
+1.  LaggedCrime doesn’t cause LawAndOrderPolitics
+2.  PovertyRate isn’t a part of the data generating process
+3.  LaggedPolicePerCapita doesn’t cause PolicePerCapita (or anything else for that matter)
+4.  RecentPopularCrimeMovie doesn’t cause Crime
 
 \brf{Trade-off}
 
-- **Omit too many variables**: DAG is too simplistic and we may omit variables that are very important
-- **Omit too few variables**: if a DAG becomes too complex, it is very difficult to identify the causal effect of interest
-
+-   **Omit too many variables**: DAG is too simplistic and we may omit variables that are very important
+-   **Omit too few variables**: if a DAG becomes too complex, it is very difficult to identify the causal effect of interest
 
 ## How to Draw Causal Diagrams
 
 \citet{huntington2022}, Ch. 7, offers many useful tips on how to draw causal diagrams
 
-- **Thinking about the "data-generating process"**, i.e. all the relevant variables and their causal relationships
-- **Simplifying DAGs** by getting rid of redundant or unimportant variables
-- **Avoiding cycles** (i.e. loops) in DAGs
-
+-   **Thinking about the "data-generating process"**, i.e. all the relevant variables and their causal relationships
+-   **Simplifying DAGs** by getting rid of redundant or unimportant variables
+-   **Avoiding cycles** (i.e. loops) in DAGs
 
 ## Cycles in DAGs
 
 \brf{Cycles} are a big \brf{no-no in DAGs}
 
-- They imply that a variable causes itself
-- Challenge: teach a cycle to a computer...
+-   They imply that a variable causes itself
+-   Challenge: teach a cycle to a computer...
 
 ```{r, out.width = '80%', echo=FALSE, fig.align="center"}
 knitr::include_graphics(paste0(graphdir, "cycles1.png"))
@@ -225,13 +188,12 @@ We can \brf{add a time dimension}...
 knitr::include_graphics(paste0(graphdir, "punch2.png"))
 ```
 
-
 ## How to Avoid Cycles?
 
 Or we can add a \brf{variable that only affects one of the variables in the cycle}
 
-
 \vfill
+
 Example: I flip a coin, and if it's head I'll...
 
 \vfill
@@ -262,120 +224,101 @@ plot(dag,
 Now there is no cycle because the coin flip only affects my decision, but not yours. You just react to my decision.
 
 ## Causal Diagrams - Confounders
+
 A common challenge in applied econometrics is to \brf{separate a causal effect} from the \brf{influence of confounders}
 
 ```{r, out.width = '25%', echo=FALSE, fig.align="center"}
 knitr::include_graphics(paste0(graphdir, "dag_selection.png"))
 ```
 
-
 Here we have two paths:
 
-- The \brf{direct path}: $D \rightarrow$ Y
-- A \brf{backdoor path}: $D \leftarrow X \rightarrow Y$
+-   The \brf{direct path}: $D \rightarrow$ Y
+-   A \brf{backdoor path}: $D \leftarrow X \rightarrow Y$
 
 \vfill
 \pause
-As long as there is no collider (introduced in a few slides), we speak of \brf{backdoor path with a condfounder} as being \brf{open}
-\vfill
-We can only \brf{identify the causal effect} $D \rightarrow Y$ if we \brf{condition on/adjust for X}
 
-
-
-
-
+As long as there is no collider (introduced in a few slides), we speak of \brf{backdoor path with a condfounder} as being \brf{open} \vfill We can only \brf{identify the causal effect} $D \rightarrow Y$ if we \brf{condition on/adjust for X}
 
 ## Causal Diagrams - Confounders
+
 Problem: \brf{often we don't observe a confounder}
 
 ```{r, out.width = '25%', echo=FALSE, fig.align="center"}
 knitr::include_graphics(paste0(graphdir, "dag_selection2.png"))
 ```
+
 \vfill
+
 $u$ lies on the **backdoor path** from $D$ to $Y$ but is **unobservable** ($\Rightarrow$ dashed line)
 
-- open backdoor $\Rightarrow$ $u$ is a confounder
+-   open backdoor $\Rightarrow$ $u$ is a confounder
 
 \vfill
 \pause
+
 \brf{Problem: selection into treatment}. In microeconomics we learn
 
-- **people** make \brf{rational choices}...
-- ...as do **firms**
-- ...as do **governments**
-
-
-
-
+-   **people** make \brf{rational choices}...
+-   ...as do **firms**
+-   ...as do **governments**
 
 ## Causal Diagrams - Confounders
-Examples for \brf{selection into treatment}: 
-\vfill
-\brf{Going to the gym makes you healthier}
 
-- good reason to believe so
-- but people who go to the gym are different from those who don't
-- observed correlation $\neq$ causation
+Examples for \brf{selection into treatment}: \vfill \brf{Going to the gym makes you healthier}
+
+-   good reason to believe so
+-   but people who go to the gym are different from those who don't
+-   observed correlation $\neq$ causation
 
 \pause
 \vfill
 \brf{Exporting boosts firm profitability}
 
-- good reason to believe so
-- but exporters are different in many ways from non-exporters
-- observed correlation $\neq$ causation
-
-
-
-
-
+-   good reason to believe so
+-   but exporters are different in many ways from non-exporters
+-   observed correlation $\neq$ causation
 
 ## Causal Diagrams - Confounders
+
 ```{r, out.width = '45%', echo=FALSE, fig.align="center"}
 knitr::include_graphics(paste0(graphdir, "DAG_educ.PNG"))
 ```
-We are interested in the \brf{effect of education D on earnings Y}, but also need to think about parental education (PE), family income (I) and unobserved family background (B)
-\vfill
-\pause
 
-- **Causal effect**: $D \rightarrow Y$
-- **Backdoor path 1**: $D  \leftarrow I \rightarrow Y$
-- **Backdoor path 2**:  $D  \leftarrow PE \rightarrow I \rightarrow Y$
-- **Backdoor path 3**: $D  \leftarrow B \rightarrow PE \rightarrow I \rightarrow Y$
+We are interested in the \brf{effect of education D on earnings Y}, but also need to think about parental education (PE), family income (I) and unobserved family background (B) \vfill \pause
 
-
-
-
-
+-   **Causal effect**: $D \rightarrow Y$
+-   **Backdoor path 1**: $D  \leftarrow I \rightarrow Y$
+-   **Backdoor path 2**: $D  \leftarrow PE \rightarrow I \rightarrow Y$
+-   **Backdoor path 3**: $D  \leftarrow B \rightarrow PE \rightarrow I \rightarrow Y$
 
 ## Causal Diagrams - Confounders
+
 ```{r, out.width = '45%', echo=FALSE, fig.align="center"}
 knitr::include_graphics(paste0(graphdir, "DAG_educ.PNG"))
 ```
+
 To identify the causal effect, we need to \brf{shut the backdoor paths} 1-3
 
-- we can do so by \brf{conditioning on $I$}
-- i.e. we control for $I$ in a regression
-- we could also control for $PE$, but this wouldn't help with identification
-
-
-
-
+-   we can do so by \brf{conditioning on $I$}
+-   i.e. we control for $I$ in a regression
+-   we could also control for $PE$, but this wouldn't help with identification
 
 ## Causal Diagrams - Confounders
+
 Note that this reasoning \brf{depends on the DAG being the correct one}
+
 ```{r, out.width = '45%', echo=FALSE, fig.align="center"}
 knitr::include_graphics(paste0(graphdir, "dag_educ2.png"))
 ```
 
-
-- If $B \rightarrow Y$, we would have an \brf{additional open backdoor path }
-- In that case, **controlling for $I$** would **not be sufficient**
-- If we cannot observe $B$, we know that our estimate is most likely biased 
-
-
+-   If $B \rightarrow Y$, we would have an \brf{additional open backdoor path }
+-   In that case, **controlling for** $I$ would **not be sufficient**
+-   If we cannot observe $B$, we know that our estimate is most likely biased
 
 ## Causal Diagrams - Colliders
+
 Unlike confounders, \brf{colliders} are a little known \brf{source of bias}
 
 ```{r, out.width = '60%', echo=FALSE, fig.align="center"}
@@ -386,86 +329,74 @@ plot_grid(p1, p2)
 ```
 
 \vfill
-In both examples the \brf{backdoor path} $D \rightarrow X \leftarrow Y$ is \brf{closed}
-\vfill
-\brf{Conditioning on a collider} can open a backdoor path and \brf{lead to bias}
 
-- In particular, it can induce a **spurious correlation** (between D and Y)
+In both examples the \brf{backdoor path} $D \rightarrow X \leftarrow Y$ is \brf{closed} \vfill \brf{Conditioning on a collider} can open a backdoor path and \brf{lead to bias}
 
-
-
-
+-   In particular, it can induce a **spurious correlation** (between D and Y)
 
 ## Causal Diagrams - Colliders
+
 ```{r, out.width = '50%', echo=FALSE, fig.align="center"}
 knitr::include_graphics(paste0(graphdir, "dag_collider3.png"))
 ```
-To deconfound $D \rightarrow Y$, we would need to **control for $U1$ and $U2$**
-\vfill
-\pause
-But what if we **controlled for an observable variable $I$ instead?** 
 
-- $D \leftarrow U1 \rightarrow I \leftarrow U2 \rightarrow Y$
-- $D \leftarrow U2 \rightarrow I \leftarrow U1 \rightarrow Y$
+To deconfound $D \rightarrow Y$, we would need to **control for** $U1$ and $U2$ \vfill \pause But what if we **controlled for an observable variable** $I$ instead?
+
+-   $D \leftarrow U1 \rightarrow I \leftarrow U2 \rightarrow Y$
+-   $D \leftarrow U2 \rightarrow I \leftarrow U1 \rightarrow Y$
 
 \vfill
+
 Controlling for $I$ makes the situation worse because it opens both backdoor paths
 
-
-
-
 ## Colliders - Example from \citet{cunningham_2018}
-...among \brf{movie stars}, we can observe a **negative correlation between talent and beauty** 
-\pause
+
+...among \brf{movie stars}, we can observe a **negative correlation between talent and beauty** \pause
+
 ```{r, out.width = '35%', echo=FALSE, fig.align="center"}
 knitr::include_graphics(paste0(graphdir, "dag_collider4.png"))
 ```
+
 \vfill
-If talent and beauty are unrelated in the population, 
 
-- then the observed correlation may reflect **collider bias**
-- due to **non-random sample selection**
+If talent and beauty are unrelated in the population,
 
-
-
-
-
+-   then the observed correlation may reflect **collider bias**
+-   due to **non-random sample selection**
 
 ## Colliders - Example from \citet{cunningham_2018}
-Suppose movie stars are those in the top 15\% of *score=beauty+talent*
+
+Suppose movie stars are those in the top 15% of *score=beauty+talent*
+
 ```{r, out.width = '60%', echo=FALSE, fig.align="center"}
 knitr::include_graphics(paste0(graphdir, "scatter_collider.png"))
 ```
 
-
-
-
-
 ## The Bad Control Problem: Condition on a Mediator
+
 ```{r, out.width = '60%', echo=FALSE, fig.align="center"}
 knitr::include_graphics(paste0(graphdir, "dag_conflict.pdf"))
 ```
+
 \vfill
-``*We estimate the effect of temperature on conflict irrespective of income*''
-\vfill
+
+\`\`*We estimate the effect of temperature on conflict irrespective of income*'' \vfill
+
 \begin{tiny}
 Credit: Marshall Burke's Blog (G-FEED)
 \end{tiny}
-
-
-
 
 ## The Bad Control Problem
 
 Conditioning on a mediator introduces \brf{selection bias}
 
-\(\Rightarrow\) \(\text{\br{Income}}\) is not as good as randomly assigned. It is a \br{function of temperature}.
+$\Rightarrow$ $\text{\br{Income}}$ is not as good as randomly assigned. It is a \br{function of temperature}.
 
 Conditioning on income will lead to a \br{downward bias}.
 
-- The direct effect is probably positive
-- High temperature reduces income
-- Lower income \(\rightarrow\) more conflict
+-   The direct effect is probably positive
+-   High temperature reduces income
+-   Lower income $\rightarrow$ more conflict
 
 ## The Bad Control Problem
 
@@ -479,7 +410,7 @@ knitr::include_graphics(paste0(graphdir, "simulation_mediator.png"))
 
 In many cases, bad control problems can be easily detected.
 
-- If a variable is on the \brf{causal path, don't control for it}.
+-   If a variable is on the \brf{causal path, don't control for it}.
 
 \vfill
 
@@ -487,44 +418,43 @@ But sometimes \brf{bad controls} are the result of \brf{sample selection}.
 
 Example: \textbf{racial bias in policing}
 
-
-
 ## Racial Bias in Police Use of Force \citep{fryer_2019}
 
 Administrative data from NYC, Texas, Florida, LA County.
 
 \brf{Observes all stops of the police}:
 
-- race of person stopped
-- use of force by the police
-- contextual variables (place, time, ...)
+-   race of person stopped
+-   use of force by the police
+-   contextual variables (place, time, ...)
 
 \brf{Findings}:
 
-- Disproportionate use of force against Blacks and Hispanics
-- This is true even when controlling for context
+-   Disproportionate use of force against Blacks and Hispanics
+-   This is true even when controlling for context
 
 ## Racial Bias in Police Use of Force \citep{fryer_2019}
 
 Fryer acknowledges several \brf{potential problems}:
 
-- Mis-reporting of the use of force
-- Probability of interacting with the police is higher for Blacks
-- Whites and Blacks stopped by the police may differ on average
+-   Mis-reporting of the use of force
+-   Probability of interacting with the police is higher for Blacks
+-   Whites and Blacks stopped by the police may differ on average
 
-\brf{Critique} by \citet{knox_2019}: bias ``goes deeper''
+\brf{Critique} by \citet{knox_2019}: bias \`\`goes deeper''
 
 ## Bad Controls: Endogenous Sample Selection
 
 Problem: it is \brf{not random who is stopped by the police}.
 
-- Officer behavior is unobservable
-- No information on people who are observed but not investigated
+-   Officer behavior is unobservable
+-   No information on people who are observed but not investigated
 
 \brf{\citet{knox_2019}}: this is equivalent to
 
-- \brf{conditioning on a mediator}
-- while not accounting for a confounder
+-   \brf{conditioning on a mediator}
+
+-   while not accounting for a confounder
 
 ## Bad Controls: Endogenous Sample Selection
 
@@ -532,7 +462,7 @@ Problem: it is \brf{not random who is stopped by the police}.
 knitr::include_graphics(paste0(graphdir, "dag_policing.pdf"))
 ```
 
-Studies only use observations with \(Stop=1\)
+Studies only use observations with $Stop=1$
 
 ## Bounding exercise in \citet{knox_2019}
 
@@ -540,48 +470,47 @@ Studies only use observations with \(Stop=1\)
 knitr::include_graphics(paste0(graphdir, "knox1.png"))
 ```
 
-\(\Rightarrow\) Ignoring the probability of stopping leads to a \brf{severe underestimation} of the racial gap in use of force
-
-
-
-
+$\Rightarrow$ Ignoring the probability of stopping leads to a \brf{severe underestimation} of the racial gap in use of force
 
 ## Further Readings
 
-
 \brf{\citet{imbens_2020}}: PO vs DAGs
+
 \begin{itemize}
 \item Self-recommending
 \end{itemize}
 \vfill
+
 \brf{\citet{montgomery_2018}}: bad control problem in experiments
+
 \begin{itemize}
 \item Insightful description based on potential outcomes and DAGs
 \end{itemize}
 \vfill
+
 \brf{\citet{schneider_2020}}: collider bias in economic history research
+
 \begin{itemize}
 \item How to detect and overcome collider bias (applications)
 \end{itemize}
-
-
-
 
 ## Controlling for Variables in a Regression
 
 The \brf{main takeaway} from studying \brf{causal diagrams}:
 
-- they clarify \brf{which variables} we should (and should not) \brf{control for}
+-   they clarify \brf{which variables} we should (and should not) \brf{control for}
 
 \vfill
+
 Control for \brf{confounders} (use the backdoor criterion)
 
 \vfill
+
 Do not control for \brf{colliders}
 
 \vfill
-Do not control for \brf{mediators} ("bad controls")
 
+Do not control for \brf{mediators} ("bad controls")
 
 ## Controlling for Variables in a Regression
 
@@ -589,10 +518,9 @@ Do not control for \brf{mediators} ("bad controls")
 
 A researcher has to \brf{take a stand on causal relationships} between variables:
 
-- what is a confounder, mediator, collider?
-- this requires some theoretical reasoning
-- and cannot be answered just by looking at data
-
+-   what is a confounder, mediator, collider?
+-   this requires some theoretical reasoning
+-   and cannot be answered just by looking at data
 
 ## Drawing DAGs: Dagitty
 
@@ -601,7 +529,6 @@ knitr::include_graphics(paste0(graphdir, "dagitty.png"))
 ```
 
 [Link to Dagitty Browser](https://www.dagitty.net/dags.html)
-
 
 ## Drawing DAGs with R and Dagitty
 
@@ -619,7 +546,6 @@ plot(graphLayout(g1))
 
 ```
 
-
 ## Drawing DAGs with R and Dagitty
 
 ```{r, echo=FALSE, eval=TRUE, out.width="65%"}
@@ -636,25 +562,21 @@ plot(graphLayout(g1))
 
 ```
 
-
 ## .
+
 \tiny
 \bibliographystyle{authordate1}
 \bibliography{../../../causalinf_phd/bibliography_causalinf}
 
-
-
 ## Group work 1
 
-\brf{Draw a DAG} for the following \brf{causal relationships}: 
+\brf{Draw a DAG} for the following \brf{causal relationships}:
 
-
-- Exporting (by a firm) $->$ Firm profitability
-- Participation in a job training programme $->$ likelihood of re-employment
-- Exposure to an earthquake \textit{in-utero} $->$ health at age 50
-- Attendance of a mixed-sex school $->$ gender attitudes later in life
-- Experience of conflict early in life $->$ voting later in life
-
+-   Exporting (by a firm) $->$ Firm profitability
+-   Participation in a job training programme $->$ likelihood of re-employment
+-   Exposure to an earthquake \textit{in-utero} $->$ health at age 50
+-   Attendance of a mixed-sex school $->$ gender attitudes later in life
+-   Experience of conflict early in life $->$ voting later in life
 
 ## Group work 2
 
@@ -666,8 +588,6 @@ knitr::include_graphics(paste0(graphdir, "dag_educ3.png"))
 
 I.e. what variables do you need to control for?
 
-
-
 ## Group work 3
 
 Deconfound the following DAG of the effect of education on income:
@@ -678,14 +598,10 @@ knitr::include_graphics(paste0(graphdir, "dag_politics.png"))
 
 ## .
 
-
 ```{r child = '../Templates/socialmedia.Rmd'}
 ```
-
 
 ## Contact
 
 ```{r child = '../Templates/contactpage.Rmd'}
 ```
-
-

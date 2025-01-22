@@ -7,9 +7,7 @@ output:
     includes:
       in_header: "../Templates/template_metrics.tex"
 classoption: "aspectratio=169, handout" 
-
-
---- 
+---
 
 ```{r setup, include=FALSE}
 rm(list=ls())
@@ -40,72 +38,60 @@ basesize <- 25
 
 ## About this Lecture
 
-\brf{Linear regression} is by far the most important \brf{estimation technique in causal inference}
-\vfill
+\brf{Linear regression} is by far the most important \brf{estimation technique in causal inference} \vfill
 
 Yes, I know, \br{machine learning is all the rage these days}
 
-- But a linear approximation is often the best we can do
-- It's already hard enough to get the linear approximation right
-- Fancy techniques are not always better
-
+-   But a linear approximation is often the best we can do
+-   It's already hard enough to get the linear approximation right
+-   Fancy techniques are not always better
 
 ## About this Lecture
 
 \brf{Part I: how does regression work? A recap}
 
-- Why we use linear regressions and how we estimate them
-- The sampling distribution of the OLS estimator
+-   Why we use linear regressions and how we estimate them
+-   The sampling distribution of the OLS estimator
 
 \vfill
 
 \brf{Part II: selection on observables}
 
-- Multivariate regression can be used for causal inference
-- But for that we need to make strong assumptions
-
-
-
+-   Multivariate regression can be used for causal inference
+-   But for that we need to make strong assumptions
 
 ## Resources
 
 The material behind these slides can be found in any good econometrics textbook. For introductory econometrics, I recommend
 
-- Wooldridge, J. Introductory Econometrics: A Modern Approach. 7th Edition. South-Western College Publishing, 2019.
-- Stock, J. and M. Watson. Introduction to Econometrics. 3rd Edition. Pearson, 2017.
-
-
+-   Wooldridge, J. Introductory Econometrics: A Modern Approach. 7th Edition. South-Western College Publishing, 2019.
+-   Stock, J. and M. Watson. Introduction to Econometrics. 3rd Edition. Pearson, 2017.
 
 ## Regression recap
 
 \br{Why do we use linear regression?}
 
-- What we want to approximate: the conditional expectation function (CEF)
-
+-   What we want to approximate: the conditional expectation function (CEF)
 
 \vfill
 
 \br{How does regression work?}
 
-- Interpretation of coefficients with and without controls
-- Estimation with OLS and Inference
-
+-   Interpretation of coefficients with and without controls
+-   Estimation with OLS and Inference
 
 ## Undergrad Recap: Goal of Linear Regression
 
-Quantify the \brf{expected effect} of a **one unit change in $X$ on $Y$**
+Quantify the \brf{expected effect} of a **one unit change in** $X$ on $Y$
 
-- If $X$ goes up by one unit, by how many units does $Y$ go up or down?
-- **Causal interpretation:** If we/nature/an experimenter changes $X$ by one unit, what is the expected effect on $Y$?
-\vfill
+-   If $X$ goes up by one unit, by how many units does $Y$ go up or down?
+-   **Causal interpretation:** If we/nature/an experimenter changes $X$ by one unit, what is the expected effect on $Y$? \vfill
 
 This \brf{effect} is equivalent to the \brf{slope} coefficient $\beta_1$ in a \brf{linear regression model}
 
 \begin{equation*}
 Y=\beta_0 + \beta_1 X + u
 \end{equation*}
-
-
 
 ## Linear Regression
 
@@ -131,97 +117,86 @@ Regression analysis means that we \brf{fit a straight line} through $(X,Y)$ data
 
 In this example, the **regression line** is $\text{Earnings}=-3000 + 700 \mbox{ IQ}$
 
-- An increase in the IQ by one point increases earnings on average by 700 EUR
-
-
+-   An increase in the IQ by one point increases earnings on average by 700 EUR
 
 ## What we are looking for: the conditional expectation function
 
 In undergraduate econometrics, you probably learned about a \brf{population regression model}
 
-- the idea is that there is a **true relationship** between $X$ and $Y$ that we want to estimate
-- we have a **sample** of $n$ observations from this population and estimate $\widehat{\beta}_0, \widehat{\beta}_1$ using OLS
+-   the idea is that there is a **true relationship** between $X$ and $Y$ that we want to estimate
+-   we have a **sample** of $n$ observations from this population and estimate $\widehat{\beta}_0, \widehat{\beta}_1$ using OLS
 
 \vfill
 
 But is the \br{population regression model (PRM)} really what we are looking for?
 
-- Yes and no. The PRM is an approximation of our object of interest
-- This object is called the \brf{conditional expectation function} (CEF) 
-
+-   Yes and no. The PRM is an approximation of our object of interest
+-   This object is called the \brf{conditional expectation function} (CEF)
 
 ## Ingredients: Random Variables
 
 \brf{Random variables} are variables that take on different values with a certain probability
 
-- $x$ is a random variable that takes on values $x_1, x_2, \ldots, x_n$ with probabilities $f(x_1), f(x_2), \ldots, f(x_n)$
+-   $x$ is a random variable that takes on values $x_1, x_2, \ldots, x_n$ with probabilities $f(x_1), f(x_2), \ldots, f(x_n)$
 
 \vfill
 
 \brf{Expected value}: the average value of a random variable
-
 
 \begin{align*}
   E(x) & = x_1f(x_1)+x_2f(x_2)+\dots+x_kf(x_n) \\
   & = \sum_{j=1}^n x_jf(x_j)              
 \end{align*}
 
-
 ## Expected Value: Example
 
 $x \in \{-1, 0, 2\}$ with probabilities $f(-1)=0.3, f(0)=0.3, f(2)=0.4$. The expected value of $X$ is
-
 
 \begin{align*}
   E(x) & = (-1)(0.3)+(0)(0.3)+(2)(0.4) \\
   & = 0.5                         
 \end{align*}
 
-
-
 ## Notation
 
-We denote **random variables with lower case letters** $x, y$. 
+We denote **random variables with lower case letters** $x, y$.
 
 \vfill
 
-Typically, we **do not use indices when we talk about the population**. For example, the linear relationship between $x$ and $y$ in the population is 
+Typically, we **do not use indices when we talk about the population**. For example, the linear relationship between $x$ and $y$ in the population is
 
 \begin{equation*}
 y=\beta_0+\beta_1x+u
 \end{equation*}
 
 \vfill
-Realisations of a random variable are denoted with **lower case letters with indices $x_i$** with $i=1,\dots, n$. We also use indices when 
 
-- Talking about **relationships in the sample**
-- Talking about particular realisations of a random variable: $x_i=x$, for example $x_i=female$ or $x_i=5$
+Realisations of a random variable are denoted with **lower case letters with indices** $x_i$ with $i=1,\dots, n$. We also use indices when
 
+-   Talking about **relationships in the sample**
+-   Talking about particular realisations of a random variable: $x_i=x$, for example $x_i=female$ or $x_i=5$
 
 \vfill
+
 This can be confusing at the start but you'll get used to it!
-
-
 
 ## The Conditional Expectation Function
 
-We are interested in \brf{explaining the relationship between $x$ and $y$} in the population
-\vfill
-A useful concept in this regard is the \brf{Conditional Expecation Function (CEF)}: $E(y_i|x_i)$
+We are interested in \brf{explaining the relationship between $x$ and $y$} in the population \vfill A useful concept in this regard is the \brf{Conditional Expecation Function (CEF)}: $E(y_i|x_i)$
 
-- what is the **population average of $y_i$ for a given value of $x_i$**
-- i.e. what if $x_i$ takes value $x$?
-
+-   what is the **population average of** $y_i$ for a given value of $x_i$
+-   i.e. what if $x_i$ takes value $x$?
 
 \vfill
+
 \brf{Example}: $x$ is a dummy that equals one if a person is female and zero otherwise. $y$ is earnings.
 
 \vfill
-The **CEF can take on two values**: 
 
-- Average earnings of women $E(y_i|x_i=1)$
-- Average earnings of men/other $E(y_i|x_i=0)$ 
+The **CEF can take on two values**:
 
+-   Average earnings of women $E(y_i|x_i=1)$
+-   Average earnings of men/other $E(y_i|x_i=0)$
 
 ## A Continuous CEF
 
@@ -233,10 +208,8 @@ knitr::include_graphics(paste0(graphdir, "CEF_schooling.PNG"))
 
 At every level of completed education, we have a different expected value of earnings
 
-- At each value $x_i$ we have a distribution of $y_i$ 
-- and the CEF comprises the averages of this distribution
-
-
+-   At each value $x_i$ we have a distribution of $y_i$
+-   and the CEF comprises the averages of this distribution
 
 ## Regression is a Linear Approximation of the CEF
 
@@ -244,18 +217,16 @@ The \brf{population regression model} (PRM) is a linear approximation of the CEF
 
 $$y=\beta_0+\beta_1x+u$$
 
-- Our **ultimate goal** is to know the **CEF**
-- But: with a linear regression, we can estimate the parameters of the PRM
-- I.e. we **cannot estimate the CEF directly**
+-   Our **ultimate goal** is to know the **CEF**
+-   But: with a linear regression, we can estimate the parameters of the PRM
+-   I.e. we **cannot estimate the CEF directly**
 
 \vfill
 
-Why a \brf{linear approximation is useful}: 
+Why a \brf{linear approximation is useful}:
 
-- We typically have small sample sizes, so approximating a non-linear function is difficult
-- We are often interested in marginal effects, so a linear approximation is often sufficient
-
-
+-   We typically have small sample sizes, so approximating a non-linear function is difficult
+-   We are often interested in marginal effects, so a linear approximation is often sufficient
 
 ## PRM: Linear Approximation of the CEF
 
@@ -263,34 +234,30 @@ Why a \brf{linear approximation is useful}:
 knitr::include_graphics(paste0(graphdir, "CEF_schooling2.PNG"))
 ```
 
-The dashed line is the Population regression model $y=\beta_0 + \beta_1 x + u$. The solid line is the CEF $E(y|x)$. 
+The dashed line is the Population regression model $y=\beta_0 + \beta_1 x + u$. The solid line is the CEF $E(y|x)$.
 
 \vfill
-It can be shown that the PRM is the \brf{best linear approximation of the CEF} (see Angrist & Pischke, MHE, ch. 3). 
 
+It can be shown that the PRM is the \brf{best linear approximation of the CEF} (see Angrist & Pischke, MHE, ch. 3).
 
-
-## CEF and PRM: what's all this about?`
+## CEF and PRM: what's all this about?\`
 
 The \brf{CEF is the object of interest} in (most of) econometrics
 
-- The PRM $y= \beta_0 + \beta_1x + u$ is a **linear approximation** of the CEF. 
-- But it is an approximation, so it can be wrong.
-- With data, we can draw inference on the PRM but not on the CEF
+-   The PRM $y= \beta_0 + \beta_1x + u$ is a **linear approximation** of the CEF.
+-   But it is an approximation, so it can be wrong.
+-   With data, we can draw inference on the PRM but not on the CEF
 
 \vfill
 
 \brf{What does this mean for the empirical analysis?}
 
-- We need to think about the **relationship between $x$ and $y$** in the population
-- Linear approximations are more innocuous when we consider small changes in $x$
+-   We need to think about the **relationship between** $x$ and $y$ in the population
+-   Linear approximations are more innocuous when we consider small changes in $x$
 
 ## The Sample Regression Function
 
-Now suppose we have a \brf{sample of size $n$} that was \brf{randomly sampled from the population}, $(y_1, x_1), \dots, (y_n, x_n)$
-\vfill
-The \brf{sample regression function} is 
-\begin{equation}
+Now suppose we have a \brf{sample of size $n$} that was \brf{randomly sampled from the population}, $(y_1, x_1), \dots, (y_n, x_n)$ \vfill The \brf{sample regression function} is \begin{equation}
 \widehat{y_i}=\widehat{\beta_0} + \widehat{\beta_1} x_i
 \label{eq13}
 \end{equation}
@@ -299,12 +266,9 @@ The \brf{sample regression function} is
 
 We can estimate the parameters $\widehat{\beta_0}$ and $\widehat{\beta_1}$ with Ordinary Least Squares (OLS)
 
-
-
 ## OLS: Intuition
 
 Let's start with some data points
-
 
 ```{r, out.width = '65%', echo=FALSE, fig.align="center"}
 data <- data.frame(
@@ -346,7 +310,6 @@ ggplot(data, aes(x = x, y = y)) +
   graphtheme
 ```
 
-
 ## OLS: Intuition
 
 The key ingredient of OLS are the residuals $\widehat{u}_i=y_i-\widehat{b_0}-\widehat{b_1}x_i$
@@ -374,7 +337,6 @@ ggplot(data, aes(x = x, y = y)) +
   graphtheme
 ```
 
-
 ## OLS: Intuition
 
 Let's consider a different regression line: the squares are much larger!
@@ -401,8 +363,6 @@ It \br{minimizes the sum of squared residuals (SSR)}
 
 The result is the \brf{best-fitting line} that describes the relationship between $x$ and $y$ in the sample
 
-
-
 ## OLS: Data Example
 
 Let's look at the relationship between education and wages with data from the U.S.
@@ -423,44 +383,31 @@ print(p)
 ## Regression Output: Interpretation
 
 \tiny
+
 ```{r, results='asis', out.width='65%', echo=FALSE}
 model <- lm(wage ~ educ, data = wage1)
 stargazer(model, header=FALSE, type='latex', title="Effect of Education on Wages")
 ```
+
 \normalsize
 
 A 1-year increase in education is associated with a 0.54 USD increase in hourly wages
 
-
-
-
 ## OLS: The Math
 
-The Ordinary Least Squares (OLS) estimators $\widehat{\beta_0}$ and $\widehat{\beta_1}$ are derived through the minimization problem
-\begin{equation}
+The Ordinary Least Squares (OLS) estimators $\widehat{\beta_0}$ and $\widehat{\beta_1}$ are derived through the minimization problem \begin{equation}
 (\widehat{\beta_0}, \widehat{\beta_1})=\displaystyle\argmin_{\widehat{b_0}, \widehat{b_1}} \displaystyle\sum_{i=1}^n[(y_i-\widehat{b_0}-\widehat{b_1}x_i)^2]
 \label{eq14}
-\end{equation}
-\vfill
-The sample means $\bar{y}=\frac{1}{n}\displaystyle\sum_{i=1}^n y_i$ and $\bar{x}=\frac{1}{n}\displaystyle\sum_{i=1}^n x_i$ are the sample analogs of the population means $E(y_i)$ and $E(x_i)$
-
-
+\end{equation} \vfill The sample means $\bar{y}=\frac{1}{n}\displaystyle\sum_{i=1}^n y_i$ and $\bar{x}=\frac{1}{n}\displaystyle\sum_{i=1}^n x_i$ are the sample analogs of the population means $E(y_i)$ and $E(x_i)$
 
 ## OLS: The Math
-The \brf{residuals of the regression} are defined as $\widehat{u_i}=y_i-\widehat{\beta_0} + \widehat{\beta_1} x_i$. 
-\vfill
-When we ``run an OLS regression'', we \brf{minimize the sum of squared residuals (SSR)}, $\displaystyle\sum_{i=1}^n \widehat{u_i}^2$ and obtain values for $\widehat{\beta_0}$ and $\widehat{\beta_1}$
-\vfill
-\pause
-Solving the minimization problem (\ref{eq14}) yields the \brf{estimators}
-\begin{eqnarray}
+
+The \brf{residuals of the regression} are defined as $\widehat{u_i}=y_i-\widehat{\beta_0} + \widehat{\beta_1} x_i$. \vfill When we \`\`run an OLS regression'', we \brf{minimize the sum of squared residuals (SSR)}, $\displaystyle\sum_{i=1}^n \widehat{u_i}^2$ and obtain values for $\widehat{\beta_0}$ and $\widehat{\beta_1}$ \vfill \pause Solving the minimization problem (\ref{eq14}) yields the \brf{estimators} \begin{eqnarray}
 \widehat{\beta_1}&=&\frac{\frac{1}{n}\sum_{i=1}^n (y_i - \bar{y})(x_i-\bar{x})}{\frac{1}{n}\sum_{i=1}^n (x_i-\bar{x})^2}=\frac{\widehat{Cov(y_i, x_i)}}{\widehat{V(x_i)}}\\
 \widehat{\beta_0}&=&\bar{y}-\widehat{\beta_1}\bar{x} 
 \nonumber
 \label{eq15}
 \end{eqnarray}
-
-
 
 ## The Sampling Distribution of the OLS Estimator
 
@@ -468,20 +415,19 @@ To \brf{draw inference about the population}, we need to know the \brf{sampling 
 
 \vfill
 
-What we want to know: 
+What we want to know:
 
-- When will $\widehat{\beta}_1$ be \textbf{unbiased?}
-- What is its \textbf{variance?}
+-   When will $\widehat{\beta}_1$ be \textbf{unbiased?}
+-   What is its \textbf{variance?}
 
 \vfill
 
-To answer these questions, we need to make some \brf{assumptions about the sample and population} 
+To answer these questions, we need to make some \brf{assumptions about the sample and population}
 
-1. Population model is linear in parameters
-2. Sample is randomly drawn from the population
-3. Variation in $x$
-4. **Zero conditional mean assumption** (ZCM)
-
+1.  Population model is linear in parameters
+2.  Sample is randomly drawn from the population
+3.  Variation in $x$
+4.  **Zero conditional mean assumption** (ZCM)
 
 ## OLS Assumptions
 
@@ -491,33 +437,30 @@ The four \brf{OLS assumptions must be fulfilled} for the OLS estimator to be \br
 
 \brf{Unbiasedness}: $E(\widehat{\beta}_1)=\beta_1$
 
-- across many random samples, the estimator gets it right on average
+-   across many random samples, the estimator gets it right on average
 
 \vfill
+
 \brf{Consistency}: $\widehat{\beta}_1 \xrightarrow[]{p} \beta_1$ as $n\rightarrow \infty$
 
-- if the sample size increases, the estimator converges to the true value
-- this is a consequence of the Law of Large Numbers (LLN)
-- As $n$ gets larger, the sample becomes more representative of the population
-
-
-
+-   if the sample size increases, the estimator converges to the true value
+-   this is a consequence of the Law of Large Numbers (LLN)
+-   As $n$ gets larger, the sample becomes more representative of the population
 
 ## The Zero Conditional Mean (ZCM) Assumption
 
 The \brf{ZCM assumption is the most important assumption} in this module
 
-- It is **not testable with the data** at hand
-- It rarely holds in practice (except in randomised experiments)
-- Causal inference techniques exploit scenarios where ZCM holds approximately
+-   It is **not testable with the data** at hand
+-   It rarely holds in practice (except in randomised experiments)
+-   Causal inference techniques exploit scenarios where ZCM holds approximately
 
 \vfill
 
 \brf{Other names for the ZCM assumption}:
 
-- **Conditional independence assumption (CIA)**
-- **Exogeneity assumption**
-
+-   **Conditional independence assumption (CIA)**
+-   **Exogeneity assumption**
 
 ## The Zero Conditional Mean (ZCM) Assumption
 
@@ -527,75 +470,70 @@ $$y=\beta_0+\beta_1 x + u$$
 
 The \brf{ZCM assumption} states that the \br{conditional mean of the error term is zero}
 
-$$E(u|x)=E(u)=0$$
-\vfill
-What does this mean?
+$$E(u|x)=E(u)=0$$ \vfill What does this mean?
 
-- The error term is **not systematically related** (speak: uncorrelated) with $x$
-- At any level of $x$, the average value of $u$ is zero
-
+-   The error term is **not systematically related** (speak: uncorrelated) with $x$
+-   At any level of $x$, the average value of $u$ is zero
 
 ## ZCM Assumption: Example
 
 Does \brf{higher education (causally) increase earnings?}
 
-$$wage_i=\beta_0+\beta_1 education_i + u_i$$
-\brf{What is the error term $u_i$ here?}
+$$wage_i=\beta_0+\beta_1 education_i + u_i$$ \brf{What is the error term $u_i$ here?}
 
-- Any determinant of a person's wage that is \br{not education} 
-- E.g., innate ability, motivation, personality, etc.
+-   Any determinant of a person's wage that is \br{not education}
+-   E.g., innate ability, motivation, personality, etc.
 
 ## ZCM Assumption: Example
-**Say $u_i$ includes ability**. According to the ZCM assumption, the following must hold:
 
-$$E(\text{ability}\mid \text{education}=8)=E(\text{ability}\mid \text{education}=12)=E(\text{ability}\mid \text{education}=16)$$
+**Say** $u_i$ includes ability. According to the ZCM assumption, the following must hold:
+
+$$E(\text{ability}\mid \text{education}=8)=E(\text{ability}\mid \text{education}=12)=E(\text{ability}\mid \text{education}=16)$$ \vfill So it \brf{must hold that}:
+
+-   the average ability of people with 8 years of education is the same as
+-   the average ability of people with 12 years of education and
+-   the average ability of people with 16 years of education
+
 \vfill
-So it \brf{must hold that}:
 
-- the average ability of people with 8 years of education is the same as
-- the average ability of people with 12 years of education and
-- the average ability of people with 16 years of education
-
-\vfill
 This is hardly plausible $\Rightarrow$ \brf{ZCM assumption is violated}
-
 
 ## What if ZCM is Violated?
 
 The OLS estimator of $\beta_1$ is \brf{biased and inconsistent}
 
 \vfill
+
 \brf{Bias}: $E(\widehat{\beta_1}) \neq \beta_1$
 
-- The expected value of the OLS estimator is not equal to the true value of $\beta_1$
-- Across many samples, the estimates are systematically too big or too small
+-   The expected value of the OLS estimator is not equal to the true value of $\beta_1$
+-   Across many samples, the estimates are systematically too big or too small
 
 \vfill
+
 \brf{Inconsistency}: $\widehat{\beta_1}$ does not converge to $\beta_1$ as $n\rightarrow \infty$
 
-- Even if the sample size is very large, the OLS estimator does not converge to the true value of $\beta_1$
-
+-   Even if the sample size is very large, the OLS estimator does not converge to the true value of $\beta_1$
 
 ## How to think about Violations of ZCM
 
 The variable $x$ is \brf{typically a choice}
 
-- People choose how much education to get, how often they go to the gym, how much they save, who they want to date, etc
-- Firms choose how much to invest, how many workers to hire, how much to pollute, etc.
-- Governments choose how much to spend on education, how much to tax, etc.
+-   People choose how much education to get, how often they go to the gym, how much they save, who they want to date, etc
+-   Firms choose how much to invest, how many workers to hire, how much to pollute, etc.
+-   Governments choose how much to spend on education, how much to tax, etc.
 
 \vfill
-
 
 The \brf{choice} of $x$ is typically \brf{influenced by other factors} $u$
 
-- Individual factors: ability, motivation, preferences, etc.
-- Firm factors: technology, market conditions, etc.
-- Government factors: ideology, political pressure, etc.
+-   Individual factors: ability, motivation, preferences, etc.
+-   Firm factors: technology, market conditions, etc.
+-   Government factors: ideology, political pressure, etc.
 
 \vfill
 
-\brf{Problem:} **$u$ affects $y$** not just through $x$ but also **through other paths** or directly
+\brf{Problem:} $u$ affects $y$ not just through $x$ but also **through other paths** or directly
 
 ## How to think about Violations of ZCM
 
@@ -608,8 +546,8 @@ knitr::include_graphics(paste0(graphdir, "dag_confound1.png"))
 Here $u$ includes a confounder $y$ directly and through $x$
 
 \vfill
-Example: $x$ is education, $y$ is earnings, $u$ is ability
 
+Example: $x$ is education, $y$ is earnings, $u$ is ability
 
 ## Omitted Variable Bias
 
@@ -620,51 +558,47 @@ Suppose the **true model** is $y=\beta_0 + \beta_1 x + \beta_2 s_1 + e$
 However, we **estimate the model** $y=\tilde\beta_0 + \tilde\beta_1 x + u$
 
 \vfill
+
 It can be shown that the \brf{OLS estimator is biased}
 
-
 $$\tilde\beta_1 = \beta_1 + \underbrace{\beta_2 \frac{Cov(x,s_1)}{Var(x)}}_{OVB}$$
-
 
 ## So when does ZCM hold?
 
 ZCM holds if $x$ is \brf{as good as randomly assigned} to individuals
 
-- This is the case if $x$ is assigned in a \brf{randomised experiment}
-- Or if $x$ is assigned in a \brf{quasi-experiment} that mimics random assignment
-- Or if we can \brf{control for all confounders} in the analysis
+-   This is the case if $x$ is assigned in a \brf{randomised experiment}
+-   Or if $x$ is assigned in a \brf{quasi-experiment} that mimics random assignment
+-   Or if we can \brf{control for all confounders} in the analysis
 
 \vfill
 
-We should **always assume that ZCM is violated**. Researchers need to **think hard about confounders and how to eliminate them.** 
-
+We should **always assume that ZCM is violated**. Researchers need to **think hard about confounders and how to eliminate them.**
 
 ## The Sampling Distribution of the OLS Estimator
 
-
 So far, we only talked about the \brf{mean of the OLS estimator} $\widehat{\beta}_1$
 
-- Suppose we run the **same regression in many samples**
-- The **mean of the OLS estimator** is the **average** of the estimates **across samples**
+-   Suppose we run the **same regression in many samples**
+-   The **mean of the OLS estimator** is the **average** of the estimates **across samples**
 
 \vfill
 
 However, to draw \brf{inference about the population}, we need to know more than the mean
 
-- How is $\widehat{\beta}_1$ **distributed across samples?**
-- But how can we know this distribution if we only have one sample?
-
+-   How is $\widehat{\beta}_1$ **distributed across samples?**
+-   But how can we know this distribution if we only have one sample?
 
 ## The Sampling Distribution of the OLS Estimator
 
 Enter: the \brf{Central Limit Theorem (CLT)}
 
-- If the **sample size is large enough**...
-- the **sampling distribution is approximately normal**
+-   If the **sample size is large enough**...
+-   the **sampling distribution is approximately normal**
 
 \vfill
 
-Under the CLT and an assumption of homoskedastic errors, the sampling distribution of the estimator is: 
+Under the CLT and an assumption of homoskedastic errors, the sampling distribution of the estimator is:
 
 $$\widehat{\beta}_1 \sim N(\beta_1, \sigma_{\widehat{\beta}_1}^2)$$
 
@@ -673,8 +607,6 @@ where $\sigma_{\widehat{\beta}_1}^2=\frac{\sigma^2}{\sum_{i=1}^n (x_i-\bar{x})^2
 \vfill
 
 Going into the assumptions behind this distribution is beyond this module. Most econometrics textbooks provide in-depth discussions
-
-
 
 ## The Sampling Distribution of the OLS Estimator
 
@@ -688,10 +620,7 @@ where $u\sim N(0,1)$ and $x\sim U(0,10)$
 
 And then we run a regression in each sample and store the slope coefficient $\widehat{\beta}_1$
 
-
-
 ## The Sampling Distribution of the OLS Estimator
-
 
 ```{r, echo=FALSE, fig.align="center", out.width="60%"}
 slopes <- numeric(1000)
@@ -716,10 +645,10 @@ ggplot(data.frame(slopes), aes(x = slopes)) +
   theme_minimal(base_size=basesize) + 
   graphtheme
 
-``` 
-- The distribution is centered on the true value $\beta_1=2$
-- The distribution is approximately normal
+```
 
+-   The distribution is centered on the true value $\beta_1=2$
+-   The distribution is approximately normal
 
 ## The Sampling Distribution of the OLS Estimator
 
@@ -733,88 +662,79 @@ where $\widehat{\sigma}^2=\frac{1}{n-2}\sum_{i=1}^n \widehat{u}_i^2$
 
 $SE(\widehat{\beta}_1)$ is an estimate of the \brf{standard deviation of the sampling distribution}
 
-- It tells us **how much the he OLS estimator varies across samples**
-- **Larger sample size** $\rightarrow$ smaller standard error
-
+-   It tells us **how much the he OLS estimator varies across samples**
+-   **Larger sample size** $\rightarrow$ smaller standard error
 
 ## Why We Need the Sampling Distribution
 
 We \brf{need the sampling distribution} to draw \brf{inference about the population}
 
-- We typically **test the hypothesis that the true value $\beta_1=0$**
-- Based on the (estimated) sampling distribution, we can test this hypothesis
-- We can use the **t-statistic**, the **p-value**, or **confidence intervals**
+-   We typically **test the hypothesis that the true value** $\beta_1=0$
+-   Based on the (estimated) sampling distribution, we can test this hypothesis
+-   We can use the **t-statistic**, the **p-value**, or **confidence intervals**
 
 \vfill
 
 How this works: please check econometrics/statistics textbooks
 
-
 ## Controlling for Confounders: Multivariate Regression
 
 We can include \brf{confounders in the regression model} to control for them
 
-$$y=\beta_0+\beta_1 x + \boldsymbol{S\gamma} + u$$
-\vfill
+$$y=\beta_0+\beta_1 x + \boldsymbol{S\gamma} + u$$ \vfill
 
-Here, $\boldsymbol{S}$ is a vector of covariates $\boldsymbol{S}=(s_1', s_2', \dots, s_k')$ and $\boldsymbol{\gamma}=(\gamma_1, \gamma_2, \dots, \gamma_k)$ is a vector of coefficients,\footnote{Note: each element of $\boldsymbol{S}$ is in itself an $(1 \times n)$ vector. E.g. $s_1=(s_{11}, s_{12}, \dots, s_{1n})$ so $\boldsymbol{S}$ is actually an $(n \times k)$ matrix} i.e. 
+Here, $\boldsymbol{S}$ is a vector of covariates $\boldsymbol{S}=(s_1', s_2', \dots, s_k')$ and $\boldsymbol{\gamma}=(\gamma_1, \gamma_2, \dots, \gamma_k)$ is a vector of coefficients,\footnote{Note: each element of $\boldsymbol{S}$ is in itself an $(1 \times n)$ vector. E.g. $s_1=(s_{11}, s_{12}, \dots, s_{1n})$ so $\boldsymbol{S}$ is actually an $(n \times k)$ matrix} i.e.
 
-$$\boldsymbol{S\gamma}=\gamma_1 s_1 + \gamma_2 s_2 + \dots + \gamma_k s_k$$
-\vfill
+$$\boldsymbol{S\gamma}=\gamma_1 s_1 + \gamma_2 s_2 + \dots + \gamma_k s_k$$ \vfill
 
 We are \brf{only interested in $\beta_1$, the causal effect of $x$ on $y$}
 
-- The other coefficients $\gamma_1, \gamma_2, \dots, \gamma_k$ are not of interest (nuisance parameters)
-- We include the covariates $\boldsymbol{S}$ to control for confounders
-
-
+-   The other coefficients $\gamma_1, \gamma_2, \dots, \gamma_k$ are not of interest (nuisance parameters)
+-   We include the covariates $\boldsymbol{S}$ to control for confounders
 
 ## Interpretation of $\beta_1$ in Multivariate Regression
 
 $\beta_1$ now has a \brf{ceteris paribus interpretation}
 
-- **Holding all other variables $\boldsymbol{S}$ constant**, a one unit increase in $x$ leads to a $\beta_1$ unit increase in $y$
+-   **Holding all other variables** $\boldsymbol{S}$ constant, a one unit increase in $x$ leads to a $\beta_1$ unit increase in $y$
 
 \vfill
 
 The \brf{inclusion of $\boldsymbol{S}$} allows for a \brf{like-with-like comparison}
 
-- We **compare units with the same values** of $\boldsymbol{S}$ but different values of $x$
-- But the like-with like comparison is only valid if $\boldsymbol{S}$ contains all confounders
-
-
+-   We **compare units with the same values** of $\boldsymbol{S}$ but different values of $x$
+-   But the like-with like comparison is only valid if $\boldsymbol{S}$ contains all confounders
 
 ## Anatomy of Regression: the Frisch-Waugh-Lovell Theorem
 
-Population model: 
+Population model:
 
-$$y=\beta_0+\beta_1 x_1 + \beta_2 x_2  + u$$
-\vfill
-The FWL theorem states that three OLS estimators for $\beta_1$ are equivalent
+$$y=\beta_0+\beta_1 x_1 + \beta_2 x_2  + u$$ \vfill The FWL theorem states that three OLS estimators for $\beta_1$ are equivalent
 
-1. regressing $y$ on $x_1$ and $x_2$
-2. regressing $y$ on $\tilde{x}_1$, the residuals from a regression of $x_1$ on $x_2$
-3. regressing $\tilde{y}$ on $\tilde{x}_1$, with $\tilde{y}$ being the residuals from a regression of $y$ on $x_2$
+1.  regressing $y$ on $x_1$ and $x_2$
+2.  regressing $y$ on $\tilde{x}_1$, the residuals from a regression of $x_1$ on $x_2$
+3.  regressing $\tilde{y}$ on $\tilde{x}_1$, with $\tilde{y}$ being the residuals from a regression of $y$ on $x_2$
 
 \vfill
+
 The main insight comes from point 2...
 
 ## Anatomy of Regression: the Frisch-Waugh-Lovell Theorem
 
-\brf{Multivariate regression does two steps at the same time}: 
+\brf{Multivariate regression does two steps at the same time}:
 
-1. It purges the correlation between $x_1$ and $x_2$ from $x_1$; the residuals $\tilde{x}_1$ are "what's left"; they are uncorrelated with $x_2$
-2. It estimates the effect of $\tilde{x}_1$ on $y$, i.e. *after* purging the correlation between $x_1$ and $x_2$ 
+1.  It purges the correlation between $x_1$ and $x_2$ from $x_1$; the residuals $\tilde{x}_1$ are "what's left"; they are uncorrelated with $x_2$
+2.  It estimates the effect of $\tilde{x}_1$ on $y$, i.e. *after* purging the correlation between $x_1$ and $x_2$
 
 \vfill
 
 \brf{Why is this important?}
 
-- If $x_2$ is a **confounder**, we can **purge** its influence by including it in the regression
+-   If $x_2$ is a **confounder**, we can **purge** its influence by including it in the regression
 
 \vfill
-The same also holds for more than one control variable
 
+The same also holds for more than one control variable
 
 ## FWL Example: Effect of Education on Earnings
 
@@ -837,12 +757,10 @@ wagereg3 <- lm(wage ~ resideduc, data=wage1)
 wagereg4 <- lm(residwage ~ resideduc, data=wage1)
 ```
 
-
-Suppose `abil` (ability) is a confounder
-\vfill
-Let's first look at the auxiliary regressions (for generating the residuals)
+Suppose `abil` (ability) is a confounder \vfill Let's first look at the auxiliary regressions (for generating the residuals)
 
 \scriptsize
+
 ```{r, results='asis', echo=FALSE}
 stargazer(auxreg1, auxreg2, 
           type="latex",
@@ -850,14 +768,15 @@ stargazer(auxreg1, auxreg2,
           no.space=TRUE,
           omit.stat=c("f", "ser"))
 ```
-\normalsize
 
+\normalsize
 
 ## FWL Example: Effect of Education on Earnings
 
 Now let's look at the main regressions
 
 \scriptsize
+
 ```{r, results='asis', echo=FALSE}
 stargazer(wagereg1, wagereg2, wagereg3, wagereg4,  
           type="latex",
@@ -865,11 +784,10 @@ stargazer(wagereg1, wagereg2, wagereg3, wagereg4,
           no.space=TRUE,
           omit.stat=c("f", "ser"))
 ```
+
 \normalsize
 
-
 ## Insights from the previous slide
-
 
 Columns (1) and (2) show that the **omission of `abil` leads to an upward bias**
 
@@ -881,43 +799,37 @@ The **coefficient of `educ` is the same** in Columns (2), (3) and (4) is the sam
 
 The regression in Column (2) takes \brf{two steps at a time}:
 
-1. **"regresses out"** (a.k.a "partials out") the **confounding influence** of ability on education
-2. provides the **partial effect of education on wages** that is \underline{not} driven by ability
-
+1.  **"regresses out"** (a.k.a "partials out") the **confounding influence** of ability on education
+2.  provides the **partial effect of education on wages** that is \underline{not} driven by ability
 
 \vfill
 
 \brf{Thanks to FWL}, we can \brf{eliminate the confounding influence of other variables}. This is \brf{BIG}!
 
-
-
 ## Conditional Mean Independence Assumption
 
-The \brf{Conditional Mean Independence Assumption (CMIA)} is a "light" version of the ZCM assumption. 
+The \brf{Conditional Mean Independence Assumption (CMIA)} is a "light" version of the ZCM assumption.
 
-$$E(u \mid x, \boldsymbol{S})=E(u \mid S)=0$$
-\vfill
+$$E(u \mid x, \boldsymbol{S})=E(u \mid S)=0$$ \vfill
 
 In plain English: as long as \brf{$\boldsymbol{S}$ is included, the error term $u$ is uncorrelated with $x$}
 
-- $x$ is exogenous conditional on $\boldsymbol{S}$
-- $x$ is as good as random conditional on $\boldsymbol{S}$
-
-
+-   $x$ is exogenous conditional on $\boldsymbol{S}$
+-   $x$ is as good as random conditional on $\boldsymbol{S}$
 
 ## Controlled Regression in Practice
 
 \citet{elsner_2018}: what is the \brf{impact of low-dose radiation on cognitive ability?}
 
-- Long-run exposure to low-dose radiation can affect cognitive ability through its effect on the brain and general health effects
+-   Long-run exposure to low-dose radiation can affect cognitive ability through its effect on the brain and general health effects
 
 \vfill
+
 \brf{Challenge:} people are usually not randomly exposed to radiation
 
-- Our setting: exploit variation in the Chernobyl fallout across Germany
-- This was driven by wind and rain patterns in April 1986
-- Look at the effect on test scores 25 years
-
+-   Our setting: exploit variation in the Chernobyl fallout across Germany
+-   This was driven by wind and rain patterns in April 1986
+-   Look at the effect on test scores 25 years
 
 ## Variation in Chernobyl-induced ground radiation in Germany, 1986
 
@@ -927,44 +839,39 @@ Is this variation as good as random?
 knitr::include_graphics(paste0(graphdir, "chernobyl1.pdf"))
 ```
 
-
 ## Example: \citet{elsner_2018}
 
-$$testscore_i = \beta_0 + \beta_1 radiation_i +  u_i$$
-\vfill
-\brf{Radiation exposure is likely not random...}
+$$testscore_i = \beta_0 + \beta_1 radiation_i +  u_i$$ \vfill \brf{Radiation exposure is likely not random...}
 
-- People could not foresee the Chernobyl accident
-- But: some areas are more prone to radiation when an accident happens
-- More prone: higher rainfall, higher altitude, further East
-- People in more prone areas are likely different from people in less prone areas
+-   People could not foresee the Chernobyl accident
+-   But: some areas are more prone to radiation when an accident happens
+-   More prone: higher rainfall, higher altitude, further East
+-   People in more prone areas are likely different from people in less prone areas
 
 \vfill
 
 So \brf{ZCM is violated}: $E(u \mid radiation) \neq 0$
 
-
-
 ## Solution: include potential confounders
 
 We need to \brf{control somehow for "proneness to radiation"}
 
-- Control for average rainfall in April and for altitude
+-   Control for average rainfall in April and for altitude
 
 \vfill
+
 We can \brf{include state dummies}
 
-- Compare **people who reside in the same state** but are exposed to **different levels of radiation**
-- This means that we run a **regression with group fixed effects** $\boldsymbol{\delta_s}$ (more on this later)
+-   Compare **people who reside in the same state** but are exposed to **different levels of radiation**
+-   This means that we run a **regression with group fixed effects** $\boldsymbol{\delta_s}$ (more on this later)
 
 ## Solution: include potential confounders
 
-$$testscore_i = \beta_0 + \beta_1 radiation_i + \beta_2 rain_i + \beta_3 alt_i +  \boldsymbol{\delta_s} + u_i$$
-\vfill
+$$testscore_i = \beta_0 + \beta_1 radiation_i + \beta_2 rain_i + \beta_3 alt_i +  \boldsymbol{\delta_s} + u_i$$ \vfill
 
 Does the Conditional Mean Independence Assumption (CMIA) hold?
 
-- I.e. is radiation as good as randomly assigned conditional on rainfall, altitude and state dummies?
+-   I.e. is radiation as good as randomly assigned conditional on rainfall, altitude and state dummies?
 
 $$E(u_i \mid radiation_i, \; rain_i, \; alt_i, \; \boldsymbol{\delta_s})=0$$
 
@@ -972,21 +879,21 @@ $$E(u_i \mid radiation_i, \; rain_i, \; alt_i, \; \boldsymbol{\delta_s})=0$$
 
 We run \brf{balancing tests based on observable characteristics} (age, gender, education, parental education)
 
-- **Run regressions** of observable characteristics on radiation, rainfall, altitude and state dummies
-- Ideally, there should be **no correlation between radiation and the observables**
-- This would be **evidence in favour of CMIA**, but no proof
+-   **Run regressions** of observable characteristics on radiation, rainfall, altitude and state dummies
+-   Ideally, there should be **no correlation between radiation and the observables**
+-   This would be **evidence in favour of CMIA**, but no proof
 
 \vfill
 
-\brf{Results:} 
+\brf{Results:}
 
-- radiation is correlated with some observables: negatively with own and parental education
-- but this correlation is **removed once we control for altitude and rainfall**
-- this is evidence that CMIA holds
+-   radiation is correlated with some observables: negatively with own and parental education
+-   but this correlation is **removed once we control for altitude and rainfall**
+-   this is evidence that CMIA holds
 
 \vfill
+
 See here for the table of balancing tests: [LINK](https://www.sciencedirect.com/science/article/pii/S0095069623000037?via%3Dihub#tbl2)
-
 
 ## Results
 
@@ -998,24 +905,21 @@ knitr::include_graphics(paste0(graphdir, "chernobylresults1.png"))
 knitr::include_graphics(paste0(graphdir, "chernobylresults2.png"))
 ```
 
-\brf{Higher radiation in 1986} $\Rightarrow$ \brf{lower test scores} in 2011
-\vfill
+\brf{Higher radiation in 1986} $\Rightarrow$ \brf{lower test scores} in 2011 \vfill
 
 In the paper we do a lot more to convince the reader
 
-
 ## Using Controlled Regression for Causal Inference
-
 
 The \brf{key to any research design} is \brf{CREDIBIILTY}
 
 \vfill
+
 With controlled regression, the credibility of causal identification hinges on the ZCM or CMIA assumption
 
-- Assumption: conditional on controls, $x$ is as good as randomly assigned
-- This design is called \brf{selection on observables}
-- The assumption is untestable! But we can (and must) bring evidence and good arguments in favour of it
-
+-   Assumption: conditional on controls, $x$ is as good as randomly assigned
+-   This design is called \brf{selection on observables}
+-   The assumption is untestable! But we can (and must) bring evidence and good arguments in favour of it
 
 ## Selection on observables: ingredients of a good paper
 
@@ -1023,37 +927,34 @@ With controlled regression, the credibility of causal identification hinges on t
 
 \vfill
 
-\brf{2)} A \brf{clear statement and discussion of the identification assumption}: 
+\brf{2)} A \brf{clear statement and discussion of the identification assumption}:
 
-- What is the ZCM/CMIA in your context? Why should it hold? What are potential challenges?
-- DAG: what are the confounders? Why should I include them in the regression?
+-   What is the ZCM/CMIA in your context? Why should it hold? What are potential challenges?
+-   DAG: what are the confounders? Why should I include them in the regression?
 
 \vfill
 
-\brf{3) Balancing tests:} 
+\brf{3) Balancing tests:}
 
-- show that $x$ is as good as randomly assigned conditional on controls
+-   show that $x$ is as good as randomly assigned conditional on controls
 
 \vfill
 
 \brf{4)} Extensive \brf{robustness checks} to rule out alternative explanations
 
-
 ## Common mistake: kitchen sink regressions
 
 A **common problem**: people start with a model like this
 
-$$y_i = \beta_0 + \beta_1 x_i + \boldsymbol{S\gamma} + u_i$$
-and include in $\boldsymbol{S}$ **every variable they can find** (everything but the kitchen sink)
+$$y_i = \beta_0 + \beta_1 x_i + \boldsymbol{S\gamma} + u_i$$ and include in $\boldsymbol{S}$ **every variable they can find** (everything but the kitchen sink)
 
 \vfill
 
 \brf{Don't do this!!!}
 
-- you could condition on colliders or mediators
-- you could condition on irrelevant variables
-- readers won't believe you
-
+-   you could condition on colliders or mediators
+-   you could condition on irrelevant variables
+-   readers won't believe you
 
 \vfill
 \brf{DAGs will help!}
@@ -1062,33 +963,25 @@ and include in $\boldsymbol{S}$ **every variable they can find** (everything but
 
 \brf{Logic of linear regression}
 
-
-- Why we use linear regression
-- Why and how we use OLS to estimate the parameters of the linear regression model
-- How to interpret the OLS estimator $\hat\beta_1$
-- What multivariate regression does, especially the FWL theorem
-
+-   Why we use linear regression
+-   Why and how we use OLS to estimate the parameters of the linear regression model
+-   How to interpret the OLS estimator $\hat\beta_1$
+-   What multivariate regression does, especially the FWL theorem
 
 \vfill
 
 \brf{Uses and limitations of linear regression for causal inference}
 
-- The ZCM assumption is violated in most applications, leading to OVB
-- How control variables can be used to control for confounders: the CMIA assumption
-
-
+-   The ZCM assumption is violated in most applications, leading to OVB
+-   How control variables can be used to control for confounders: the CMIA assumption
 
 ## .
+
 \tiny
 \bibliographystyle{authordate1}
 \bibliography{../../../causalinf_phd/bibliography_causalinf}
 
-
-
-
-
-## Appendix 
-
+## Appendix
 
 ## Regression with R
 
@@ -1099,11 +992,9 @@ library(wooldridge)
 library(stargazer)
 ```
 
-
 ## Regression with R
 
 This code shows how to estimate and present regressions with R
-
 
 ```{r, eval=FALSE, echo=TRUE}
 data('wage1') # load the data
@@ -1114,12 +1005,11 @@ reg2 <- lm(wage ~ educ + exper, data = df) # estimate multivariate regression
 stargazer(reg1, reg2, type = "text") # print regression results
 ```
 
-
 ## Regression outputs with Stargazer and R Markdown
 
-You can generate nice regression tables with the `stargazer` package and R Markdown/Quarto. Here is a code chunk that gives you a nicely formatted latex table. 
+You can generate nice regression tables with the `stargazer` package and R Markdown/Quarto. Here is a code chunk that gives you a nicely formatted latex table.
 
-````markdown
+```` markdown
 `r ''````{r, results='asis', echo=FALSE}
 stargazer(reg1, reg2, 
       header=FALSE, 
@@ -1127,9 +1017,6 @@ stargazer(reg1, reg2,
       title="Effect of Education on Wages")
 ```
 ````
-
-
-
 
 ## Regression with R
 
@@ -1152,19 +1039,23 @@ What is the sampling distribution of an estimator? Provide an intuitive explanat
 
 \vfill
 
-How is the sampling variance of an estimator related to the sample size? 
-
+How is the sampling variance of an estimator related to the sample size?
 
 ## Group Work Questions II
 
-Suppose you have a variable $z$ that is omitted from the population model 
+Suppose you have a variable $z$ that is omitted from the population model
 
 $$y=\beta_0 + \beta_1 x + \beta_2 z + u$$
 
 The correct population parameter, $\beta_1$, is positive.
 
-- a) Suppose you know that $cov(x, z)>0$ and $\beta_2<0$. How will the OLS estimator $\widehat\beta_1$ be biased when $z$ is omitted? Will it be over- or underestimated?
-- b) Draw a DAG with $z$ as a confounder and indicate the two factors that make up the omitted variable bias 
+-   
+
+    a)  Suppose you know that $cov(x, z)>0$ and $\beta_2<0$. How will the OLS estimator $\widehat\beta_1$ be biased when $z$ is omitted? Will it be over- or underestimated?
+
+-   
+
+    b)  Draw a DAG with $z$ as a confounder and indicate the two factors that make up the omitted variable bias
 
 ## Group Work Questions III
 
@@ -1176,13 +1067,18 @@ reg2 <- lm(testscr ~ str + el_pct, data=datacal)
 
 On the following slide, you see a regression output with two columns. In data on school districts in California, we want to study whether larger class sizes lead to lower test scores. The dependent variable is the average test score in a school district; the regressor of interest is the average class size in a school district. In Column (2), we control for the percentage of students in a school district who are not English native speakers (a proxy for poverty).
 
-- a) Interpret the slope coefficient on class size in Column (1)
-- b) Given the results in Column (2), what can we say about the correlation between class size and the share of non-native English speakers in a school district? 
+-   
 
+    a)  Interpret the slope coefficient on class size in Column (1)
+
+-   
+
+    b)  Given the results in Column (2), what can we say about the correlation between class size and the share of non-native English speakers in a school district?
 
 ## Group Work Questions III cont'd
 
 \scriptsize
+
 ```{r, results='asis', echo=FALSE}
 stargazer(reg1, reg2, 
           type="latex",
@@ -1190,17 +1086,15 @@ stargazer(reg1, reg2,
           no.space=TRUE,
           omit.stat=c("f", "ser"))
 ```
+
 \normalsize
 
 ## .
 
-
 ```{r child = '../Templates/socialmedia.Rmd'}
 ```
-
 
 ## Contact
 
 ```{r child = '../Templates/contactpage.Rmd'}
 ```
-

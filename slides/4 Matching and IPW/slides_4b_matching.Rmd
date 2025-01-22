@@ -7,9 +7,7 @@ output:
     includes:
       in_header: "../Templates/template_metrics.tex"
 classoption: "aspectratio=169, handout" 
-
-
---- 
+---
 
 ```{r setup, include=FALSE}
 rm(list=ls())
@@ -32,25 +30,19 @@ graphdir <- "../../../causalinf_phd/Graphs/"
 
 ```
 
-
 ## Approximate Matching
 
 In most cases, we \brf{cannot find a perfect match} for each treated unit
 
-- Many **variables are continuous**
-- We have many **covariates**
-- ...and **finite samples**
+-   Many **variables are continuous**
+-   We have many **covariates**
+-   ...and **finite samples**
 
 \vfill
 
 \brf{Approximate matching} allows us to \brf{match similar units}
 
-
-
-
-
 ## Approximate Matching: Questions to Ask Yourself
-
 
 \begin{columns}
   
@@ -100,24 +92,22 @@ In most cases, we \brf{cannot find a perfect match} for each treated unit
 
 \end{columns}
 
-
-
-
-## Approximate Matching 
+## Approximate Matching
 
 There are two **main methods for approximate matching:**
 
-1. \brf{Distance Matching} $\rightarrow$ minimise distance in $X$
-2. \brf{Propensity Score Matching} $\rightarrow$ match on likelihood of being treated
+1.  \brf{Distance Matching} $\rightarrow$ minimise distance in $X$
+2.  \brf{Propensity Score Matching} $\rightarrow$ match on likelihood of being treated
 
 \vfill
+
 A third type of matching is \brf{coarsened exact matching} (CEM)
 
 \vfill
+
 It is also possible to \brf{combine matching methods}
 
-- Example: match exactly on some characteristics and approximately on others
-
+-   Example: match exactly on some characteristics and approximately on others
 
 ## Distance Matching: Questions to Ask
 
@@ -131,49 +121,43 @@ What is the \brf{cut-off point} for a good match?
 
 Do we consider \brf{multiple matches} for each treated unit?
 
-- If so, what criterion determines which unit is a match? 
-- And should **each control unit get the same weight**?
-
+-   If so, what criterion determines which unit is a match?
+-   And should **each control unit get the same weight**?
 
 ## Distance Matching: Nearest Neighbour
 
 \small
-Starting point: \brf{treated units, with covariates age and age at which they left education}
 
+Starting point: \brf{treated units, with covariates age and age at which they left education}
 
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "mahala1.png"))
 ```
 
-
-
-
 ## Distance Matching: Nearest Neighbour
 
 \small
-\brf{Treated and control units are different} w.r.t. education
 
+\brf{Treated and control units are different} w.r.t. education
 
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "mahala2.png"))
 ```
 
-
-
 ## Distance Matching: Nearest Neighbour
 
 \small
-For each treated unit, we \brf{find the "closest" control unit} in terms of $X$ (\textit{Euclidean Distance})
 
+For each treated unit, we \brf{find the "closest" control unit} in terms of $X$ (\textit{Euclidean Distance})
 
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "mahala3.png"))
 ```
 
-
 ## Distance Matching: Nearest Neighbour
 
 \small
+
 \brf{Drop control units} that are \brf{not close enough} to any treated unit
 
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
@@ -183,14 +167,15 @@ knitr::include_graphics(paste0(graphdir, "mahala4.png"))
 ## Distance Matching: Nearest Neighbour
 
 \small
+
 \brf{Drop control units} that are \brf{not close enough} to any treated unit
 
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "mahala5.png"))
 ```
 
-
 ## Distance Matching: Nearest Neighbour
+
 \normalsize
 \brf{Our estimation sample:}
 
@@ -212,7 +197,6 @@ With \brf{one covariate}, the distance is the Euclidean Distance
 
 For each treated unit, we find the control unit with the \brf{smallest distance} $||X_i-X_j||$
 
-
 ## Multiple Covariates: Mahalanobis Distance
 
 With \brf{multiple covariates} $1, \dots, k$, we take into account the variance-covariance matrix $\widehat{\Sigma}_X$ of the covariates
@@ -225,50 +209,43 @@ With \brf{multiple covariates} $1, \dots, k$, we take into account the variance-
 
 As before, for each treated unit, we find the control unit with the \brf{smallest distance} $||X_i-X_j||$
 
-\vfill 
+\vfill
 
 **Purpose of weighting** with $\widehat{\Sigma}_X^{-1}$:
 
-- Covariates become \brf{scale-invariant}
-- All distances are \brf{measured in terms of standard deviations}
-
+-   Covariates become \brf{scale-invariant}
+-   All distances are \brf{measured in terms of standard deviations}
 
 ## Nearest Neighbour Matching: Steps Involved
 
+1.  \brf{Preprocess (Matching)}
 
-1. \brf{Preprocess (Matching)}
-  
-  - **Calculate the Mahalanobis Distance** $||X_i-X_j||=\sqrt{ (X_i-X_j)'\widehat{\Sigma}_X^{-1}(X_i - X_j) }$
-  - **Match** each treated unit to the **nearest control unit**
-  - Prune control units if unused
-  - Prune matches if Distance\(>\)caliper (i.e. if they exceed a certain distance)
-  
-2. \brf{Estimation}: calculate difference in means or run a regression
+-   **Calculate the Mahalanobis Distance** $||X_i-X_j||=\sqrt{ (X_i-X_j)'\widehat{\Sigma}_X^{-1}(X_i - X_j) }$
+-   **Match** each treated unit to the **nearest control unit**
+-   Prune control units if unused
+-   Prune matches if Distance$>$caliper (i.e. if they exceed a certain distance)
 
-
-
+2.  \brf{Estimation}: calculate difference in means or run a regression
 
 ## Other Distance Matching Methods
 
-
 \brf{k-Nearest-neighbour Matching (NNM)}
 
-- Match with the nearest neighbour or the **$k$ nearest neighbours** in terms of $X$ 
-- Take the average of these neighbours as the counterfactual
+-   Match with the nearest neighbour or the $k$ nearest neighbours in terms of $X$
+-   Take the average of these neighbours as the counterfactual
 
 \vfill
 \brf{Radius and Kernel Matching}
 
-- Match with **all control units** within a **certain radius of the treated unit**
-- If all control units have equal weight, we call this **radius matching**
-- If weights decay with distance, we call this **kernel matching**
-
+-   Match with **all control units** within a **certain radius of the treated unit**
+-   If all control units have equal weight, we call this **radius matching**
+-   If weights decay with distance, we call this **kernel matching**
 
 ## Nearest Neighbour Matching with $k=3$
 
 \small
-Suppose you have a dataset with 2 treated and many control units
 
+Suppose you have a dataset with 2 treated and many control units
 
 ```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
 ncontrol <- 40
@@ -329,11 +306,10 @@ nnm1 <- ggplot(data = df, aes(x = Education, y = Age, label = Label, color = Col
 print(nnm1)
 ```
 
-
-
 ## Nearest Neighbour Matching with $k=3$
 
-\small 
+\small
+
 Now we select the three nearest neighbours for each treated unit; their average $Y$ is the counterfactual for the treated unit
 
 ```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
@@ -379,11 +355,10 @@ nnm2 <- ggplot(data = df, aes(x = Education, y = Age)) +
 print(nnm2)
 ```
 
-
-
 ## Nearest Neighbour Matching with $k=10$
 
-\small 
+\small
+
 Now we select the ten nearest neighbours for each treated unit
 
 ```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
@@ -466,10 +441,10 @@ nnm3 <- ggplot(data = df, aes(x = Education, y = Age)) +
 print(nnm3)
 ```
 
-
 ## Radius Matching
 
 \small
+
 Here the researcher specifies a \brf{radius} ($r=2$) around the treated unit
 
 ```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
@@ -519,8 +494,6 @@ ggplot_object <- ggplot(data = df, aes(x = Education, y = Age, label = Type)) +
 # Print the plot
 print(ggplot_object)
 ```
-
-
 
 ## Radius Matching
 
@@ -611,8 +584,8 @@ print(ggplot_object3)
 
 ```
 
-
 ## Kernel Matching
+
 Consider the following sample
 
 ```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
@@ -638,8 +611,8 @@ kernel1 <- ggplot(df, aes(x = Education, y = Age, label = Type)) +
 print(kernel1)
 ```
 
-
 ## Kernel Matching
+
 Now suppose each control unit gets equal weight
 
 ```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
@@ -707,10 +680,7 @@ kernel_weighted <- ggplot(df, aes(x = Education, y = Age, label = Type)) +
 print(kernel_weighted)
 ```
 
-
-
 ## Kernel Matching
-
 
 \begin{columns}
 \begin{column}{.65\textwidth}
@@ -740,9 +710,8 @@ K(X) is only defined between $-1$ and $1$
 \end{column}
 \end{columns}
 
-
-
 ## Kernel Matching Within a Radius
+
 We often use \brf{kernel weighting within a radius} or the set of $k$ nearest neighbours
 
 ```{r echo=FALSE, eval=TRUE, out.width="60%", fig.align='center'}
@@ -799,32 +768,27 @@ Researchers need to \brf{solve a bias-variance trade-off}
 
 \brf{Unique matches}:
 
-- Matches are precise but few $\rightarrow$ \brf{low bias, high variance}
+-   Matches are precise but few $\rightarrow$ \brf{low bias, high variance}
 
 \vfill
 
 \brf{Weighted average of multiple control units}
 
-- Find many matches, but these are imprecise $\rightarrow$ \brf{high bias, low variance}
-
-
+-   Find many matches, but these are imprecise $\rightarrow$ \brf{high bias, low variance}
 
 ## Coarsened Exact Matching
-\brf{Idea of CEM}: 
 
-- Coarsen X (for example different age groups)
-- Perform exact matching based on coarsened data
+\brf{Idea of CEM}:
+
+-   Coarsen X (for example different age groups)
+-   Perform exact matching based on coarsened data
 
 \vfill
-Advantage: **easy and fast**
-\vfill
-Disadvantages: 
 
-- researcher **degrees of freedom** (categories are chosen by the researcher)
-- curse of dimensionality (few categories: many but imprecise matches; many categories: few but more precise matches)
+Advantage: **easy and fast** \vfill Disadvantages:
 
-
-
+-   researcher **degrees of freedom** (categories are chosen by the researcher)
+-   curse of dimensionality (few categories: many but imprecise matches; many categories: few but more precise matches)
 
 ## Coarsened Exact Matching
 
@@ -836,7 +800,6 @@ Disadvantages:
 knitr::include_graphics(paste0(graphdir, "cem1.png"))
 ```
 
-
 ## Coarsened exact matching
 
 \small
@@ -847,31 +810,27 @@ Coarsen: \brf{divide variables into categories}
 knitr::include_graphics(paste0(graphdir, "cem2.png"))
 ```
 
-
 ## Coarsened exact matching
-\small
-Now see \brf{which cells contain treated and control units}
 
+\small
+
+Now see \brf{which cells contain treated and control units}
 
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "cem3.png"))
 ```
 
-
-
-
 ## Coarsened exact matching
 
 \small
+
 We \brf{find matches within cells}
 
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "cem4.png"))
 ```
 
-
 ## Coarsened exact matching
-
 
 We \brf{find matches within cells}
 
@@ -879,19 +838,15 @@ We \brf{find matches within cells}
 
 We need to **take a stand** regarding **matching within the cells**
 
-- nearest neighbour or k nearest neighbours
-- with or without replacement
-- kernel distance function (usually not necessary)
-  
-
-
+-   nearest neighbour or k nearest neighbours
+-   with or without replacement
+-   kernel distance function (usually not necessary)
 
 ## Propensity Score Matching
 
-
 Idea: predict the \brf{probability that a given unit is treated} based on $X$
 
-- The probability $Pr(D_i=1 | X)$ is called the \brf{propensity score}
+-   The probability $Pr(D_i=1 | X)$ is called the \brf{propensity score}
 
 \vfill
 
@@ -901,9 +856,6 @@ Idea: predict the \brf{probability that a given unit is treated} based on $X$
 
 \brf{Estimate the ATT} based on the matched dataset
 
-
-
-
 ## Propensity score matching
 
 Starting point: treated and control units
@@ -911,8 +863,6 @@ Starting point: treated and control units
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "psm1.png"))
 ```
-
-
 
 ## Propensity score matching
 
@@ -922,9 +872,6 @@ For each unit, we want to predict the probability that it is treated based on $X
 knitr::include_graphics(paste0(graphdir, "psm2.png"))
 ```
 
-
-
-
 ## Propensity score matching
 
 Let's do this: predict the probability of being treated
@@ -932,10 +879,6 @@ Let's do this: predict the probability of being treated
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "psm3.png"))
 ```
-
-
-
-
 
 ## Propensity score matching
 
@@ -945,10 +888,6 @@ For each treated unit, find the control unit with the closest propensity score
 knitr::include_graphics(paste0(graphdir, "psm4.png"))
 ```
 
-
-
-
-
 ## Propensity score matching
 
 Prune control units that have not been matched
@@ -956,10 +895,6 @@ Prune control units that have not been matched
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "psm5.png"))
 ```
-
-
-
-
 
 ## Propensity score matching
 
@@ -969,10 +904,6 @@ The result is your matched dataset
 knitr::include_graphics(paste0(graphdir, "psm6.png"))
 ```
 
-
-
-
-
 ## Propensity score matching
 
 The result is your matched dataset
@@ -980,10 +911,6 @@ The result is your matched dataset
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "psm7.png"))
 ```
-
-
-
-
 
 ## Propensity score matching
 
@@ -993,104 +920,85 @@ We can now regress the outcome on the treatment status
 knitr::include_graphics(paste0(graphdir, "psm8.png"))
 ```
 
-
-
-
-
 ## Estimation of the propensity score
 
 The propensity score must satisfy the \brf{balancing property}. It implies:
 
-- Observations with the \textbf{same propensity score have the same distribution
-of observable covariates} independently of treatment status;
-- For a given propensity score **assignment to treatment is random**, hence treated and control units are on average observationally identical.
-
-
-
+-   Observations with the \textbf{same propensity score have the same distribution
+    of observable covariates} independently of treatment status;
+-   For a given propensity score **assignment to treatment is random**, hence treated and control units are on average observationally identical.
 
 ## Estimation of the propensity score
-Can use any \brf{standard probability model} to estimate the
-propensity score, e.g. a logit model:
-\begin{equation*}\label{eq23}
+
+Can use any \brf{standard probability model} to estimate the propensity score, e.g. a logit model: \begin{equation*}\label{eq23}
 Pr\{D_{i} = 1|X_{i}\} = \frac{e^{\lambda h(X_{i})}}{1 + e^{\lambda h(X_{i})}},
-\end{equation*}
-where \(h(X_{i})\) is a \textbf{function of covariates with linear and higher order
+\end{equation*} where $h(X_{i})$ is a \textbf{function of covariates with linear and higher order
 terms.}
-
-
-
 
 ## Inverse Probability Weighting (IPW)
 
-\brf{IPW is based on the propensity score}. Ingredients: 
+\brf{IPW is based on the propensity score}. Ingredients:
 
-- The propensity score of being treated: $p(X)$
-- The propensity score of beign untreated: $1-p(X)$
+-   The propensity score of being treated: $p(X)$
+-   The propensity score of beign untreated: $1-p(X)$
 
 \vfill
+
 \brf{Units are weighted} by the \brf{inverse propensity score} of THEIR treatment status
 
 \vfill
 \brf{Why does this work?}
 
-- Weights "create" similar observations in terms of $X$
-- Treated observations with similar $X$ as untreated get a high weight because they are similar
-
+-   Weights "create" similar observations in terms of $X$
+-   Treated observations with similar $X$ as untreated get a high weight because they are similar
 
 ## Inverse Probability Weighting and the ATE
-It can be shown that IPW identifies the ATE in the population: 
-\begin{equation*}
+
+It can be shown that IPW identifies the ATE in the population: \begin{equation*}
 \begin{aligned}
 \Delta & =E\left[\mu_1(X)-\mu_0(X)\right]=E\left[\frac{E[Y \cdot D \mid X] \cdot D}{p(X)}-\frac{E[Y \cdot(1-D) \mid X] \cdot(1-D)}{1-p(X)}\right] \\
 & =E\left[\frac{Y \cdot D}{p(X)}-\frac{Y \cdot(1-D)}{1-p(X)}\right]
 \end{aligned}
 \end{equation*}
 
-
 ## Inverse Probability Weighting and the ATT
-The ATT is identified by 
-\begin{equation*}
+
+The ATT is identified by \begin{equation*}
 \Delta_{D=1}=E\left[\frac{Y \cdot D}{\operatorname{Pr}(D=1)}-\frac{Y \cdot(1-D) \cdot p(X)}{(1-p(X)) \cdot \operatorname{Pr}(D=1)}\right]
 \end{equation*}
 
-
-
-
-
 ## IPW Weights Example
 
-| Observation | Treated | PS ($p(x)$) | weight |
-|---------|---------|---------|---------|
-| 1  | 1  | 0.6  | $\frac{1}{p(x)}=\frac{1}{0.6}=1.67$ |
-| 2  | 0  | 0.6  | $\frac{1}{1-p(x)}=\frac{1}{0.4}=2.5$ |
-| 3  | 1  | 0.9  | $\frac{1}{p(x)}=\frac{1}{0.9}=1.11$ |
-| 4  | 0  | 0.9  | $\frac{1}{1-p(x)}=\frac{1}{0.1}=10$ |
+| Observation | Treated | PS ($p(x)$) | weight                               |
+|-------------|---------|-------------|--------------------------------------|
+| 1           | 1       | 0.6         | $\frac{1}{p(x)}=\frac{1}{0.6}=1.67$  |
+| 2           | 0       | 0.6         | $\frac{1}{1-p(x)}=\frac{1}{0.4}=2.5$ |
+| 3           | 1       | 0.9         | $\frac{1}{p(x)}=\frac{1}{0.9}=1.11$  |
+| 4           | 0       | 0.9         | $\frac{1}{1-p(x)}=\frac{1}{0.1}=10$  |
 
 Here, observations 2 and 4 (untreated) get fairly large weights because they have similar $X$ to typical treated units
 
 \vfill
+
 Observation 3 (treated) gets a low weight because it is dissimilar to most untreated units
-
-
-
-
 
 ## Matching and Causal Inference
 
 \brf{Matching is NOT a causal identification strategy}
 
-- Neither is regression
-- It is a \brf{data reduction/pre-processing} technique
+-   Neither is regression
+-   It is a \brf{data reduction/pre-processing} technique
 
 \vfill
+
 It helps us to achieve \brf{balance on observables $X$}
 
 \vfill
+
 \brf{Causal identification} rests on the \brf{conditional independence assumption}
 
-- given $X$, $D$ should be as good as randomly assigned
-- i.e. $X$ has to capture all confounders
-
+-   given $X$, $D$ should be as good as randomly assigned
+-   i.e. $X$ has to capture all confounders
 
 ## Matching and Causal Inference: a DAG
 
@@ -1108,27 +1016,25 @@ With PSM, the additional assumption is that the \brf{propensity score is correct
 knitr::include_graphics(paste0(graphdir, "matching-psmdag-1.png"))
 ```
 
-
-
 ## Matching Example: \citet{broockman_2013}
 
 \brf{Research question:} are black politicians more likely to help black citizens even if the incentives are low?
 
 \vfill
+
 \brf{Methodology:} audit study; sent emails to U.S. state legislators; asking them to help them sign up for unemployment benefits
 
 \vfill
 \brf{Experimental variation:}
 
-- Sender with black vs. white name
-- Sender lives in same district as legislator or far away
+-   Sender with black vs. white name
+-   Sender lives in same district as legislator or far away
 
 \vfill
+
 \brf{Matching}: white and black legislators with similar characteristics
 
-
 ## Step 1: Check for Common Support
-
 
 ```{r, echo=FALSE, out.width="65%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "matching-common-support-1.png"))
@@ -1138,32 +1044,27 @@ Left: share of black voters in the district
 
 \vfill
 
-Right: distribution of propensity scores 
+Right: distribution of propensity scores
 
-- \brf{propensity score $p$} (probability of being black) based on share of black voters, median household income, legislator is a democrat
-
+-   \brf{propensity score $p$} (probability of being black) based on share of black voters, median household income, legislator is a democrat
 
 ## Step 1: Common Support
 
-\small 
+\small
 
 Problem: areas with high $p$ have no white legislators, areas with low $p$ have no black legislators
 
-- Solution: \brf{prune areas without common support} (at least 10 control obs within a .02 bin)
+-   Solution: \brf{prune areas without common support} (at least 10 control obs within a .02 bin)
 
 ```{r, echo=FALSE, out.width="65%", fig.align='center'}
 knitr::include_graphics(paste0(graphdir, "matching-common-support-trimmed-1.png"))
 ```
-
-
-
 
 ## Balance in \citet{broockman_2013}
 
 Broockman performs Mahalanobis (nearest neighbour) matching; here is the balancing table
 
 \footnotesize
-
 
 \begin{tabular}{@{}lcc@{}}
 \toprule
@@ -1201,8 +1102,6 @@ knitr::include_graphics(paste0(graphdir, "matching-bad-balance-distribution-1.pn
 
 Always check the \brf{full distribution} of covariates before and after matching
 
-
-
 ## Full Distribution of $X$ and $p$ after IPW
 
 ```{r, echo=FALSE, out.width="65%", fig.align='center'}
@@ -1211,11 +1110,7 @@ knitr::include_graphics(paste0(graphdir, "matching-ps-after-weighting-1.png"))
 
 Not perfect, but not so bad either...
 
-
-
-
 ## Data preparation in R
-
 
 We use the excellent `Matching` package in R. A great alternative is `MatchIt`
 
@@ -1258,13 +1153,14 @@ summary(M)
 \normalsize
 
 ## Mahalanobis distance matching in R
+
 Previous slide: the estimate $-0.007346$ means that black legislators were 0.7 percentage points less likely to respond to emails
 
 \vfill
 
 This effect is not statistically significant
 
-## Comparison with OLS 
+## Comparison with OLS
 
 \scriptsize
 
@@ -1276,8 +1172,7 @@ stargazer(plainols1, plainols2, type = "latex", header=FALSE)
 
 \normalsize
 
-
-## Comparison with OLS 
+## Comparison with OLS
 
 The covariate plots showed that there is little common support
 
@@ -1286,77 +1181,60 @@ The covariate plots showed that there is little common support
 Matching rests on comparable observations with common support in $X$
 
 \vfill
+
 OLS uses observations without common support; this explains the difference in the estimates
-
-
 
 ## Matching and Re-Weighting: Conclusion
 
 \brf{Matching and re-weighting} are \brf{data subsetting techniques}
 
-- They help to **achieve balance on observables $X$**
-- They are particularly useful when there is **little common support**
-
+-   They help to **achieve balance on observables** $X$
+-   They are particularly useful when there is **little common support**
 
 \vfill
 \brf{Matching and re-weighting are not causal identification strategies}
 
-- we need to rely on the \brf{conditional independence assumption} to identify causal effects
-- whether this holds depends on the context
-- even the best matching procedure in the world cannot fix a bad research design
-
+-   we need to rely on the \brf{conditional independence assumption} to identify causal effects
+-   whether this holds depends on the context
+-   even the best matching procedure in the world cannot fix a bad research design
 
 ## Matching and Re-Weighting: Conclusion
 
 There are \brf{many matching procedures}
 
-- It is easy to get lost in the details
-- The most important thing is to **achieve balance on observables $X$**
-- When choosing a method, **keep the bias-variance tradeoff in mind**
-
+-   It is easy to get lost in the details
+-   The most important thing is to **achieve balance on observables** $X$
+-   When choosing a method, **keep the bias-variance tradeoff in mind**
 
 \vfill
-\brf{Showing robustness to different matching procedures} is very important
 
+\brf{Showing robustness to different matching procedures} is very important
 
 ## Matching in R
 
-\brf{R has many packages for matching}; most of them do similar things but have their strengths and weaknesses. Here are some very good ones: 
+\brf{R has many packages for matching}; most of them do similar things but have their strengths and weaknesses. Here are some very good ones:
 
-
-- `Matching`
-- `MatchIt`
-- `cem` for Coarsened Exact Matching
-- `optmatch`
+-   `Matching`
+-   `MatchIt`
+-   `cem` for Coarsened Exact Matching
+-   `optmatch`
 
 \vfill
 
 `MatchIt` covers all the bases
 
-
-
-
-
 ## .
+
 \tiny
 \bibliographystyle{authordate1}
 \bibliography{../../../causalinf_phd/bibliography_causalinf}
 
-
-
-
-
-
-
 ## .
-
 
 ```{r child = '../Templates/socialmedia.Rmd'}
 ```
-
 
 ## Contact
 
 ```{r child = '../Templates/contactpage.Rmd'}
 ```
-

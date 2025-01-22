@@ -1,102 +1,102 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.19)  23 JAN 2024 16:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.7)  7 JAN 2025 16:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **slides_2_regression.tex
 (./slides_2_regression.tex
-LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-01-04>
+LaTeX2e <2024-11-01> patch level 1
+L3 programming layer <2024-12-25>
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamer.cls
 Document Class: beamer 2024/01/06 v3.71 A class for typesetting presentations
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasemodes.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count187
+\etb@tempcnta=\count196
 )
-\beamer@tempbox=\box51
-\beamer@tempcount=\count188
-\c@beamerpauses=\count189
+\beamer@tempbox=\box52
+\beamer@tempcount=\count197
+\c@beamerpauses=\count198
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasedecode.sty
-\beamer@slideinframe=\count190
-\beamer@minimum=\count191
-\beamer@decode@box=\box52
+\beamer@slideinframe=\count199
+\beamer@minimum=\count266
+\beamer@decode@box=\box53
 )
-\beamer@commentbox=\box53
-\beamer@modecount=\count192
+\beamer@commentbox=\box54
+\beamer@modecount=\count267
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2022/02/03 v1.0f TeX engine tests
+Package: iftex 2024/12/12 v1.0g TeX engine tests
 )
-\headdp=\dimen140
-\footheight=\dimen141
-\sidebarheight=\dimen142
-\beamer@tempdim=\dimen143
-\beamer@finalheight=\dimen144
-\beamer@animht=\dimen145
-\beamer@animdp=\dimen146
-\beamer@animwd=\dimen147
-\beamer@leftmargin=\dimen148
-\beamer@rightmargin=\dimen149
-\beamer@leftsidebar=\dimen150
-\beamer@rightsidebar=\dimen151
-\beamer@boxsize=\dimen152
-\beamer@vboxoffset=\dimen153
-\beamer@descdefault=\dimen154
-\beamer@descriptionwidth=\dimen155
-\beamer@lastskip=\skip48
-\beamer@areabox=\box54
-\beamer@animcurrent=\box55
-\beamer@animshowbox=\box56
-\beamer@sectionbox=\box57
-\beamer@logobox=\box58
-\beamer@linebox=\box59
-\beamer@sectioncount=\count193
-\beamer@subsubsectionmax=\count194
-\beamer@subsectionmax=\count195
-\beamer@sectionmax=\count196
-\beamer@totalheads=\count197
-\beamer@headcounter=\count198
-\beamer@partstartpage=\count199
-\beamer@sectionstartpage=\count266
-\beamer@subsectionstartpage=\count267
-\beamer@animationtempa=\count268
-\beamer@animationtempb=\count269
-\beamer@xpos=\count270
-\beamer@ypos=\count271
-\beamer@ypos@offset=\count272
-\beamer@showpartnumber=\count273
-\beamer@currentsubsection=\count274
-\beamer@coveringdepth=\count275
-\beamer@sectionadjust=\count276
-\beamer@toclastsection=\count277
-\beamer@tocsectionnumber=\count278
+\headdp=\dimen141
+\footheight=\dimen142
+\sidebarheight=\dimen143
+\beamer@tempdim=\dimen144
+\beamer@finalheight=\dimen145
+\beamer@animht=\dimen146
+\beamer@animdp=\dimen147
+\beamer@animwd=\dimen148
+\beamer@leftmargin=\dimen149
+\beamer@rightmargin=\dimen150
+\beamer@leftsidebar=\dimen151
+\beamer@rightsidebar=\dimen152
+\beamer@boxsize=\dimen153
+\beamer@vboxoffset=\dimen154
+\beamer@descdefault=\dimen155
+\beamer@descriptionwidth=\dimen156
+\beamer@lastskip=\skip49
+\beamer@areabox=\box55
+\beamer@animcurrent=\box56
+\beamer@animshowbox=\box57
+\beamer@sectionbox=\box58
+\beamer@logobox=\box59
+\beamer@linebox=\box60
+\beamer@sectioncount=\count268
+\beamer@subsubsectionmax=\count269
+\beamer@subsectionmax=\count270
+\beamer@sectionmax=\count271
+\beamer@totalheads=\count272
+\beamer@headcounter=\count273
+\beamer@partstartpage=\count274
+\beamer@sectionstartpage=\count275
+\beamer@subsectionstartpage=\count276
+\beamer@animationtempa=\count277
+\beamer@animationtempb=\count278
+\beamer@xpos=\count279
+\beamer@ypos=\count280
+\beamer@ypos@offset=\count281
+\beamer@showpartnumber=\count282
+\beamer@currentsubsection=\count283
+\beamer@coveringdepth=\count284
+\beamer@sectionadjust=\count285
+\beamer@toclastsection=\count286
+\beamer@tocsectionnumber=\count287
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseoptions.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
 ))
-\beamer@paperwidth=\skip49
-\beamer@paperheight=\skip50
+\beamer@paperwidth=\skip50
+\beamer@paperheight=\skip51
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count279
-\Gm@cntv=\count280
-\c@Gm@tempcnt=\count281
-\Gm@bindingoffset=\dimen156
-\Gm@wd@mp=\dimen157
-\Gm@odd@mp=\dimen158
-\Gm@even@mp=\dimen159
-\Gm@layoutwidth=\dimen160
-\Gm@layoutheight=\dimen161
-\Gm@layouthoffset=\dimen162
-\Gm@layoutvoffset=\dimen163
+\Gm@cnth=\count288
+\Gm@cntv=\count289
+\c@Gm@tempcnt=\count290
+\Gm@bindingoffset=\dimen157
+\Gm@wd@mp=\dimen158
+\Gm@odd@mp=\dimen159
+\Gm@even@mp=\dimen160
+\Gm@layoutwidth=\dimen161
+\Gm@layoutheight=\dimen162
+\Gm@layouthoffset=\dimen163
+\Gm@layoutvoffset=\dimen164
 \Gm@dimlist=\toks18
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/pgf/math/pgfmath.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
 \pgfutil@everybye=\toks19
-\pgfutil@tempdima=\dimen164
-\pgfutil@tempdimb=\dimen165
+\pgfutil@tempdima=\dimen165
+\pgfutil@tempdimb=\dimen166
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
-\pgfutil@abb=\box60
+\pgfutil@abb=\box61
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/pgf.revision.tex)
 Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
 )) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
@@ -105,66 +105,66 @@ Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.code.tex
 \pgfkeys@tmptoks=\toks22
 ))) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex
-\pgf@x=\dimen166
-\pgf@xa=\dimen167
-\pgf@xb=\dimen168
-\pgf@xc=\dimen169
-\pgf@y=\dimen170
-\pgf@ya=\dimen171
-\pgf@yb=\dimen172
-\pgf@yc=\dimen173
-\c@pgf@counta=\count282
-\c@pgf@countb=\count283
-\c@pgf@countc=\count284
-\c@pgf@countd=\count285
+\pgf@x=\dimen167
+\pgf@xa=\dimen168
+\pgf@xb=\dimen169
+\pgf@xc=\dimen170
+\pgf@y=\dimen171
+\pgf@ya=\dimen172
+\pgf@yb=\dimen173
+\pgf@yc=\dimen174
+\c@pgf@counta=\count291
+\c@pgf@countb=\count292
+\c@pgf@countc=\count293
+\c@pgf@countd=\count294
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
-\pgfmath@dimen=\dimen174
-\pgfmath@count=\count286
-\pgfmath@box=\box61
+\pgfmath@dimen=\dimen175
+\pgfmath@count=\count295
+\pgfmath@box=\box62
 \pgfmath@toks=\toks23
 \pgfmath@stack@operand=\toks24
 \pgfmath@stack@operation=\toks25
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code.tex) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.tex) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.code.tex) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.tex) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics.code.tex) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count287
+\c@pgfmathroundto@lastzeros=\count296
 ))) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+File: size11.clo 2024/06/29 v1.4n Standard LaTeX file (size option)
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
-Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 107.
+Package graphics Info: Driver file: pdftex.def on input line 106.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen175
-\Gin@req@width=\dimen176
+\Gin@req@height=\dimen176
+\Gin@req@width=\dimen177
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
 Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
-\pgf@x=\dimen177
-\pgf@y=\dimen178
-\pgf@xa=\dimen179
-\pgf@ya=\dimen180
-\pgf@xb=\dimen181
-\pgf@yb=\dimen182
-\pgf@xc=\dimen183
-\pgf@yc=\dimen184
-\pgf@xd=\dimen185
-\pgf@yd=\dimen186
+\pgf@x=\dimen178
+\pgf@y=\dimen179
+\pgf@xa=\dimen180
+\pgf@ya=\dimen181
+\pgf@xb=\dimen182
+\pgf@yb=\dimen183
+\pgf@xc=\dimen184
+\pgf@yc=\dimen185
+\pgf@xd=\dimen186
+\pgf@yd=\dimen187
 \w@pgf@writea=\write3
 \r@pgf@reada=\read2
-\c@pgf@counta=\count288
-\c@pgf@countb=\count289
-\c@pgf@countc=\count290
-\c@pgf@countd=\count291
+\c@pgf@counta=\count297
+\c@pgf@countb=\count298
+\c@pgf@countc=\count299
+\c@pgf@countd=\count300
 \t@pgf@toka=\toks26
 \t@pgf@tokb=\toks27
 \t@pgf@tokc=\toks28
-\pgf@sys@id@count=\count292
+\pgf@sys@id@count=\count301
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
 )
@@ -175,66 +175,66 @@ File: pgfsys-pdftex.def 2023-01-15 v3.1.10 (3.1.10)
 File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
 ))) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
 File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfsyssoftpath@smallbuffer@items=\count293
-\pgfsyssoftpath@bigbuffer@items=\count294
+\pgfsyssoftpath@smallbuffer@items=\count302
+\pgfsyssoftpath@bigbuffer@items=\count303
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
 File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 274.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1350.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1354.
-Package xcolor Info: Model `RGB' extended on input line 1366.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1368.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1370.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
 Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/math/pgfint.code.tex) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
 File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@picminx=\dimen187
-\pgf@picmaxx=\dimen188
-\pgf@picminy=\dimen189
-\pgf@picmaxy=\dimen190
-\pgf@pathminx=\dimen191
-\pgf@pathmaxx=\dimen192
-\pgf@pathminy=\dimen193
-\pgf@pathmaxy=\dimen194
-\pgf@xx=\dimen195
-\pgf@xy=\dimen196
-\pgf@yx=\dimen197
-\pgf@yy=\dimen198
-\pgf@zx=\dimen199
-\pgf@zy=\dimen256
+\pgf@picminx=\dimen188
+\pgf@picmaxx=\dimen189
+\pgf@picminy=\dimen190
+\pgf@picmaxy=\dimen191
+\pgf@pathminx=\dimen192
+\pgf@pathmaxx=\dimen193
+\pgf@pathminy=\dimen194
+\pgf@pathmaxy=\dimen195
+\pgf@xx=\dimen196
+\pgf@xy=\dimen197
+\pgf@yx=\dimen198
+\pgf@yy=\dimen199
+\pgf@zx=\dimen256
+\pgf@zy=\dimen257
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex
 File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@path@lastx=\dimen257
-\pgf@path@lasty=\dimen258
+\pgf@path@lastx=\dimen258
+\pgf@path@lasty=\dimen259
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
 File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@shorten@end@additional=\dimen259
-\pgf@shorten@start@additional=\dimen260
+\pgf@shorten@end@additional=\dimen260
+\pgf@shorten@start@additional=\dimen261
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
 File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfpic=\box62
-\pgf@hbox=\box63
-\pgf@layerbox@main=\box64
-\pgf@picture@serial@count=\count295
+\pgfpic=\box63
+\pgf@hbox=\box64
+\pgf@layerbox@main=\box65
+\pgf@picture@serial@count=\count304
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
 File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgflinewidth=\dimen261
+\pgflinewidth=\dimen262
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex
 File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@pt@x=\dimen262
-\pgf@pt@y=\dimen263
-\pgf@pt@temp=\dimen264
+\pgf@pt@x=\dimen263
+\pgf@pt@y=\dimen264
+\pgf@pt@temp=\dimen265
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
 File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
@@ -243,17 +243,17 @@ File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
 File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
 File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfarrowsep=\dimen265
+\pgfarrowsep=\dimen266
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@max=\dimen266
-\pgf@sys@shading@range@num=\count296
-\pgf@shadingcount=\count297
+\pgf@max=\dimen267
+\pgf@sys@shading@range@num=\count305
+\pgf@shadingcount=\count306
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
 File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfexternal@startupbox=\box65
+\pgfexternal@startupbox=\box66
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
 File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex
@@ -264,13 +264,13 @@ File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
 File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ))) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/pgf/utilities/xxcolor.sty
 Package: xxcolor 2003/10/24 ver 0.1
-\XC@nummixins=\count298
-\XC@countmixins=\count299
+\XC@nummixins=\count307
+\XC@countmixins=\count308
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2024-01-20 v7.01h Hypertext links for LaTeX
+Package: hyperref 2024-11-05 v7.01l Hypertext links for LaTeX
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
@@ -289,8 +289,6 @@ Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 )) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
-Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
@@ -300,71 +298,73 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count300
+\c@section@level=\count309
+) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
-\@linkdim=\dimen267
-\Hy@linkcounter=\count301
-\Hy@pagecounter=\count302
+\@linkdim=\dimen268
+\Hy@linkcounter=\count310
+\Hy@pagecounter=\count311
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2024-01-20 v7.01h Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2024-11-05 v7.01l Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count303
+\Hy@SavedSpaceFactor=\count312
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2024-01-20 v7.01h Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2024-11-05 v7.01l Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `unicode' set `true' on input line 4062.
-Package hyperref Info: Option `bookmarks' set `true' on input line 4062.
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 4062.
-Package hyperref Info: Option `implicit' set `false' on input line 4062.
-Package hyperref Info: Hyper figures OFF on input line 4179.
-Package hyperref Info: Link nesting OFF on input line 4184.
-Package hyperref Info: Hyper index ON on input line 4187.
-Package hyperref Info: Plain pages OFF on input line 4194.
-Package hyperref Info: Backreferencing OFF on input line 4199.
+Package hyperref Info: Option `unicode' set `true' on input line 4040.
+Package hyperref Info: Option `bookmarks' set `true' on input line 4040.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 4040.
+Package hyperref Info: Option `implicit' set `false' on input line 4040.
+Package hyperref Info: Hyper figures OFF on input line 4157.
+Package hyperref Info: Link nesting OFF on input line 4162.
+Package hyperref Info: Hyper index ON on input line 4165.
+Package hyperref Info: Plain pages OFF on input line 4172.
+Package hyperref Info: Backreferencing OFF on input line 4177.
 Package hyperref Info: Implicit mode OFF; no redefinition of LaTeX internals.
-Package hyperref Info: Bookmarks ON on input line 4446.
-\c@Hy@tempcnt=\count304
+Package hyperref Info: Bookmarks ON on input line 4424.
+\c@Hy@tempcnt=\count313
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
-\Urlmuskip=\muskip16
+\Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4784.
-\XeTeXLinkMargin=\dimen268
+LaTeX Info: Redefining \url on input line 4763.
+\XeTeXLinkMargin=\dimen269
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count305
-\Field@Width=\dimen269
-\Fld@charsize=\dimen270
-Package hyperref Info: Hyper figures OFF on input line 6063.
-Package hyperref Info: Link nesting OFF on input line 6068.
-Package hyperref Info: Hyper index ON on input line 6071.
-Package hyperref Info: backreferencing OFF on input line 6078.
-Package hyperref Info: Link coloring OFF on input line 6083.
-Package hyperref Info: Link coloring with OCG OFF on input line 6088.
-Package hyperref Info: PDF/A mode OFF on input line 6093.
-\Hy@abspage=\count306
+\Fld@menulength=\count314
+\Field@Width=\dimen270
+\Fld@charsize=\dimen271
+Package hyperref Info: Hyper figures OFF on input line 6042.
+Package hyperref Info: Link nesting OFF on input line 6047.
+Package hyperref Info: Hyper index ON on input line 6050.
+Package hyperref Info: backreferencing OFF on input line 6057.
+Package hyperref Info: Link coloring OFF on input line 6062.
+Package hyperref Info: Link coloring with OCG OFF on input line 6067.
+Package hyperref Info: PDF/A mode OFF on input line 6072.
+\Hy@abspage=\count315
 
 Package hyperref Message: Stopped early.
 
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2024-01-20 v7.01h Hyperref driver for pdfTeX
+File: hpdftex.def 2024-11-05 v7.01l Hyperref driver for pdfTeX
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
 with kernel methods
 )
-\Fld@listcount=\count307
-\c@bookmark@seq@number=\count308
+\Fld@listcount=\count316
+\c@bookmark@seq@number=\count317
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
@@ -384,127 +384,127 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 ))) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasetranslator.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/translator/translator.sty
 Package: translator 2021-05-31 v1.12d Easy translation of strings in LaTeX
 )) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasemisc.sty) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasetwoscreens.sty) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseoverlay.sty
-\beamer@argscount=\count309
-\beamer@lastskipcover=\skip51
-\beamer@trivlistdepth=\count310
+\beamer@argscount=\count318
+\beamer@lastskipcover=\skip52
+\beamer@trivlistdepth=\count319
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasetitle.sty) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasesection.sty
-\c@lecture=\count311
-\c@part=\count312
-\c@section=\count313
-\c@subsection=\count314
-\c@subsubsection=\count315
+\c@lecture=\count320
+\c@part=\count321
+\c@section=\count322
+\c@subsection=\count323
+\c@subsubsection=\count324
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseframe.sty
-\beamer@framebox=\box66
-\beamer@frametitlebox=\box67
-\beamer@zoombox=\box68
-\beamer@zoomcount=\count316
-\beamer@zoomframecount=\count317
-\beamer@frametextheight=\dimen271
-\c@subsectionslide=\count318
-\beamer@frametopskip=\skip52
-\beamer@framebottomskip=\skip53
-\beamer@frametopskipautobreak=\skip54
-\beamer@framebottomskipautobreak=\skip55
+\beamer@framebox=\box67
+\beamer@frametitlebox=\box68
+\beamer@zoombox=\box69
+\beamer@zoomcount=\count325
+\beamer@zoomframecount=\count326
+\beamer@frametextheight=\dimen272
+\c@subsectionslide=\count327
+\beamer@frametopskip=\skip53
+\beamer@framebottomskip=\skip54
+\beamer@frametopskipautobreak=\skip55
+\beamer@framebottomskipautobreak=\skip56
 \beamer@envbody=\toks30
-\framewidth=\dimen272
-\c@framenumber=\count319
+\framewidth=\dimen273
+\c@framenumber=\count328
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseverbatim.sty
 \beamer@verbatimfileout=\write4
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseframesize.sty
-\beamer@splitbox=\box69
-\beamer@autobreakcount=\count320
-\beamer@autobreaklastheight=\dimen273
+\beamer@splitbox=\box70
+\beamer@autobreakcount=\count329
+\beamer@autobreaklastheight=\dimen274
 \beamer@frametitletoks=\toks31
 \beamer@framesubtitletoks=\toks32
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseframecomponents.sty
-\beamer@footins=\box70
+\beamer@footins=\box71
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasecolor.sty) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasenotes.sty
-\beamer@frameboxcopy=\box71
+\beamer@frameboxcopy=\box72
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasetoc.sty) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasetemplates.sty
 \beamer@sbttoks=\toks33
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseauxtemplates.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaseboxes.sty
-\bmb@box=\box72
-\bmb@colorbox=\box73
-\bmb@boxwidth=\dimen274
-\bmb@boxheight=\dimen275
-\bmb@prevheight=\dimen276
-\bmb@temp=\dimen277
-\bmb@dima=\dimen278
-\bmb@dimb=\dimen279
-\bmb@prevheight=\dimen280
+\bmb@box=\box73
+\bmb@colorbox=\box74
+\bmb@boxwidth=\dimen275
+\bmb@boxheight=\dimen276
+\bmb@prevheight=\dimen277
+\bmb@temp=\dimen278
+\bmb@dima=\dimen279
+\bmb@dimb=\dimen280
+\bmb@prevheight=\dimen281
 )
-\beamer@blockheadheight=\dimen281
+\beamer@blockheadheight=\dimen282
 )) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbaselocalstructure.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/tools/enumerate.sty
 Package: enumerate 2023/07/04 v3.00 enumerate extensions (DPC)
 \@enLab=\toks34
 )
-\beamer@bibiconwidth=\skip56
-\c@figure=\count321
-\c@table=\count322
-\abovecaptionskip=\skip57
-\belowcaptionskip=\skip58
+\beamer@bibiconwidth=\skip57
+\c@figure=\count330
+\c@table=\count331
+\abovecaptionskip=\skip58
+\belowcaptionskip=\skip59
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasenavigation.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasenavigationsymbols.tex)
-\beamer@section@min@dim=\dimen282
+\beamer@section@min@dim=\dimen283
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasetheorems.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2023/05/13 v2.17o AMS math features
-\@mathmargin=\skip59
+Package: amsmath 2024/11/05 v2.17t AMS math features
+\@mathmargin=\skip60
 For additional information on amsmath, use the `?' option.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks35
-\ex@=\dimen283
+\ex@=\dimen284
 )) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen284
+\pmbraise@=\dimen285
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
-\inf@bad=\count323
-LaTeX Info: Redefining \frac on input line 234.
-\uproot@=\count324
-\leftroot@=\count325
-LaTeX Info: Redefining \overline on input line 399.
-LaTeX Info: Redefining \colon on input line 410.
-\classnum@=\count326
-\DOTSCASE@=\count327
-LaTeX Info: Redefining \ldots on input line 496.
-LaTeX Info: Redefining \dots on input line 499.
-LaTeX Info: Redefining \cdots on input line 620.
-\Mathstrutbox@=\box74
-\strutbox@=\box75
-LaTeX Info: Redefining \big on input line 722.
-LaTeX Info: Redefining \Big on input line 723.
-LaTeX Info: Redefining \bigg on input line 724.
-LaTeX Info: Redefining \Bigg on input line 725.
-\big@size=\dimen285
-LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
-\macc@depth=\count328
-LaTeX Info: Redefining \bmod on input line 905.
-LaTeX Info: Redefining \pmod on input line 910.
-LaTeX Info: Redefining \smash on input line 940.
-LaTeX Info: Redefining \relbar on input line 970.
-LaTeX Info: Redefining \Relbar on input line 971.
-\c@MaxMatrixCols=\count329
-\dotsspace@=\muskip17
-\c@parentequation=\count330
-\dspbrk@lvl=\count331
+\inf@bad=\count332
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count333
+\leftroot@=\count334
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count335
+\DOTSCASE@=\count336
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box75
+\strutbox@=\box76
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen286
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count337
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count338
+\dotsspace@=\muskip18
+\c@parentequation=\count339
+\dspbrk@lvl=\count340
 \tag@help=\toks36
-\row@=\count332
-\column@=\count333
-\maxfields@=\count334
+\row@=\count341
+\column@=\count342
+\maxfields@=\count343
 \andhelp@=\toks37
-\eqnshift@=\dimen286
-\alignsep@=\dimen287
-\tagshift@=\dimen288
-\tagwidth@=\dimen289
-\totwidth@=\dimen290
-\lineht@=\dimen291
+\eqnshift@=\dimen287
+\alignsep@=\dimen288
+\tagshift@=\dimen289
+\tagwidth@=\dimen290
+\totwidth@=\dimen291
+\lineht@=\dimen292
 \@envbody=\toks38
-\multlinegap=\skip60
-\multlinetaggap=\skip61
+\multlinegap=\skip61
+\multlinetaggap=\skip62
 \mathdisplay@stack=\toks39
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
@@ -515,47 +515,47 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@headfont=\toks42
 \thm@notefont=\toks43
 \thm@headpunct=\toks44
-\thm@preskip=\skip62
-\thm@postskip=\skip63
-\thm@headsep=\skip64
+\thm@preskip=\skip63
+\thm@postskip=\skip64
+\thm@headsep=\skip65
 \dth@everypar=\toks45
 )
-\c@theorem=\count335
+\c@theorem=\count344
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerbasethemes.sty)) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerthemedefault.sty (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerfontthemedefault.sty) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamercolorthemedefault.sty) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerinnerthemedefault.sty
-\beamer@dima=\dimen292
-\beamer@dimb=\dimen293
+\beamer@dima=\dimen293
+\beamer@dimb=\dimen294
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamerouterthemedefault.sty))) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfpages.sty
 Package: pgfpages 2011/01/05 ver 0.02
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count336
-\calc@Bcount=\count337
-\calc@Adimen=\dimen294
-\calc@Bdimen=\dimen295
-\calc@Askip=\skip65
-\calc@Bskip=\skip66
+\calc@Acount=\count345
+\calc@Bcount=\count346
+\calc@Adimen=\dimen295
+\calc@Bdimen=\dimen296
+\calc@Askip=\skip66
+\calc@Bskip=\skip67
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count338
-\calc@Cskip=\skip67
+\calc@Ccount=\count347
+\calc@Cskip=\skip68
 )
-\pgf@logicalpages=\count339
-\pgf@firstshipout=\count340
-\pgf@lastshipout=\count341
-\pgf@currentshipout=\count342
-\pgf@cpn=\count343
-\pgf@shipoutnextto=\count344
-\pgfphysicalheight=\dimen296
-\pgfphysicalwidth=\dimen297
-\pgfpages@shipoutbox=\box76
+\pgf@logicalpages=\count348
+\pgf@firstshipout=\count349
+\pgf@lastshipout=\count350
+\pgf@currentshipout=\count351
+\pgf@cpn=\count352
+\pgf@shipoutnextto=\count353
+\pgfphysicalheight=\dimen297
+\pgfphysicalwidth=\dimen298
+\pgfpages@shipoutbox=\box77
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2021/02/14 v1.3d Input encoding file
+Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks46
 \inpenc@posthook=\toks47
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
-Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
 Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
@@ -592,74 +592,74 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2024/01/20 4.5c verbatim text (tvz,hv)
-\FV@CodeLineNo=\count345
+\FV@CodeLineNo=\count354
 \FV@InFile=\read3
-\FV@TabBox=\box77
-\c@FancyVerbLine=\count346
-\FV@StepNumber=\count347
+\FV@TabBox=\box78
+\c@FancyVerbLine=\count355
+\FV@StepNumber=\count356
 \FV@OutFile=\write5
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip68
-\fb@frw=\dimen298
-\fb@frh=\dimen299
-\FrameRule=\dimen300
-\FrameSep=\dimen301
+\OuterFrameSep=\skip69
+\fb@frw=\dimen299
+\fb@frh=\dimen300
+\FrameRule=\dimen301
+\FrameSep=\dimen302
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/beamer/beamercolorthemestructure.sty) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen302
-\lightrulewidth=\dimen303
-\cmidrulewidth=\dimen304
-\belowrulesep=\dimen305
-\belowbottomsep=\dimen306
-\aboverulesep=\dimen307
-\abovetopsep=\dimen308
-\cmidrulesep=\dimen309
-\cmidrulekern=\dimen310
-\defaultaddspace=\dimen311
-\@cmidla=\count348
-\@cmidlb=\count349
-\@aboverulesep=\dimen312
-\@belowrulesep=\dimen313
-\@thisruleclass=\count350
-\@lastruleclass=\count351
-\@thisrulewidth=\dimen314
+\heavyrulewidth=\dimen303
+\lightrulewidth=\dimen304
+\cmidrulewidth=\dimen305
+\belowrulesep=\dimen306
+\belowbottomsep=\dimen307
+\aboverulesep=\dimen308
+\abovetopsep=\dimen309
+\cmidrulesep=\dimen310
+\cmidrulekern=\dimen311
+\defaultaddspace=\dimen312
+\@cmidla=\count357
+\@cmidlb=\count358
+\@aboverulesep=\dimen313
+\@belowrulesep=\dimen314
+\@thisruleclass=\count359
+\@lastruleclass=\count360
+\@thisrulewidth=\dimen315
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
-Package: longtable 2023-11-01 v4.19 Multi-page Table package (DPC)
-\LTleft=\skip69
-\LTright=\skip70
-\LTpre=\skip71
-\LTpost=\skip72
-\LTchunksize=\count352
-\LTcapwidth=\dimen315
-\LT@head=\box78
-\LT@firsthead=\box79
-\LT@foot=\box80
-\LT@lastfoot=\box81
-\LT@gbox=\box82
-\LT@cols=\count353
-\LT@rows=\count354
-\c@LT@tables=\count355
-\c@LT@chunks=\count356
+Package: longtable 2024-10-27 v4.22 Multi-page Table package (DPC)
+\LTleft=\skip70
+\LTright=\skip71
+\LTpre=\skip72
+\LTpost=\skip73
+\LTchunksize=\count361
+\LTcapwidth=\dimen316
+\LT@head=\box79
+\LT@firsthead=\box80
+\LT@foot=\box81
+\LT@lastfoot=\box82
+\LT@gbox=\box83
+\LT@cols=\count362
+\LT@rows=\count363
+\c@LT@tables=\count364
+\c@LT@chunks=\count365
 \LT@p@ftn=\toks48
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/comment/comment.sty
 \CommentStream=\write6
 Excluding comment 'comment') (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/mathtools/mathtools.sty
-Package: mathtools 2022/06/29 v1.29 mathematical typesetting tools
+Package: mathtools 2024/10/04 v1.31 mathematical typesetting tools
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/mathtools/mhsetup.sty
 Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
 )
-\g_MT_multlinerow_int=\count357
-\l_MT_multwidth_dim=\dimen316
-\origjot=\skip73
-\l_MT_shortvdotswithinadjustabove_dim=\dimen317
-\l_MT_shortvdotswithinadjustbelow_dim=\dimen318
-\l_MT_above_intertext_sep=\dimen319
-\l_MT_below_intertext_sep=\dimen320
-\l_MT_above_shortintertext_sep=\dimen321
-\l_MT_below_shortintertext_sep=\dimen322
-\xmathstrut@box=\box83
-\xmathstrut@dim=\dimen323
+\g_MT_multlinerow_int=\count366
+\l_MT_multwidth_dim=\dimen317
+\origjot=\skip74
+\l_MT_shortvdotswithinadjustabove_dim=\dimen318
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen319
+\l_MT_above_intertext_sep=\dimen320
+\l_MT_below_intertext_sep=\dimen321
+\l_MT_above_shortintertext_sep=\dimen322
+\l_MT_below_shortintertext_sep=\dimen323
+\xmathstrut@box=\box84
+\xmathstrut@dim=\dimen324
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/bbm-macros/bbm.sty
 Package: bbm 1999/03/15 V 1.2 provides fonts for set symbols - TH
 LaTeX Font Info:    Overwriting math alphabet `\mathbbm' in version `bold'
@@ -667,85 +667,90 @@ LaTeX Font Info:    Overwriting math alphabet `\mathbbm' in version `bold'
 LaTeX Font Info:    Overwriting math alphabet `\mathbbmss' in version `bold'
 (Font)                  U/bbmss/m/n --> U/bbmss/bx/n on input line 35.
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/pdfpages/pdfpages.sty
-Package: pdfpages 2024/01/21 v0.5y Insert pages of external PDF documents (AM)
+Package: pdfpages 2024/10/28 v0.6c Insert pages of external PDF documents (AM)
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2023/05/03 v3.0c eso-pic (RN)
-\ESO@tempdima=\dimen324
-\ESO@tempdimb=\dimen325
+\ESO@tempdima=\dimen325
+\ESO@tempdimb=\dimen326
 )
-\AM@pagewidth=\dimen326
-\AM@pageheight=\dimen327
-\AM@fboxrule=\dimen328
+\AM@pagewidth=\dimen327
+\AM@pageheight=\dimen328
+\AM@fboxrule=\dimen329
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/pdfpages/pppdftex.def
-File: pppdftex.def 2024/01/21 v0.5y Pdfpages driver for pdfTeX (AM)
+File: pppdftex.def 2024/10/28 v0.6c Pdfpages driver for pdfTeX (AM)
 )
-\pdfpages@includegraphics@status=\count358
-\AM@pagebox=\box84
+\pdfpages@includegraphics@status=\count367
+\AM@pagebox=\box85
 \AM@global@opts=\toks49
-\AM@pagecnt=\count359
+\AM@pagecnt=\count368
 \AM@toc@title=\toks50
 \AM@lof@heading=\toks51
-\c@AM@survey=\count360
-\AM@templatesizebox=\box85
+\c@AM@survey=\count369
+\AM@templatesizebox=\box86
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip74
-\bibsep=\skip75
+\bibhang=\skip75
+\bibsep=\skip76
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count361
+\c@NAT@ctr=\count370
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/siunitx/siunitx.sty
-Package: siunitx 2023-11-14 v3.3.9 A comprehensive (SI) units package
-\l__siunitx_number_uncert_offset_int=\count362
-\l__siunitx_number_exponent_fixed_int=\count363
-\l__siunitx_number_min_decimal_int=\count364
-\l__siunitx_number_min_integer_int=\count365
-\l__siunitx_number_round_precision_int=\count366
-\l__siunitx_number_lower_threshold_int=\count367
-\l__siunitx_number_upper_threshold_int=\count368
-\l__siunitx_number_group_first_int=\count369
-\l__siunitx_number_group_size_int=\count370
-\l__siunitx_number_group_minimum_int=\count371
-\l__siunitx_angle_tmp_dim=\dimen329
-\l__siunitx_angle_marker_box=\box86
-\l__siunitx_angle_unit_box=\box87
-\l__siunitx_compound_count_int=\count372
-\l__siunitx_table_tmp_box=\box88
-\l__siunitx_table_tmp_dim=\dimen330
-\l__siunitx_table_column_width_dim=\dimen331
-\l__siunitx_table_integer_box=\box89
-\l__siunitx_table_decimal_box=\box90
-\l__siunitx_table_uncert_box=\box91
-\l__siunitx_table_before_box=\box92
-\l__siunitx_table_after_box=\box93
-\l__siunitx_table_before_dim=\dimen332
-\l__siunitx_table_carry_dim=\dimen333
-\l__siunitx_unit_tmp_int=\count373
-\l__siunitx_unit_position_int=\count374
-\l__siunitx_unit_total_int=\count375
+Package: siunitx 2024-12-06 v3.4.0 A comprehensive (SI) units package
+\l__siunitx_number_uncert_offset_int=\count371
+\l__siunitx_number_exponent_fixed_int=\count372
+\l__siunitx_number_min_decimal_int=\count373
+\l__siunitx_number_min_integer_int=\count374
+\l__siunitx_number_round_precision_int=\count375
+\l__siunitx_number_lower_threshold_int=\count376
+\l__siunitx_number_upper_threshold_int=\count377
+\l__siunitx_number_group_first_int=\count378
+\l__siunitx_number_group_size_int=\count379
+\l__siunitx_number_group_minimum_int=\count380
+\l__siunitx_angle_tmp_dim=\dimen330
+\l__siunitx_angle_marker_box=\box87
+\l__siunitx_angle_unit_box=\box88
+\l__siunitx_compound_count_int=\count381
+\l__siunitx_table_tmp_box=\box89
+\l__siunitx_table_tmp_dim=\dimen331
+\l__siunitx_table_column_width_dim=\dimen332
+\l__siunitx_table_integer_box=\box90
+\l__siunitx_table_decimal_box=\box91
+\l__siunitx_table_uncert_box=\box92
+\l__siunitx_table_before_box=\box93
+\l__siunitx_table_after_box=\box94
+\l__siunitx_table_before_dim=\dimen333
+\l__siunitx_table_carry_dim=\dimen334
+\l__siunitx_unit_tmp_int=\count382
+\l__siunitx_unit_position_int=\count383
+\l__siunitx_unit_total_int=\count384
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/tools/array.sty
-Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
-\col@sep=\dimen334
-\ar@mcellbox=\box94
-\extrarowheight=\dimen335
+Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
+\col@sep=\dimen335
+\ar@mcellbox=\box95
+\extrarowheight=\dimen336
 \NC@list=\toks52
-\extratabsurround=\skip76
-\backup@length=\skip77
-\ar@cellbox=\box95
-)) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/bookmark/bookmark.sty
+\extratabsurround=\skip77
+\backup@length=\skip78
+\ar@cellbox=\box96
+)) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2024/07/06 v1.0i Color table columns (DPC)
+\everycr=\toks53
+\minrowclearance=\skip79
+\rownum=\count385
+) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/bookmark/bookmark.sty
 Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
 File: bkm-pdftex.def 2023-12-10 v1.31 bookmark driver for pdfTeX and luaTeX (HO)
-\BKM@id=\count376
+\BKM@id=\count386
 ))
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 173.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 190.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count377
-\l__pdf_internal_box=\box96
+File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count387
+\l__pdf_internal_box=\box97
 ) (./slides_2_regression.aux
 
 LaTeX Warning: Label `' multiply defined.
@@ -759,24 +764,24 @@ LaTeX Warning: Label `' multiply defined.
 )
 \openout1 = `slides_2_regression.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -817,53 +822,53 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 173.
+Package hyperref Info: Link coloring OFF on input line 190.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 173.
+(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 190.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 173.
+(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 190.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 173.
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 190.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 173.
+(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 190.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 173.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 173.
+(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 190.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 173.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 173.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 173.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 190.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 173.
+(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 173.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 173.
+(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 190.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 173.
+(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 173.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 173.
+(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 190.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 173.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 173.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 190.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 173.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 190.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 173.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 173.
+(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 173.
+(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 173.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 173.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 190.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 173.
+(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 190.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/translator/translator-basic-dictionary-English.dict
 Dictionary: translator-basic-dictionary, Language: English 
 ) (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/translator/translator-bibliography-dictionary-English.dict
@@ -884,274 +889,370 @@ Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PDF
 Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
-)) (./slides_2_regression.nav) [1
+)) (./slides_2_regression.nav)
+
+[1
 
 {/Users/ben_elsner/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
-LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 192.
+LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 209.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 192.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 209.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 192.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 209.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 192.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 209.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 192.
+(Font)              <10.95> on input line 209.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 192.
+(Font)              <8> on input line 209.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 192.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 192.
+(Font)              <6> on input line 209.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 209.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 192.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 209.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 192.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 209.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 192.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 209.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 192.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 209.
+
+
 [2
 
-] [3
+]
 
-] [4
+[3
 
-] [5
+]
 
-] [6
+[4
+
+]
+
+[5
+
+]
+
+[6
 
 {/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}]
 <slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf, id=58, 692.5875pt x 430.60875pt>
 File: slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf Graphic file (type pdf)
 <use slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf  used on input line 298.
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf  used on input line 315.
 (pdftex.def)             Requested size: 179.25114pt x 111.44312pt.
+
+
 [7
 
-{/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc} <./slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf>] [8
+{/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc} <./slides_2_regression_files/figure-beamer/unnamed-chunk-1-1.pdf>]
 
-{/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}] [9
+[8
 
-] [10
+{/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
 
-] [11
+[9
 
-] [12
+]
+
+[10
+
+]
+
+[11
+
+]
+
+[12
 
 ]
 <../../../causalinf_phd/Graphs/CEF_schooling.png, id=107, 482.55281pt x 275.52937pt>
 File: ../../../causalinf_phd/Graphs/CEF_schooling.png Graphic file (type png)
 <use ../../../causalinf_phd/Graphs/CEF_schooling.png>
-Package pdftex.def Info: ../../../causalinf_phd/Graphs/CEF_schooling.png  used on input line 448.
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/CEF_schooling.png  used on input line 465.
 (pdftex.def)             Requested size: 239.00558pt x 136.46523pt.
+
+
 [13
 
- <../../../causalinf_phd/Graphs/CEF_schooling.png>] [14
+ <../../../causalinf_phd/Graphs/CEF_schooling.png>]
+
+[14
 
 ]
 <../../../causalinf_phd/Graphs/CEF_schooling2.png, id=123, 510.40688pt x 338.76563pt>
 File: ../../../causalinf_phd/Graphs/CEF_schooling2.png Graphic file (type png)
 <use ../../../causalinf_phd/Graphs/CEF_schooling2.png>
-Package pdftex.def Info: ../../../causalinf_phd/Graphs/CEF_schooling2.png  used on input line 495.
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/CEF_schooling2.png  used on input line 512.
 (pdftex.def)             Requested size: 239.00558pt x 158.63574pt.
 
-Overfull \vbox (13.97194pt too high) detected at line 495
+Overfull \vbox (13.97194pt too high) detected at line 512
  []
+
+
 
 [15
 
- <../../../causalinf_phd/Graphs/CEF_schooling2.png>] [16
+ <../../../causalinf_phd/Graphs/CEF_schooling2.png>]
 
-] [17
+[16
+
+]
+
+[17
 
 ]
 <slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf, id=144, 693.59125pt x 476.78125pt>
 File: slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf  used on input line 548.
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf  used on input line 565.
 (pdftex.def)             Requested size: 258.91765pt x 177.98499pt.
+
+
 [18
 
  <./slides_2_regression_files/figure-beamer/unnamed-chunk-4-1.pdf>]
 <slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf, id=159, 693.59125pt x 476.78125pt>
 File: slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf  used on input line 555.
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf  used on input line 572.
 (pdftex.def)             Requested size: 258.91765pt x 177.98499pt.
+
+
 [19
 
  <./slides_2_regression_files/figure-beamer/unnamed-chunk-5-1.pdf>]
 <slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf, id=174, 693.59125pt x 476.78125pt>
 File: slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf Graphic file (type pdf)
 <use slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf  used on input line 563.
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf  used on input line 580.
 (pdftex.def)             Requested size: 258.91765pt x 177.98499pt.
+
+
 [20
 
  <./slides_2_regression_files/figure-beamer/unnamed-chunk-6-1.pdf>]
 <slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf, id=188, 693.59125pt x 476.78125pt>
 File: slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf Graphic file (type pdf)
 <use slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf  used on input line 570.
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf  used on input line 587.
 (pdftex.def)             Requested size: 258.91765pt x 177.98499pt.
+
+
 [21
 
  <./slides_2_regression_files/figure-beamer/unnamed-chunk-7-1.pdf>]
 <slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf, id=205, 693.59125pt x 476.78125pt>
 File: slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf Graphic file (type pdf)
 <use slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf  used on input line 577.
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf  used on input line 594.
 (pdftex.def)             Requested size: 258.91765pt x 177.98499pt.
+
+
 [22
 
- <./slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf>] [23
+ <./slides_2_regression_files/figure-beamer/unnamed-chunk-8-1.pdf>]
+
+[23
 
 ]
 <slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf, id=228, 698.61pt x 476.78125pt>
 File: slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf Graphic file (type pdf)
 <use slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf  used on input line 599.
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf  used on input line 616.
 (pdftex.def)             Requested size: 258.91765pt x 176.70457pt.
+
+
 [24
 
  <./slides_2_regression_files/figure-beamer/unnamed-chunk-9-1.pdf>]
 
-Package hyperref Warning: Ignoring empty anchor on input line 636.
+Package hyperref Warning: Ignoring empty anchor on input line 654.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 636.
+(Font)              <5> on input line 654.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 636.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 654.
+
+
 [25
 
-] [26
+]
 
-] [27
+[26
 
-] [28
+]
 
-] [29
+[27
 
-] [30
+]
 
-] [31
+[28
 
-] [32
+]
 
-] [33
+[29
 
-] [34
+]
 
-] [35
+[30
+
+]
+
+[31
+
+]
+
+[32
+
+]
+
+[33
+
+]
+
+[34
+
+]
+
+[35
 
 ]
 <../../../causalinf_phd/Graphs/dag_confound1.png, id=319, 289.83281pt x 216.81pt>
 File: ../../../causalinf_phd/Graphs/dag_confound1.png Graphic file (type png)
 <use ../../../causalinf_phd/Graphs/dag_confound1.png>
-Package pdftex.def Info: ../../../causalinf_phd/Graphs/dag_confound1.png  used on input line 905.
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/dag_confound1.png  used on input line 923.
 (pdftex.def)             Requested size: 179.25114pt x 134.08998pt.
+
+
 [36
 
- <../../../causalinf_phd/Graphs/dag_confound1.png>] [37
+ <../../../causalinf_phd/Graphs/dag_confound1.png>]
 
-] [38
+[37
 
-] [39
+]
 
-] [40
+[38
 
-] [41
+]
+
+[39
+
+]
+
+[40
+
+]
+
+[41
 
 ]
 <slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf, id=359, 697.60625pt x 482.80376pt>
 File: slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf Graphic file (type pdf)
 <use slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf>
-Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf  used on input line 1027.
+Package pdftex.def Info: slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf  used on input line 1045.
 (pdftex.def)             Requested size: 239.00558pt x 165.41086pt.
+
+
 [42
 
- <./slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf>] [43
+ <./slides_2_regression_files/figure-beamer/unnamed-chunk-12-1.pdf>]
 
-] [44
+[43
+
+]
+
+[44
 
 ]
 LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <10.95> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1105.
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <8> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1105.
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <6> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1105.
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <6> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <6> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <6> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1123.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 1105.
+(Font)              <9> on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <9> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1105.
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <5> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1105.
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <5> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <5> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1123.
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <5> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1105.
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1123.
+
+
 [45
 
 ]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 1133.
+(Font)              <14.4> on input line 1151.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 1133.
+(Font)              <10> on input line 1151.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 1133.
+(Font)              <7> on input line 1151.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1133.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1151.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1133.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1151.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1133.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1151.
+
+
 [46
 
-] [47
+]
 
-] [48
+[47
+
+]
+
+[48
 
 ]
 \openout4 = `slides_2_regression.vrb'.
@@ -1164,15 +1265,19 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 
 Package hyperref Warning: Ignoring empty anchor on input line 10.
 
-) [49
+)
+
+[49
 
 ]
 
-Package hyperref Warning: Ignoring empty anchor on input line 1259.
+Package hyperref Warning: Ignoring empty anchor on input line 1279.
 
 
-Overfull \vbox (1.12074pt too high) detected at line 1259
+Overfull \vbox (1.12074pt too high) detected at line 1279
  []
+
+
 
 [50
 
@@ -1182,48 +1287,74 @@ Overfull \vbox (1.12074pt too high) detected at line 1259
 (./slides_2_regression.vrb
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 4.
-) [51
+)
 
-] [52
+[51
 
-] [53
+]
+
+[52
+
+]
+
+[53
 
 ]
 <../../../causalinf_phd/Graphs/chernobyl1.pdf, id=454, 598.235pt x 447.6725pt>
 File: ../../../causalinf_phd/Graphs/chernobyl1.pdf Graphic file (type pdf)
 <use ../../../causalinf_phd/Graphs/chernobyl1.pdf>
-Package pdftex.def Info: ../../../causalinf_phd/Graphs/chernobyl1.pdf  used on input line 1344.
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/chernobyl1.pdf  used on input line 1364.
 (pdftex.def)             Requested size: 239.00558pt x 178.85406pt.
+
+
 [54
 
- <../../../causalinf_phd/Graphs/chernobyl1.pdf>] [55
+ <../../../causalinf_phd/Graphs/chernobyl1.pdf>]
 
-] [56
+[55
 
-] [57
+]
 
-] [58
+[56
+
+]
+
+[57
+
+]
+
+[58
 
 ]
 <../../../causalinf_phd/Graphs/chernobylresults1.png, id=491, 637.38126pt x 117.43875pt>
 File: ../../../causalinf_phd/Graphs/chernobylresults1.png Graphic file (type png)
 <use ../../../causalinf_phd/Graphs/chernobylresults1.png>
-Package pdftex.def Info: ../../../causalinf_phd/Graphs/chernobylresults1.png  used on input line 1460.
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/chernobylresults1.png  used on input line 1480.
 (pdftex.def)             Requested size: 318.67209pt x 58.71564pt.
 <../../../causalinf_phd/Graphs/chernobylresults2.png, id=492, 361.35pt x 90.3375pt>
 File: ../../../causalinf_phd/Graphs/chernobylresults2.png Graphic file (type png)
 <use ../../../causalinf_phd/Graphs/chernobylresults2.png>
-Package pdftex.def Info: ../../../causalinf_phd/Graphs/chernobylresults2.png  used on input line 1460.
+Package pdftex.def Info: ../../../causalinf_phd/Graphs/chernobylresults2.png  used on input line 1480.
 (pdftex.def)             Requested size: 199.1693pt x 49.7919pt.
+
+
 [59
 
- <../../../causalinf_phd/Graphs/chernobylresults1.png> <../../../causalinf_phd/Graphs/chernobylresults2.png>] [60
+ <../../../causalinf_phd/Graphs/chernobylresults1.png> <../../../causalinf_phd/Graphs/chernobylresults2.png>]
 
-] [61
+[60
 
-] [62
+]
 
-] [63
+[61
+
+]
+
+[62
+
+]
+
+[63
 
 ] (./slides_2_regression.bbl
 
@@ -1235,14 +1366,20 @@ Overfull \hbox (2.12503pt too wide) in paragraph at lines 1--1
 [][]  
  []
 
-) [64
+)
 
-] [65
+[64
+
+]
+
+[65
 
 ]
 \openout4 = `slides_2_regression.vrb'.
 
-(./slides_2_regression.vrb) [66
+(./slides_2_regression.vrb)
+
+[66
 
 ]
 \openout4 = `slides_2_regression.vrb'.
@@ -1251,7 +1388,9 @@ Overfull \hbox (2.12503pt too wide) in paragraph at lines 1--1
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 7.
 (/Users/ben_elsner/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)) [67
+))
+
+[67
 
 {/Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
 \openout4 = `slides_2_regression.vrb'.
@@ -1265,73 +1404,89 @@ LaTeX Font Warning: Font shape `T1/lmtt/bx/it' in size <10.95> not available
 LaTeX Font Warning: Font shape `TS1/lmtt/bx/it' in size <10.95> not available
 (Font)              Font shape `TS1/lmtt/b/sl' tried instead on input line 9.
 
-) [68
+)
+
+[68
 
 ]
 \openout4 = `slides_2_regression.vrb'.
 
-(./slides_2_regression.vrb) [69
+(./slides_2_regression.vrb)
 
-] [70
-
-] [71
-
-] [72
+[69
 
 ]
 
-Package hyperref Warning: Ignoring empty anchor on input line 1757.
+[70
+
+]
+
+[71
+
+]
+
+[72
+
+]
+
+Package hyperref Warning: Ignoring empty anchor on input line 1780.
+
+
 
 [73
 
 ]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 1771.
+(Font)              <12> on input line 1794.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <12> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1771.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1794.
 <../Templates/emailicon.png, id=595, 513.92pt x 513.92pt>
 File: ../Templates/emailicon.png Graphic file (type png)
 <use ../Templates/emailicon.png>
-Package pdftex.def Info: ../Templates/emailicon.png  used on input line 1771.
+Package pdftex.def Info: ../Templates/emailicon.png  used on input line 1794.
 (pdftex.def)             Requested size: 28.45274pt x 28.44997pt.
 <../Templates/interneticon.jpeg, id=597, 1927.2pt x 1927.2pt>
 File: ../Templates/interneticon.jpeg Graphic file (type jpg)
 <use ../Templates/interneticon.jpeg>
-Package pdftex.def Info: ../Templates/interneticon.jpeg  used on input line 1771.
+Package pdftex.def Info: ../Templates/interneticon.jpeg  used on input line 1794.
 (pdftex.def)             Requested size: 34.14322pt x 34.14113pt.
 
-Overfull \hbox (5.69048pt too wide) in paragraph at lines 1771--1771
+Overfull \hbox (5.69048pt too wide) in paragraph at lines 1794--1794
 []|[]| 
  []
 
 <../Templates/calendlyicon.png, id=599, 401.5pt x 401.5pt>
 File: ../Templates/calendlyicon.png Graphic file (type png)
 <use ../Templates/calendlyicon.png>
-Package pdftex.def Info: ../Templates/calendlyicon.png  used on input line 1771.
+Package pdftex.def Info: ../Templates/calendlyicon.png  used on input line 1794.
 (pdftex.def)             Requested size: 34.14322pt x 34.14235pt.
 
-Overfull \hbox (5.69048pt too wide) in paragraph at lines 1771--1771
+Overfull \hbox (5.69048pt too wide) in paragraph at lines 1794--1794
 []|[]| 
  []
 
 <../Templates/youtubeicon.png, id=601, 204.765pt x 192.72pt>
 File: ../Templates/youtubeicon.png Graphic file (type png)
 <use ../Templates/youtubeicon.png>
-Package pdftex.def Info: ../Templates/youtubeicon.png  used on input line 1771.
+Package pdftex.def Info: ../Templates/youtubeicon.png  used on input line 1794.
 (pdftex.def)             Requested size: 28.45274pt x 26.7777pt.
 <../Templates/xicon.png, id=603, 148.555pt x 148.555pt>
 File: ../Templates/xicon.png Graphic file (type png)
 <use ../Templates/xicon.png>
-Package pdftex.def Info: ../Templates/xicon.png  used on input line 1771.
+Package pdftex.def Info: ../Templates/xicon.png  used on input line 1794.
 (pdftex.def)             Requested size: 28.45274pt x 28.45241pt.
 <../Templates/linkedinicon.png, id=605, 308.352pt x 308.352pt>
 File: ../Templates/linkedinicon.png Graphic file (type png)
 <use ../Templates/linkedinicon.png>
-Package pdftex.def Info: ../Templates/linkedinicon.png  used on input line 1771.
+Package pdftex.def Info: ../Templates/linkedinicon.png  used on input line 1794.
 (pdftex.def)             Requested size: 28.45274pt x 28.45152pt.
+
+
 [74
 
- <../Templates/emailicon.png> <../Templates/interneticon.jpeg> <../Templates/calendlyicon.png> <../Templates/youtubeicon.png> <../Templates/xicon.png> <../Templates/linkedinicon.png>] [75
+ <../Templates/emailicon.png> <../Templates/interneticon.jpeg> <../Templates/calendlyicon.png> <../Templates/youtubeicon.png> <../Templates/xicon.png> <../Templates/linkedinicon.png>]
+
+[75
 
 ]
 \tf@nav=\write7
@@ -1345,26 +1500,26 @@ Package pdftex.def Info: ../Templates/linkedinicon.png  used on input line 1771.
 
 (./slides_2_regression.aux)
  ***********
-LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-01-04>
+LaTeX2e <2024-11-01> patch level 1
+L3 programming layer <2024-12-25>
  ***********
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 27926 strings out of 476132
- 574608 string characters out of 5793900
- 1941539 words of memory out of 5000000
- 49178 multiletter control sequences out of 15000+600000
+ 28371 strings out of 475210
+ 583813 string characters out of 5765892
+ 913458 words of memory out of 5000000
+ 50523 multiletter control sequences out of 15000+600000
  693425 words of font info for 135 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 101i,13n,107p,415b,1040s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 101i,14n,107p,415b,1158s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss12.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss9.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbo10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsso10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsso8.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsso9.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtko10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></Users/ben_elsner/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on slides_2_regression.pdf (75 pages, 1179663 bytes).
+Output written on slides_2_regression.pdf (75 pages, 1179621 bytes).
 PDF statistics:
- 812 PDF objects out of 1000 (max. 8388607)
- 616 compressed objects within 7 object streams
+ 811 PDF objects out of 1000 (max. 8388607)
+ 615 compressed objects within 7 object streams
  230 named destinations out of 1000 (max. 500000)
  151 words of extra memory for PDF output out of 10000 (max. 10000000)
 
